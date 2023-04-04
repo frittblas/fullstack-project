@@ -1,0 +1,24 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+.text-msg {
+  background-color: #ff6004;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,12 @@
+nav {
+	background-color: #6dc71d;
+}
+
+.navbar-light a.navbar-brand {
+	color: white;
+	margin-right: 30px;
+}
+
+a.navbar-brand img {
+	border: 4px solid white;
+}

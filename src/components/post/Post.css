@@ -1,0 +1,13 @@
+.post > img.card-img-top {
+	max-height: 500px;
+}
+
+.post > .card-body > img{
+	float: left;
+	margin-right: 10px;
+}
+
+.post > .card-body > .card-text{
+	font-size: 0.8rem;
+	margin-top: 15px;
+}

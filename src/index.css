@@ -22,3 +22,9 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+button.btn {
+  background-color: #6dc71d;
+  border: none;
+  border-radius: 0;
+}

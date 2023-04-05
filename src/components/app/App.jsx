@@ -6,7 +6,7 @@ import Hkr from '../Hkr';
 import It from '../It';
 import About from '../About';
 import Footer from '../Footer';
-import User from '../user/User';
+import User from '../../pages/user/User';
 import { Routes, Route } from "react-router-dom";
 
 import './App.css';

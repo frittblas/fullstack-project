@@ -10,6 +10,7 @@ export default function User() {
       <PostForm />
       <Container className="post-list">
         <Post />
+        <Post />
       </Container>
     </div>
   );

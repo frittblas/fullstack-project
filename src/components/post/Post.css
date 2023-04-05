@@ -1,13 +1,31 @@
-.post > img.card-img-top {
-	max-height: 500px;
+.post {
+	border-radius: 0;
+	border: 0;
+	border-top: 4px solid #6dc71d;
+	margin-bottom: 30px;
 }
 
-.post > .card-body > img{
+.post a {
+	text-decoration: none;
+	color: black;
+}
+
+.post > .card-body > .card-subtitle {
+	font-size: 0.6rem;
+}
+
+.post > .card-body > a > img {
+	float: left;
+	margin-right: 15px;
+	max-height: 130px;
+}
+
+.post > .card-body > img {
 	float: left;
 	margin-right: 10px;
 }
 
-.post > .card-body > .card-text{
+.post > .card-body > .card-text {
 	font-size: 0.8rem;
 	margin-top: 15px;
 }

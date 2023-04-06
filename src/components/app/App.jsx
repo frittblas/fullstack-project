@@ -7,6 +7,7 @@ import It from '../It';
 import About from '../About';
 import Footer from '../Footer';
 import User from '../../pages/user/User';
+import Admin from '../../pages/admin/Admin';
 import { Routes, Route } from "react-router-dom";
 
 import './App.css';
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/it" element={<It />}> </Route>
           <Route path="/about" element={<About />}> </Route>
           <Route path="/user" element={<User />}> </Route>
+          <Route path="/admin" element={<Admin />}> </Route>
         </Routes>
       </Container>
     </main>

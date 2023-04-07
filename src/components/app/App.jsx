@@ -6,8 +6,9 @@ import Hkr from '../Hkr';
 import It from '../It';
 import About from '../About';
 import Footer from '../Footer';
-import User from '../../pages/user/User';
-import Admin from '../../pages/admin/Admin';
+import UserPage from '../../pages/user/UserPage';
+import AdminPage from '../../pages/admin/AdminPage';
+import PostPage from '../../pages/post/PostPage';
 import { Routes, Route } from "react-router-dom";
 
 import './App.css';
@@ -22,8 +23,9 @@ export default function App() {
           <Route path="/hkr" element={<Hkr />}> </Route>
           <Route path="/it" element={<It />}> </Route>
           <Route path="/about" element={<About />}> </Route>
-          <Route path="/user" element={<User />}> </Route>
-          <Route path="/admin" element={<Admin />}> </Route>
+          <Route path="/user" element={<UserPage />}> </Route>
+          <Route path="/admin" element={<AdminPage />}> </Route>
+          <Route path="/post" element={<PostPage />}> </Route>
         </Routes>
       </Container>
     </main>

@@ -7,6 +7,7 @@ import {default as ReactNavbar} from 'react-bootstrap/Navbar';
 import './Navbar.css';
 
 import PostToggler from "../post-toggler/PostToggler";
+import ProgramsDropdown from "../programs-dropdown/ProgramsDropdown";
 
 export default function Navbar() {
   return (
@@ -21,12 +22,19 @@ export default function Navbar() {
           />{' '}
           Forum
         </ReactNavbar.Brand>
+        <div>
         {
           useLocation().pathname === '/user' ?
           <PostToggler />:
           ""
         }
-        <div className="d-flex ms-auto">
+        {
+          useLocation().pathname === '/admin' ?
+          <ProgramsDropdown />:
+          ""
+        }
+        </div>
+        <div className="d-flex logout-wrap">
           <Nav.Link as={Link} to="/about">Logout</Nav.Link>
         </div>
       </Container>

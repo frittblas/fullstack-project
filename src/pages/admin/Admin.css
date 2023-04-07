@@ -1,0 +1,13 @@
+.table-responsive > table.user-table {
+	margin-top: 20px;
+	border-collapse:separate; 
+ 	border-spacing: 0 2em;
+}
+
+.table-responsive > table.user-table tr td {
+	border: none;
+}
+
+.table-responsive > table.user-table tr {
+	background-color: #f8f9fa;
+}

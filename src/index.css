@@ -28,3 +28,7 @@ button.btn {
   border: none;
   border-radius: 0;
 }
+
+textarea, input {
+  border-radius: 0 !important;
+}

@@ -16,8 +16,19 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { author, message, image, program } = req.body;
-    const newPost = await post.create({ author: author, message: message, image: image, date: new Date().toLocaleString(), program: program });
+    const newPost = await post.create({ author: author, message: message, image: image, date: new Date(), program: program });
     res.send(newPost);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.put('/reply', async (req, res) => {
+  try {
+    const { postId, author, message } = req.body;
+    const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: author, reply: message, date: new Date() } } },{ new: true } 
+    )
+    res.send(updatedPost);
   } catch (err) {
     res.status(500).send(err);
   }

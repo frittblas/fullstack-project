@@ -4,9 +4,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import UserListItem from '../../components/user-list-item/UserListItem';
-import './Admin.css';
+import './AdminPage.css';
 
-export default function Admin() {
+export default function AdminPage() {
   return (
     <div>
       <Form.Group className="d-flex">

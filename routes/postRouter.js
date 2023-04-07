@@ -12,4 +12,15 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+router.post('/', async (req, res) => {
+  try {
+    const { author, message, image, program } = req.body;
+    const newPost = await post.create({ author: author, message: message, image: image, date: new Date().toLocaleString(), program: program });
+    res.send(newPost);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 export default router;

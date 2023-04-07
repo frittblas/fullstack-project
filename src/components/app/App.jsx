@@ -5,7 +5,7 @@ import Welcome from '../Welcome';
 import Hkr from '../Hkr';
 import It from '../It';
 import About from '../About';
-import Footer from '../Footer';
+import Footer from '../footer/Footer';
 import UserPage from '../../pages/user/UserPage';
 import AdminPage from '../../pages/admin/AdminPage';
 import PostPage from '../../pages/post/PostPage';

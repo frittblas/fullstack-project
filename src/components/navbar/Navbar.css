@@ -3,9 +3,13 @@ nav {
 	margin-bottom: 30px;
 }
 
+nav .form-switch input {
+	border-radius: 8px !important;
+}
+
 .navbar-light a.navbar-brand {
 	color: white;
-	margin-right: 30px;
+	margin-right: 3%;
 }
 
 a.navbar-brand img {
@@ -17,18 +21,19 @@ a.navbar-brand img {
 	padding-left: 10px;
 }
 
-/*.programs-select {
-	min-width: 320px;
-}*/
-
 @media (max-width: 581px) {
 	nav.navbar > .container-fluid {
 		flex-wrap: nowrap;
 	}
 }
 
+@media (max-width: 540px) {
+	.navbar .programs-select {
+		display: block;
+	}
+}
 
-@media (max-width: 535px) {
+@media (max-width: 350px) {
 	nav.navbar > .container-fluid {
 		flex-direction: column;
 	}

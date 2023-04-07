@@ -22,7 +22,6 @@ export default function Navbar() {
           />{' '}
           Forum
         </ReactNavbar.Brand>
-        <div>
         {
           useLocation().pathname === '/user' ?
           <PostToggler />:
@@ -33,7 +32,6 @@ export default function Navbar() {
           <ProgramsDropdown />:
           ""
         }
-        </div>
         <div className="d-flex logout-wrap">
           <Nav.Link as={Link} to="/about">Logout</Nav.Link>
         </div>

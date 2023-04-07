@@ -11,6 +11,8 @@ export default function UserPage() {
       <Container className="post-list">
         <Post />
         <Post />
+        <Post />
+        <Post />
       </Container>
     </div>
   );

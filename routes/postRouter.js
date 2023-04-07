@@ -23,9 +23,10 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/reply', async (req, res) => {
+router.put('/:id/reply', async (req, res) => {
   try {
-    const { postId, author, message } = req.body;
+    const postId = req.params.id;
+    const { author, message } = req.body;
     const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: author, reply: message, date: new Date() } } },{ new: true } 
     )
     res.send(updatedPost);

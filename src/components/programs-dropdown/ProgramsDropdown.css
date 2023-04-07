@@ -1,0 +1,8 @@
+.programs-select {
+	display: flex;
+	align-items: center;
+}
+
+.programs-select span {
+	margin-right: 5px;	
+}

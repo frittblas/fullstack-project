@@ -13,7 +13,6 @@ export default function PostPage() {
       <ListGroup className="mt-5">
         <Comment />
         <Comment />
-        <Comment />
       </ListGroup>
     </div>
   );

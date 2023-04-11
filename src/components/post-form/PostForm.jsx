@@ -1,9 +1,15 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import APIHelper from '../../utilities/api-helper';
+import { setPost } from '../../services/api';
 import './PostForm.css';
 
-export default function PostForm() {
+let onPostPostedHook;
+
+export default function PostForm({onPostPosted}) {
+  onPostPostedHook = onPostPosted;
+  
   return (
     <Form id="post-form" method="POST" onSubmit={onPostSubmit}>
       <Form.Group className="mb-3">
@@ -30,23 +36,15 @@ async function onPostSubmit(event) {
   postData.program = "Software Development";
 
   if (file) {
-    postData.image = await toBase64(file);
+    postData.image = await APIHelper.toBase64(file);
   }
 
-  console.log(postData);
-}
 
-function toBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = e => { 
-      const fileData = {name: file.name, type: file.type, size: file.size};
-      const fcontents = e.target.result;
-      const b64Encoded = fcontents.slice(fcontents.indexOf('base64,') + 7);
-      fileData.contents = b64Encoded;
-      resolve(fileData);
-    };
-    reader.onerror = e => reject(e);
-    reader.readAsDataURL(file);
-  });
+  const respData = await setPost(postData);
+
+  if (respData != null) {
+    onPostPostedHook(respData)
+  }
+
+  console.log(respData);
 }

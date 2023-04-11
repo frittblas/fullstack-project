@@ -16,10 +16,27 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { author, message, image, program } = req.body;
-    const newPost = await post.create({ author: author, message: message, image: image, date: new Date(), program: program });
+    const imageString = JSON.stringify(image)
+    const newPost = await post.create({ author: author, message: message, image: imageString, date: new Date(), program: program });
     res.send(newPost);
   } catch (err) {
     res.status(500).send(err);
+  }
+});
+
+router.get('/:id/image', async (req, res) => {
+  try {
+    const newPost = await post.findById(req.params.id);
+    if (!newPost) {
+      return res.status(404).json("404: Post not found!");
+    }
+    const imageObj = await JSON.parse(newPost.image);
+    const image = Buffer.from(imageObj.contents, 'base64');
+    res.set('Content-Type', imageObj.type); // Set the Content-Type header based on post.imageType
+    res.send(image);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 

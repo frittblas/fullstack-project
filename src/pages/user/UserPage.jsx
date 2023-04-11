@@ -7,7 +7,7 @@ import './UserPage.css';
 export default function UserPage() {
   return (
     <div>
-      <PostForm />
+      <PostForm onPostPosted={data => onPostPostedHandler(data)} />
       <Container className="post-list">
         <Post />
         <Post />
@@ -16,4 +16,8 @@ export default function UserPage() {
       </Container>
     </div>
   );
+}
+
+function onPostPostedHandler(data) {
+  console.log(data)
 }

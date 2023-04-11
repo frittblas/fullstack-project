@@ -16,7 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
 
-
 mongoose.connect(process.env.DB_URI)
   .then(() => {
     console.log("Connected to mongodb");

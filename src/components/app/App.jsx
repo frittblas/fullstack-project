@@ -29,9 +29,9 @@ export default function App() {
           <Route path="/hkr" element={<Hkr />}> </Route>
           <Route path="/it" element={<It />}> </Route>
           <Route path="/about" element={<About />}> </Route>
-          <Route path="/user" element={<UserPage />}> </Route>
+          <Route path="/users" element={<UserPage />}> </Route>
           <Route path="/admin" element={<AdminPage />}> </Route>
-          <Route path="/post" element={<PostPage />}> </Route>
+          <Route path="/posts" element={<PostPage />}> </Route>
           <Route path="/login" element={<Login />}> </Route>
           <Route path="/register" element={<Register />}> </Route>
         </Routes>

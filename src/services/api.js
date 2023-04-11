@@ -26,7 +26,7 @@ async function setPost(data) {
 			body: JSON.stringify(data)
 		});
 
-		return resp.status == 200 ? await resp.json() : null;
+		return resp.status == 201 ? await resp.json() : null;
 	} catch (e) {
 		console.error(e.message);
 	}

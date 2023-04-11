@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://URL TO THE CLOUD BACKEND THING',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: true
       }

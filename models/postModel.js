@@ -3,7 +3,12 @@ import mongoose from 'mongoose';
 const postSchema = new mongoose.Schema({
   author: String,
   message: String,
-  image: String,
+  image: {
+    name: String,
+    type: String, 
+    size: Number,
+    contents: String
+  },
   replies: Array,
   date: Date,
   program: String

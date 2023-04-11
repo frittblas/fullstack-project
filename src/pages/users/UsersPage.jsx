@@ -3,9 +3,9 @@ import Container from 'react-bootstrap/Container';
 import PostForm from '../../components/post-form/PostForm';
 import Post from '../../components/post/Post';
 import { getPosts } from '../../services/api';
-import './UserPage.css';
+import './UsersPage.css';
 
-export default function UserPage() {
+export default function UsersPage() {
   const [getPostList, setPostList] = useState([])
 
   useEffect(() => {

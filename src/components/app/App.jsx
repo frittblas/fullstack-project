@@ -9,14 +9,20 @@ import Footer from '../footer/Footer';
 import UserPage from '../../pages/user/UserPage';
 import AdminPage from '../../pages/admin/AdminPage';
 import PostPage from '../../pages/post/PostPage';
-import { Routes, Route } from "react-router-dom";
+import Login from '../../pages/login/Login';
+import Register from '../../pages/register/Register';
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import './App.css';
 
+
 export default function App() {
+  const location = useLocation();
+  const hideNavbar = location.pathname === '/login' || location.pathname === '/register';
+
   return (<>
     <main>
-      <Navbar />
+      {!hideNavbar && <Navbar />}
       <Container id="content">
         <Routes>
           <Route path="/" element={<Welcome />}> </Route>
@@ -26,6 +32,8 @@ export default function App() {
           <Route path="/user" element={<UserPage />}> </Route>
           <Route path="/admin" element={<AdminPage />}> </Route>
           <Route path="/post" element={<PostPage />}> </Route>
+          <Route path="/login" element={<Login />}> </Route>
+          <Route path="/register" element={<Register />}> </Route>
         </Routes>
       </Container>
     </main>

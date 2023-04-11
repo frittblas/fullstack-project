@@ -1,0 +1,49 @@
+.root-container {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.auth-form-container,
+.login-form,
+.register-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 500px
+}
+
+@media screen and (min-width: 600px) {
+  .auth-form-container {
+    padding: 20px;
+    border: 1px solid #6dc71d;
+    border-radius: 10px;
+    margin: 0.5rem;
+  }
+}
+
+.auth-btn {
+  margin-top: 10px;
+  width: 200px;
+  border: none;
+  background-color: #6dc71d;
+  padding: 20px;
+  border-radius: 10px !important;
+  cursor: pointer;
+}
+
+.auth-btn:hover {
+  background-color: #539915;
+}
+
+.link-btn {
+  background: none !important;
+  color: rgb(122, 122, 122);
+  text-decoration: underline;
+}
+
+.link-btn:hover {
+  color: rgb(189, 187, 187);
+}

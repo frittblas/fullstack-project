@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     const { author, message, image, program } = req.body;
     const imageString = JSON.stringify(image)
     const newPost = await post.create({ author: author, message: message, image: imageString, date: new Date(), program: program });
-    res.send(newPost);
+    res.status(201).send(newPost);
   } catch (err) {
     res.status(500).send(err);
   }

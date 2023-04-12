@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const posts = await post.find({});
+    const posts = await post.find({}).sort({date: 'desc'});
     res.send(posts);
   } catch (err) {
     res.status(500).send(err);

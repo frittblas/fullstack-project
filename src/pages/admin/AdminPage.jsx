@@ -1,12 +1,19 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import UserListItem from '../../components/user-list-item/UserListItem';
+import { getUsers } from '../../services/api';
 import './AdminPage.css';
 
 export default function AdminPage() {
+  const [getUsersList, setUsersList] = useState([]);
+
+  useEffect(() => {
+    (async () => setUsersList(await getUsers()))();
+  }, []);
+
   return (
     <div>
       <Form.Group className="d-flex">
@@ -15,9 +22,7 @@ export default function AdminPage() {
       </Form.Group>
       <Table responsive className="align-middle user-table">
         <tbody>
-          <UserListItem />
-          <UserListItem />
-          <UserListItem />
+          {getUsersList.map(u => <UserListItem userData={u}/>)}
         </tbody>
       </Table>
     </div>

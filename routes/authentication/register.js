@@ -65,7 +65,6 @@ async function register (firstname, lastname, username, email, password, program
             username,
             email,
             password, 
-            programID,
             programTitle
         });
 

@@ -6,7 +6,6 @@ const userSchema = new mongoose.Schema({
   lastname: String,
   password: String,
   profileImg: String,
-  programID: Number,
   programTitle: String
 }, { collection: 'users' })
  

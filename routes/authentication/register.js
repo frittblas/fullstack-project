@@ -1,9 +1,11 @@
-import user from '..routes/models/userModel.js';
+
+import express from 'express';
+import User from '../../models/userModel.js';
 
 
-const express = require ('express');
+
 const router = express.Router();
-const user = require('..routes/models/userModel.js');
+
 
 
 async function register (firstname, lastname, username, email, password, programTitle ){
@@ -74,4 +76,4 @@ async function register (firstname, lastname, username, email, password, program
     
     };
 
-module.exports = router; 
+export default register;

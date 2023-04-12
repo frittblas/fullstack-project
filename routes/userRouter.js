@@ -1,7 +1,7 @@
 import express from 'express';
 import user from '../models/userModel.js';
-import login from '../authentication/login';
-import register from '../authentication/register';
+import login from './authentication/login.js';
+import register from './authentication/register.js';
 
 const router = express.Router();
 

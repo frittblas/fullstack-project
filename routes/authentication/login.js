@@ -1,17 +1,19 @@
 
-import user from '..routes/models/userModel.js';
+import users from '../../models/userModel.js';
+import user from '../../models/userModel.js';
+import mongoose from 'mongoose';
 
-const UserLogin = mongoose.model('UserLogin', user);
+//const UserLogin = mongoose.model('UserLogin', user);
 
 
 async function login(username, password){
 
-    const user= await UserLogin.findOne({username});
-    if(!user){
+    const FindUser= await users.findOne({username});
+    if(!FindUser){
         return 'Invalid username';
     }
 
-    const passwordValid = await user.comparePassword(password);
+    const passwordValid = await users.comparePassword(password);
     if(!passwordValid){
         return 'Invalid password';
     }

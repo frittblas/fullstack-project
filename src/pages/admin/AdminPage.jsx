@@ -22,8 +22,8 @@ export default function AdminPage() {
 
   useEffect(() => {
     // (async () => setUsersList(await getUsers()))();
-    userSearch.value = '';
-  }, [state.program]);
+    // userSearch.value = '';
+  }, []);
 
   return (
     <div>

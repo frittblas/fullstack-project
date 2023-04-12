@@ -3,9 +3,9 @@ import PostFull from '../../components/post-full/PostFull';
 import CommentForm from '../../components/comment-form/CommentForm';
 import Comment from '../../components/comment/Comment';
 import ListGroup from 'react-bootstrap/ListGroup';
-import './PostPage.css';
+import './PostsPage.css';
 
-export default function PostPage() {
+export default function PostsPage() {
   return (
     <div id="post-page">
       <PostFull />

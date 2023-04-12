@@ -35,7 +35,7 @@ export default function Login() {
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control
-              type="new-password"
+              type="password"
               placeholder="********"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

@@ -9,6 +9,8 @@ export default function Register() {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState(true);
   const [program, setProgram] = useState('');
   const [profilePic, setProfilePic] = useState(null);
   const [profilePicPreview, setProfilePicPreview] = useState('');
@@ -20,7 +22,12 @@ export default function Register() {
     e.preventDefault();
     // Authentication for register
     // Use Petes APIHelper
-    console.log(username, firstname, lastname, password, program)
+    if (password === confirmPassword) {
+      setPasswordMatch(true);
+      console.log(username, firstname, lastname, password, program)
+    } else {
+      setPasswordMatch(false);
+    }
   }
 
   const handleLogin = () => {
@@ -83,11 +90,24 @@ export default function Register() {
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control
-              type="current-password"
-              placeholder="********"
+              type="password"
+              placeholder="min 6 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              minLength={6}
             />
+          </Form.Group>
+          <Form.Group controlId="confirmPassword">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="******"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            {!passwordMatch && (
+              <Form.Text className="text-danger">Passwords do not match</Form.Text>
+            )}
           </Form.Group>
           <Form.Group controlId="program">
             <Form.Label>Program code</Form.Label>

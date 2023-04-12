@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import './Register.css';
+import APIHelper from '../../utilities/api-helper';
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -8,6 +10,8 @@ export default function Register() {
   const [lastname, setLastname] = useState('');
   const [password, setPassword] = useState('');
   const [program, setProgram] = useState('');
+  const [profilePic, setProfilePic] = useState(null);
+  const [profilePicPreview, setProfilePicPreview] = useState('');
   //programs is temporary before connection with backend
   const [programs, setPrograms] = useState(["none", "it", "economics", "teacher", "iot"])
   const navigate = useNavigate();
@@ -31,6 +35,19 @@ export default function Register() {
     ));
   };
 
+  // Function to handle file upload
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    setProfilePic(file);
+
+    // Preview the image using FileReader
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfilePicPreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+
   return (
     <Container className="root-container">
       <Container className="auth-form-container">
@@ -46,19 +63,19 @@ export default function Register() {
             />
           </Form.Group>
           <Form.Group controlId="firstname">
-            <Form.Label>Firstname</Form.Label>
+            <Form.Label>First name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="First Name"
+              placeholder="First name"
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
             />
           </Form.Group>
           <Form.Group controlId="lastname">
-            <Form.Label>Lastname</Form.Label>
+            <Form.Label>Last name</Form.Label>
             <Form.Control
               type="lastname"
-              placeholder="Lastname"
+              placeholder="Last name"
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
             />
@@ -82,7 +99,12 @@ export default function Register() {
           </Form.Group>
           <Form.Group controlId="profilepic">
             <Form.Label>Profile picture</Form.Label>
-            <Form.Control type="file" />
+            <Form.Control type="file" onChange={handleFileUpload} />
+            {profilePicPreview && (
+              <div className="profile-pic-preview">
+                <img src={profilePicPreview} alt="Profile Picture Preview" />
+              </div>
+            )}
           </Form.Group>
           <Button className="auth-btn" type="submit">Register</Button>
         </Form>

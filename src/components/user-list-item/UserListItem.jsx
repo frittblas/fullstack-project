@@ -2,12 +2,12 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 
-export default function UserListItem() {
+export default function UserListItem({userData}) {
   return (
     <tr>
-      <td><Image roundedCircle="true" src="../../../public/user.jpeg" height="50" /></td>
-      <td>John Smith</td>
-      <td>Software Development</td>
+      <td><Image roundedCircle="true" src={`/api/users/${userData._id}/image`} height="50" /></td>
+      <td>{`${userData.firstname} ${userData.lastname}`}</td>
+      <td>{userData.program}</td>
     </tr>
   );
 }

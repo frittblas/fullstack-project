@@ -31,11 +31,12 @@ export default function PostForm({onPostPosted}) {
 
 async function onPostSubmit(event) {
   event.preventDefault();
-  const file = event.target[1].files[0];
+  const file = event.target[2].files[0];
   const postData = {};
 
   postData.author = "someUsername"
-  postData.message = event.target[0].value;
+  postData.title = event.target[0].value;
+  postData.message = event.target[1].value;
   postData.program = "Software Development";
 
   if (file) {

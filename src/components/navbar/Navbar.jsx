@@ -23,7 +23,7 @@ export default function Navbar() {
           Forum
         </ReactNavbar.Brand>
         {
-          useLocation().pathname === '/user' ?
+          useLocation().pathname === '/users' ?
           <PostToggler />:
           ""
         }

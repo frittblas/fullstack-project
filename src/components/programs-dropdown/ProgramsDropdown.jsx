@@ -11,10 +11,8 @@ export default function ProgramsDropdown() {
       <Form.Group className="programs-select" onChange={event => {state.program = event.target.value;}}>
         <span>Programs:</span>
         <Form.Select>
-          <option value="All">All</option>
-          <option value="Software Development">Software Development</option>
-          <option value="Bio-Medicine">Bio-Medicine</option>
-          <option value="Economics">Economics</option>
+          <option key="all" value="All">All</option>
+          {state.programsList.map(p => <option key={p._id} value={p.programTitle}>{p.programTitle}</option>)}
         </Form.Select>
       </Form.Group>
   );

@@ -16,6 +16,8 @@ async function getPosts() {
 	}
 }
 
+const getPrograms = async () => await _get('/api/programs');
+
 async function setPost(data) {
 	try {
 		const resp = await fetch('/api/posts', {
@@ -32,4 +34,14 @@ async function setPost(data) {
 	}
 }
 
-export { getUsers, getPosts, setPost }
+// generic getter
+async function _get(url) {
+	try {
+		const resp = await fetch(url);
+		return resp.ok ? await resp.json() : null;
+	} catch (e) {
+		console.error(e.message);
+	}
+}
+
+export { getUsers, getPosts, getPrograms, setPost }

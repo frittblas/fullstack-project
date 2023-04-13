@@ -3,54 +3,63 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
+import Spinner from 'react-bootstrap/Spinner'
 import UserListItem from '../../components/user-list-item/UserListItem';
-import { getUsers } from '../../services/api';
+import { getUsers, getPrograms } from '../../services/api';
 import { useStates } from 'react-easier';
 import './AdminPage.css';
 
-// store all users here:
-const tmpUsers = [
-  {_id: 1, firstname: "John", lastname: "Smith", username: "jsmith01", program: "Software Development"},
-  {_id: 2, firstname: "Pancho", lastname: "Rodrigues", username: "pjfiiiii011", program: "Economics"},
-  {_id: 3, firstname: "Ganzano", lastname: "Allbertino", username: "ganzzzaaaa", program: "Economics"},
-  {_id: 4, firstname: "Michael", lastname: "Rox", username: "michaellloo02", program: "Bio-Medicine"},
-];
-
 export default function AdminPage() {
   const state = useStates('main');
-  const [getUsersList, setUsersList] = useState(tmpUsers);
+  const [isInitLoad, setInitLoad] = useState(true);
+  const [getCurrentProg, setCurrentProg] = useState('All');
+  const [getMainUserList, setMainUserList] = useState([]);
+  const [getUsersList, setUsersList] = useState([]);
 
   useEffect(() => {
-    // (async () => setUsersList(await getUsers()))();
-    // userSearch.value = '';
+    (async () => {
+      const users = await getUsers();
+      setMainUserList(users);
+      setUsersList(users);
+      setInitLoad(false);
+    })(setMainUserList, setUsersList, setInitLoad);
   }, []);
+
+  if (state.program !== getCurrentProg) {
+    resetSearchField();
+    setCurrentProg(state.program);
+    if (state.program === 'All') setUsersList(getMainUserList);
+    else setUsersList(getMainUserList.filter(u => u.programTitle === state.program));
+  }
 
   return (
     <div>
       <Form.Group className="d-flex">
-        <Form.Control id="userSearch" type="text" placeholder="Username" />
+        <Form.Control id="userSearch" type="text" placeholder="first, last, username" />
         <Button variant="success" 
           onClick={() => setUsersList(filterUsers(userSearch.value, getUsersList))} 
           type="submit">
             Search
         </Button>
         <Button variant="disabled" 
-          onClick={e => {e.target.parentNode.childNodes[0].value = ''; setUsersList(tmpUsers)}} 
+          onClick={() => setCurrentProg('')} 
           type="reset"
           className="ms-1">
             Reset
         </Button>
       </Form.Group>
-      <Table responsive className="align-middle user-table">
-        <tbody>
-          {
-            state.program === 'All' ?
-            getUsersList.map(u => <UserListItem key={u._id} userData={u}/>):
-            getUsersList.filter(u => u.program === state.program).map(u => <UserListItem key={u._id} userData={u}/>)
-          }
-        </tbody>
-      </Table>
-    </div>
+      {
+        isInitLoad ?
+        <div className="spinner-wrap"><Spinner animation="border" /></div> :
+        <Table responsive className="align-middle user-table">
+          <tbody>
+            {
+              getUsersList.map(u => <UserListItem key={u._id} userData={u}/>)
+            }
+          </tbody>
+        </Table>
+      }
+    </div> 
   );
 }
 
@@ -61,4 +70,8 @@ function filterUsers(keyword, userList) {
       || u.username.toLowerCase().includes(keyword.toLowerCase())
   )})
   return result;
+}
+
+function resetSearchField() {
+  userSearch.value = '';
 }

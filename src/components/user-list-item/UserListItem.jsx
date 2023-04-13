@@ -7,7 +7,7 @@ export default function UserListItem({userData}) {
       <tr>
         <td><Image roundedCircle="true" src={`/api/users/${userData._id}/image`} height="50" /></td>
         <td>{`${userData.firstname} ${userData.lastname}`}</td>
-        <td>{userData.program}</td>
+        <td>{userData.programTitle}</td>
       </tr>
   );
 }

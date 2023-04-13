@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
@@ -23,7 +23,7 @@ export default function Navbar() {
           Forum
         </ReactNavbar.Brand>
         {
-          useLocation().pathname === '/user' ?
+          useLocation().pathname === '/users' ?
           <PostToggler />:
           ""
         }

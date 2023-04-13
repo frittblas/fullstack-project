@@ -1,6 +1,6 @@
-
-import express from 'express';
 import User from '../../models/userModel.js';
+import express from 'express';
+
 
 
 
@@ -9,11 +9,19 @@ const router = express.Router();
 
 
 async function register (firstname, lastname, username, email, password, programTitle ){
-   
+    console.log('register:', firstname, lastname, username, email, password, programTitle);
+
         const emailExists = await User.findOne({email});
-        const userNameExists = await User.findOne({username});
+        console.log('emailExists:', emailExists);
+
+        const userNameExists = await User.findOne({ username: username.toLowerCase() });
+        console.log('userNameExists:', userNameExists);
+
         const passwordLength = await User.findOne({password});
+        console.log('passwordLength:', passwordLength);
+
         const programTitleExists= await User.findOne({programTitle});
+        console.log('programTitleExists', programTitleExists);
        
 
         if(!firstname){
@@ -44,7 +52,7 @@ async function register (firstname, lastname, username, email, password, program
         }
 
 
-        if(!userNameExists){
+        if(userNameExists){
             return 'Username is taken';
         }
 
@@ -71,6 +79,10 @@ async function register (firstname, lastname, username, email, password, program
         });
 
         const savedUser = await newUser.save();
+
+        if (!savedUser) {
+            return 'Registration failed';
+        }
 
         return 'successfull registration';
     

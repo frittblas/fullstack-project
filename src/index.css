@@ -32,3 +32,20 @@ button.btn {
 textarea, input {
   border-radius: 0 !important;
 }
+
+.spinner-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.spinner-border {
+  display: block;
+  margin: auto;
+  border-color: white;
+  border-right-color: #6dc71d;
+  border-left-color: #6dc71d;
+  padding: 2px;
+  background-color: #50aa00;
+}

@@ -1,5 +1,5 @@
-
 import users from '../../models/userModel.js';
+import { comparePassword } from '../authentication/encryption.js';
 
 async function login(username, password) {
 
@@ -10,10 +10,15 @@ async function login(username, password) {
         return 'Invalid username';
     }
 
-    if (user.password !== password) {
+
+    if (!comparePassword(password, user.password)) {
         return 'Invalid password';
     }
-
+    /*
+        if (user.password !== password) {
+            return 'Invalid password';
+        }
+    */
 
     return 'Successfully logged in';
 

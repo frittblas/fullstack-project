@@ -34,6 +34,22 @@ async function setPost(data) {
 	}
 }
 
+async function setComment(postId, data) {
+	try {
+		const resp = await fetch(`/api/posts/${postId}/reply`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		});
+
+		return resp.status == 200 ? await resp.json() : null;
+	} catch (e) {
+		console.error(e.message);
+	}
+}
+
 // generic getter
 async function _get(url) {
 	try {
@@ -44,4 +60,4 @@ async function _get(url) {
 	}
 }
 
-export { getUsers, getPosts, getPrograms, setPost }
+export { getUsers, getPosts, getPrograms, setPost, setComment }

@@ -30,7 +30,17 @@ router.post('/register', async (req, res) => {
 
   try {
     const { firstname, lastname, username, email, password, programTitle } = req.body;
-    const message = await register(firstname, lastname, username, email, password, programTitle);
+
+    const user = {
+      firstname,
+      lastname,
+      username,
+      email,
+      password,
+      programTitle
+    };
+
+    const message = await register(user);
     res.send(message);
   } catch (err) {
     res.status(500).send(err.message)

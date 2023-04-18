@@ -20,8 +20,8 @@ export default function UsersPage() {
       <Container id="post-list">
         {
           state.program === 'All' ? 
-          getPostList.map(p => <Post postData={p} />) :
-          getPostList.filter(p => p.program === state.program).map(p => <Post postData={p} />)
+          getPostList.map(p => <Post key={p._id} postData={p} />) :
+          getPostList.filter(p => p.program === state.program).map(p => <Post key={p._id} postData={p} />)
         }
       </Container>
     </div>

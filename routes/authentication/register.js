@@ -1,8 +1,7 @@
 import express from 'express';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import User from '../../models/userModel.js';
 import Program from '../../models/programModel.js';
+import { encryptPassword } from '../authentication/encryption.js';
 
 const router = express.Router();
 
@@ -67,6 +66,8 @@ async function validateUserInput(firstname, lastname, username, email, password,
     return 'Password is too short';
   }
 
+  password
+
   const programTitleExists = await Program.findOne({ programTitle });
   if (!programTitleExists) {
     return 'Program does not exist';
@@ -104,6 +105,9 @@ async function register(user) {
   if (validationError) {
     return validationError;
   }
+
+  // encrypt password
+  user.password = await encryptPassword(user.password);
 
   console.log('register:', user.firstname, user.lastname, user.username, user.email, user.password, user.programTitle);
 

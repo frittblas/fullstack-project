@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import userRouter from './routes/userRouter.js';
 import postRouter from './routes/postRouter.js';
 import programRouter from './routes/programRouter.js';
+import adminRouter from './routes/adminRouter.js';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/programs', programRouter);
+app.use('/admin', adminRouter);
 
 app.all('*');
 

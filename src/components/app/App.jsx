@@ -29,7 +29,7 @@ export default function App() {
         <Routes>
           <Route path="/users" element={<UsersPage />}> </Route>
           <Route path="/admin" element={<AdminPage />}> </Route>
-          <Route path="/posts/:id" element={<PostsPage />}> </Route>
+          <Route path="/posts/:postId" element={<PostsPage />}> </Route>
           <Route path="/login" element={<Login />}> </Route>
           <Route path="/register" element={<Register />}> </Route>
         </Routes>

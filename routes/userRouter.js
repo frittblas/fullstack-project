@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/login', async (req,res)=>{
+router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -26,13 +26,13 @@ router.post('/login', async (req,res)=>{
 
 })
 
-router.post('/register', async (req, res)=>{
+router.post('/register', async (req, res) => {
 
-  try{
-    const{firstname, lastname,username,email,password,programTitle}=req.body;
+  try {
+    const { firstname, lastname, username, email, password, programTitle } = req.body;
     const message = await register(firstname, lastname, username, email, password, programTitle);
     res.send(message);
-  }catch(err){
+  } catch (err) {
     res.status(500).send(err.message)
   }
 })

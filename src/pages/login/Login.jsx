@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import { loginUser } from '../../services/api'
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -10,36 +11,13 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const user = await loginUser(username, password)
 
-    // Perform validation on the form inputs (e.g., check for empty fields)
-    if (!username || !password) {
-      alert('Please enter a username and password');
-      return;
+    if (user) {
+      navigate('/users', { state: { user } })
     }
+    console.log(user)
 
-    try {
-      // Send HTTP POST request to server
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      });
-
-      // Check response status
-      if (response.ok) {
-        // Handle success response
-        const data = await response.json();
-        console.log(data);
-      } else {
-        // Handle error response
-        const errorData = await response.json();
-        console.error(errorData);
-      }
-    } catch (error) {
-      console.error(error);
-    }
 
     // Reset form inputs
     setUsername('');

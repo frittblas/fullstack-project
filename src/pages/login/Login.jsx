@@ -8,11 +8,43 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Authentication for login
-    console.log(username, password)
-  }
+
+    // Perform validation on the form inputs (e.g., check for empty fields)
+    if (!username || !password) {
+      alert('Please enter a username and password');
+      return;
+    }
+
+    try {
+      // Send HTTP POST request to server
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      // Check response status
+      if (response.ok) {
+        // Handle success response
+        const data = await response.json();
+        console.log(data);
+      } else {
+        // Handle error response
+        const errorData = await response.json();
+        console.error(errorData);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    // Reset form inputs
+    setUsername('');
+    setPassword('');
+  };
 
   const handleRegister = () => {
     navigate('/register');

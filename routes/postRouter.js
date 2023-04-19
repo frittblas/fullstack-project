@@ -62,7 +62,9 @@ router.put('/:id/reply', async (req, res) => {
     const { author, message } = req.body;
     const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: author, reply: message, date: new Date() } } },{ new: true } 
     )
-    res.send(updatedPost);
+    const updatedPostObject = await JSON.parse(JSON.stringify(updatedPost));
+    delete updatedPostObject.image;
+    res.send(updatedPostObject);
   } catch (err) {
     res.status(500).send(err);
   }

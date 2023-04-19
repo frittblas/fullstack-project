@@ -1,30 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import APIHelper from '../../utilities/api-helper';
+import { setUser } from '../../services/api';
 
 export default function Register() {
   const [username, setUsername] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [program, setProgram] = useState('');
+  const [programTitle, setProgramTitle] = useState('');
   const [profilePic, setProfilePic] = useState(null);
   const [profilePicPreview, setProfilePicPreview] = useState('');
+  const programsList = [
+    { "_id": "64369652372d6ab6b4c15118", "programTitle": "Software Development" },
+    { "_id": "64369669372d6ab6b4c15119", "programTitle": "Economics" },
+    { "_id": "64369674372d6ab6b4c1511a", "programTitle": "IoT Engineers" },
+    { "_id": "64369683372d6ab6b4c1511c", "programTitle": "Business Administration" },
+    { "_id": "643696b4372d6ab6b4c1511f", "programTitle": "Digital Design" },
+    { "_id": "643696da372d6ab6b4c15120", "programTitle": "Food and Meal Science" }
+  ];
   //programs is temporary before connection with backend
-  const [programs, setPrograms] = useState(["none", "it", "economics", "teacher", "iot"])
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Authentication for register
-    // Use Petes APIHelper
     if (password === confirmPassword) {
       setPasswordMatch(true);
-      console.log(username, firstname, lastname, password, program)
+      setUser(firstname, lastname, username, email, password, programTitle)
+      console.log(username)
     } else {
       setPasswordMatch(false);
     }
@@ -34,10 +43,10 @@ export default function Register() {
     navigate('/login');
   };
 
-  const generateProgramOptions = (programs) => {
-    return programs.map((program) => (
-      <option key={program} value={program}>
-        {program}
+  const generateProgramOptions = (programList) => {
+    return programList.map((program) => (
+      <option key={program._id} value={program._id}>
+        {program.programTitle}
       </option>
     ));
   };
@@ -87,6 +96,15 @@ export default function Register() {
               onChange={(e) => setLastname(e.target.value)}
             />
           </Form.Group>
+          <Form.Group controlId="email">
+            <Form.Label>E-mail</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -112,9 +130,9 @@ export default function Register() {
           <Form.Group controlId="program">
             <Form.Label>Program code</Form.Label>
             <Form.Select
-              value={program}
-              onChange={(e) => setProgram(e.target.value)}>
-              {generateProgramOptions(programs)}
+              value={programTitle}
+              onChange={(e) => setProgramTitle(e.target.value)}>
+              {generateProgramOptions(programsList)}
             </Form.Select>
           </Form.Group>
           <Form.Group controlId="profilepic">

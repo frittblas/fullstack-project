@@ -3,12 +3,13 @@ import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import APIHelper from '../../utilities/api-helper';
+import { setUser } from '../../services/api';
 
 export default function Register() {
-  const [programs, setPrograms] = useState([]);
   const [username, setUsername] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
@@ -31,6 +32,7 @@ export default function Register() {
     // Authentication for register
     if (password === confirmPassword) {
       setPasswordMatch(true);
+      setUser(firstname, lastname, username, email, password, programTitle)
       console.log(username)
     } else {
       setPasswordMatch(false);
@@ -92,6 +94,15 @@ export default function Register() {
               placeholder="Last name"
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group controlId="email">
+            <Form.Label>E-mail</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
           <Form.Group controlId="password">

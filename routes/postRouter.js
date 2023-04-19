@@ -3,6 +3,7 @@ import post from '../models/postModel.js';
 
 const router = express.Router();
 
+//Get all posts
 router.get('/', async (req, res) => {
   try {
     const posts = await post.find({}).sort({date: 'desc'});
@@ -12,7 +13,19 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get one post, remove the image from response.
+router.get('/:id', async (req, res) => {
+  try {
+    const onePost = await post.findById(req.params.id);
+    const postObject = await JSON.parse(JSON.stringify(onePost));
+    delete postObject.image;
+    res.send(postObject);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
 
+//Create new post
 router.post('/', async (req, res) => {
   try {
     const { author, title, message, image, program } = req.body;
@@ -24,6 +37,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+//Get an image from post
 router.get('/:id/image', async (req, res) => {
   try {
     const newPost = await post.findById(req.params.id);
@@ -41,13 +55,16 @@ router.get('/:id/image', async (req, res) => {
   }
 });
 
+//Insert a reply into a post
 router.put('/:id/reply', async (req, res) => {
   try {
     const postId = req.params.id;
     const { author, message } = req.body;
     const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: author, reply: message, date: new Date() } } },{ new: true } 
     )
-    res.send(updatedPost);
+    const updatedPostObject = await JSON.parse(JSON.stringify(updatedPost));
+    delete updatedPostObject.image;
+    res.send(updatedPostObject);
   } catch (err) {
     res.status(500).send(err);
   }

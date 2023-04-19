@@ -8,11 +8,11 @@ export default function Post({postData}) {
   return (
     <Card className="post">
       <Card.Body>
-        <Link to={`posts/${postData._id}`}>
+        <Link to={`/posts/${postData._id}`}>
           <Image fluid="true" src={`/api/posts/${postData._id}/image`} />
         </Link>
         <Image roundedCircle="true" src="../../../public/user.jpeg" height="50" />
-        <Link to={`posts/${postData._id}`}>
+        <Link to={`/posts/${postData._id}`}>
           <Card.Title>${postData.title}</Card.Title>
         </Link>
         <Card.Subtitle className="mb-2 text-muted">by {postData.author}</Card.Subtitle>

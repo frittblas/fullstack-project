@@ -2,17 +2,27 @@ import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import { loginUser } from '../../services/api'
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Authentication for login
-    console.log(username, password)
-  }
+    const user = await loginUser(username, password)
+
+    if (user) {
+      navigate('/users', { state: { user } })
+    }
+    console.log(user)
+
+
+    // Reset form inputs
+    setUsername('');
+    setPassword('');
+  };
 
   const handleRegister = () => {
     navigate('/register');

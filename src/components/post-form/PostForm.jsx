@@ -34,10 +34,10 @@ async function onPostSubmit(event) {
   const file = event.target[2].files[0];
   const postData = {};
 
-  postData.author = "someUsername"
+  postData.author = "Pancho Bambino"
   postData.title = event.target[0].value;
   postData.message = event.target[1].value;
-  postData.program = "Software Development";
+  postData.program = "Economics";
 
   if (file) {
     postData.image = await APIHelper.toBase64(file);

@@ -3,6 +3,7 @@ import post from '../models/postModel.js';
 
 const router = express.Router();
 
+//Get all posts
 router.get('/', async (req, res) => {
   try {
     const posts = await post.find({}).sort({date: 'desc'});
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-
+//Create new post
 router.post('/', async (req, res) => {
   try {
     const { author, title, message, image, program } = req.body;
@@ -24,6 +25,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+//Get an image from post
 router.get('/:id/image', async (req, res) => {
   try {
     const newPost = await post.findById(req.params.id);
@@ -41,6 +43,7 @@ router.get('/:id/image', async (req, res) => {
   }
 });
 
+//Insert a reply into a post
 router.put('/:id/reply', async (req, res) => {
   try {
     const postId = req.params.id;

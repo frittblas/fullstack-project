@@ -62,7 +62,7 @@ async function _get(url) {
 
 async function setUser(data) {
   try {
-    const resp = await fetch(`/api/register`, {
+    const resp = await fetch(`/api/users/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -70,10 +70,13 @@ async function setUser(data) {
       body: JSON.stringify(data)
     });
 
+    console.log(resp)
     return resp.status == 201 ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
   }
 }
+
+
 
 export { getUsers, getPosts, getPrograms, setPost, setComment, setUser }

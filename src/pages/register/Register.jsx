@@ -32,7 +32,16 @@ export default function Register() {
     // Authentication for register
     if (password === confirmPassword) {
       setPasswordMatch(true);
-      setUser(firstname, lastname, username, email, password, programTitle)
+      const user = {
+        firstname,
+        lastname,
+        username,
+        email,
+        password,
+        programTitle: "Economics"
+      }
+      console.log(user)
+      setUser(user)
       console.log(username)
     } else {
       setPasswordMatch(false);
@@ -45,7 +54,7 @@ export default function Register() {
 
   const generateProgramOptions = (programList) => {
     return programList.map((program) => (
-      <option key={program._id} value={program._id}>
+      <option key={program._id} value={program.programTitle}>
         {program.programTitle}
       </option>
     ));

@@ -3,7 +3,7 @@ import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import APIHelper from '../../utilities/api-helper';
-import { setUser } from '../../services/api';
+import { createUser, getPrograms } from '../../services/api';
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -16,46 +16,38 @@ export default function Register() {
   const [programTitle, setProgramTitle] = useState("");
   const [profilePic, setProfilePic] = useState(null);
   const [profilePicPreview, setProfilePicPreview] = useState('');
-  //programs is temporary before connection with backend
+  const [programsList, setProgramsList] = useState([]);
   const navigate = useNavigate();
 
-  const [programsList, setProgramsList] = useState([]);
-
   useEffect(() => {
-    async function getPrograms(url) {
+    async function fetchPrograms() {
       try {
-        const response = await fetch(url);
-        const data = await response.json();
+        const data = await getPrograms("/api/programs");
         setProgramsList(data);
       } catch (error) {
         console.error(error);
       }
     }
-    getPrograms("/api/programs");
+    fetchPrograms();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!programTitle) {
-      alert("Please select a program code");
-    } else {
-      // Authentication for register
-      if (password === confirmPassword) {
-        setPasswordMatch(true);
-        const user = {
-          firstname,
-          lastname,
-          username,
-          email,
-          password,
-          programTitle
-        }
-        console.log(user)
-        setUser(user)
-        navigate('/login');
-      } else {
-        setPasswordMatch(false);
+    if (password === confirmPassword) {
+      setPasswordMatch(true);
+      const user = {
+        firstname,
+        lastname,
+        username,
+        email,
+        password,
+        programTitle
       }
+      console.log(user)
+      createUser(user)
+      navigate('/login');
+    } else {
+      setPasswordMatch(false);
     }
   }
 

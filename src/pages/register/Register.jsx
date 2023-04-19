@@ -13,38 +13,49 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [programTitle, setProgramTitle] = useState('');
+  const [programTitle, setProgramTitle] = useState("");
   const [profilePic, setProfilePic] = useState(null);
   const [profilePicPreview, setProfilePicPreview] = useState('');
-  const programsList = [
-    { "_id": "64369652372d6ab6b4c15118", "programTitle": "Software Development" },
-    { "_id": "64369669372d6ab6b4c15119", "programTitle": "Economics" },
-    { "_id": "64369674372d6ab6b4c1511a", "programTitle": "IoT Engineers" },
-    { "_id": "64369683372d6ab6b4c1511c", "programTitle": "Business Administration" },
-    { "_id": "643696b4372d6ab6b4c1511f", "programTitle": "Digital Design" },
-    { "_id": "643696da372d6ab6b4c15120", "programTitle": "Food and Meal Science" }
-  ];
   //programs is temporary before connection with backend
   const navigate = useNavigate();
 
+  const [programsList, setProgramsList] = useState([]);
+
+  useEffect(() => {
+    async function getPrograms(url) {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setProgramsList(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getPrograms("/api/programs");
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Authentication for register
-    if (password === confirmPassword) {
-      setPasswordMatch(true);
-      const user = {
-        firstname,
-        lastname,
-        username,
-        email,
-        password,
-        programTitle: "Economics"
-      }
-      console.log(user)
-      setUser(user)
-      console.log(username)
+    if (!programTitle) {
+      alert("Please select a program code");
     } else {
-      setPasswordMatch(false);
+      // Authentication for register
+      if (password === confirmPassword) {
+        setPasswordMatch(true);
+        const user = {
+          firstname,
+          lastname,
+          username,
+          email,
+          password,
+          programTitle
+        }
+        console.log(user)
+        setUser(user)
+        navigate('/login');
+      } else {
+        setPasswordMatch(false);
+      }
     }
   }
 
@@ -140,7 +151,9 @@ export default function Register() {
             <Form.Label>Program code</Form.Label>
             <Form.Select
               value={programTitle}
-              onChange={(e) => setProgramTitle(e.target.value)}>
+              onChange={(e) => setProgramTitle(e.target.value)}
+              required>
+              <option value="">None</option>
               {generateProgramOptions(programsList)}
             </Form.Select>
           </Form.Group>

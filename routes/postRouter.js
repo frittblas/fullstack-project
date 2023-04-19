@@ -13,6 +13,18 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get one post, remove the image from response.
+router.get('/:id', async (req, res) => {
+  try {
+    const onePost = await post.findById(req.params.id);
+    const postObject = await JSON.parse(JSON.stringify(onePost));
+    delete postObject.image;
+    res.send(postObject);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
+
 //Create new post
 router.post('/', async (req, res) => {
   try {

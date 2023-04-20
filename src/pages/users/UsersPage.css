@@ -1,7 +1,12 @@
 #post-list {
-	margin: 30px 0;
-	padding: 5%;
-	border: 1px solid #f8f9fa;
-	height: inherit;
-	background-color: #f8f9fa;
+  margin: 30px 0;
+  padding: 5%;
+  border: 1px solid #f8f9fa;
+  height: inherit;
+  background-color: #f8f9fa;
+}
+
+#post-form {
+  margin-left: 10px;
+  margin-right: 10px;
 }

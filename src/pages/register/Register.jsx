@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
-import APIHelper from '../../utilities/api-helper';
+import toBase64 from '../../utilities/api-helper'
 import { createUser, getPrograms } from '../../services/api';
 
 export default function Register() {
@@ -13,7 +13,7 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [programTitle, setProgramTitle] = useState("");
+  const [programTitle, setProgramTitle] = useState('');
   const [profilePic, setProfilePic] = useState(null);
   const [profilePicPreview, setProfilePicPreview] = useState('');
   const [programsList, setProgramsList] = useState([]);
@@ -22,7 +22,7 @@ export default function Register() {
   useEffect(() => {
     async function fetchPrograms() {
       try {
-        const data = await getPrograms("/api/programs");
+        const data = await getPrograms('/api/programs');
         setProgramsList(data);
       } catch (error) {
         console.error(error);
@@ -35,16 +35,23 @@ export default function Register() {
     e.preventDefault();
     if (password === confirmPassword) {
       setPasswordMatch(true);
+      const image = {}
+      image = await toBase64(profilePic)
+      if (profilePic != null) {
+        setProfilePic(image)
+        console.log(profilePic)
+      }
       const user = {
         firstname,
         lastname,
         username,
         email,
         password,
-        programTitle
+        programTitle,
+        profilePic
       }
-      console.log(user)
-      createUser(user)
+      const response = await createUser(user)
+      console.log(response)
       navigate('/login');
     } else {
       setPasswordMatch(false);
@@ -63,18 +70,17 @@ export default function Register() {
     ));
   };
 
-  // Function to handle file upload
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
-    setProfilePic(file);
-
-    // Preview the image using FileReader
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setProfilePicPreview(reader.result);
-    };
-    reader.readAsDataURL(file);
-  }
+    if (file) {
+      setProfilePic(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfilePicPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <Container className="root-container">
@@ -88,6 +94,7 @@ export default function Register() {
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </Form.Group>
           <Form.Group controlId="firstname">
@@ -97,6 +104,7 @@ export default function Register() {
               placeholder="First name"
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
+              required
             />
           </Form.Group>
           <Form.Group controlId="lastname">
@@ -106,6 +114,7 @@ export default function Register() {
               placeholder="Last name"
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
+              required
             />
           </Form.Group>
           <Form.Group controlId="email">
@@ -115,6 +124,7 @@ export default function Register() {
               placeholder="E-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </Form.Group>
           <Form.Group controlId="password">
@@ -125,6 +135,7 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               minLength={6}
+              required
             />
           </Form.Group>
           <Form.Group controlId="confirmPassword">
@@ -134,6 +145,7 @@ export default function Register() {
               placeholder="******"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
             {!passwordMatch && (
               <Form.Text className="text-danger">Passwords do not match</Form.Text>

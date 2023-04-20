@@ -50,6 +50,20 @@ router.post('/register', async (req, res) => {
   }
 })
 
+router.get('/:id/image', async (req, res) => {
+  try {
+    const someUser = await user.findById(req.params.id);
+    if (!someUser) return res.status(404).json("404: Page not found!");
 
+    const imageObj = await JSON.parse(someUser.profileImg);
+    const image = Buffer.from(imageObj.contents, 'base64');
+
+    res.set('Content-Type', imageObj.type);
+    res.send(image);
+    
+  } catch (err) {
+    res.status(500).send(err.message)
+  }
+})
 
 export default router;

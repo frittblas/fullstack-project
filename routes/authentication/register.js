@@ -77,6 +77,7 @@ async function validateUserInput(firstname, lastname, username, email, password,
 }
 
 async function createNewUser(user) {
+
   const newUser = new User({
     ...user
   });
@@ -109,7 +110,6 @@ async function register(user) {
   // encrypt password
   user.password = await encryptPassword(user.password);
 
-  console.log('register:', user.firstname, user.lastname, user.username, user.email, user.password, user.programTitle);
 
   const newUser = await createNewUser(user);
 

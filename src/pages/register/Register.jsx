@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
-import toBase64 from '../../utilities/api-helper'
+import APIHelper from '../../utilities/api-helper';
 import { createUser, getPrograms } from '../../services/api';
 
 export default function Register() {
@@ -14,8 +14,8 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [programTitle, setProgramTitle] = useState('');
-  const [profilePic, setProfilePic] = useState(null);
-  const [profilePicPreview, setProfilePicPreview] = useState('');
+  const [profileImg, setProfileImg] = useState(null);
+  const [profileImgPreview, setProfileImgPreview] = useState('');
   const [programsList, setProgramsList] = useState([]);
   const navigate = useNavigate();
 
@@ -35,11 +35,8 @@ export default function Register() {
     e.preventDefault();
     if (password === confirmPassword) {
       setPasswordMatch(true);
-      const image = {}
-      image = await toBase64(profilePic)
-      if (profilePic != null) {
-        setProfilePic(image)
-        console.log(profilePic)
+      if (profileImg != null) {
+        console.log(profileImg)
       }
       const user = {
         firstname,
@@ -48,7 +45,7 @@ export default function Register() {
         email,
         password,
         programTitle,
-        profilePic
+        profileImg
       }
       const response = await createUser(user)
       console.log(response)
@@ -70,13 +67,13 @@ export default function Register() {
     ));
   };
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfilePic(file);
+      setProfileImg(await APIHelper.toBase64(file));
       const reader = new FileReader();
       reader.onload = () => {
-        setProfilePicPreview(reader.result);
+        setProfileImgPreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -164,9 +161,9 @@ export default function Register() {
           <Form.Group controlId="profilepic">
             <Form.Label>Profile picture</Form.Label>
             <Form.Control type="file" onChange={handleFileUpload} />
-            {profilePicPreview && (
+            {profileImgPreview && (
               <div className="profile-pic-preview">
-                <img src={profilePicPreview} alt="Profile Picture Preview" />
+                <img src={profileImgPreview} alt="Profile Picture Preview" />
               </div>
             )}
           </Form.Group>

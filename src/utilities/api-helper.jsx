@@ -13,4 +13,4 @@ function toBase64(file) {
   });
 }
 
-export default toBase64;
+export default { toBase64 }

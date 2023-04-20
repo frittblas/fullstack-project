@@ -29,7 +29,9 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
 
   try {
-    const { firstname, lastname, username, email, password, programTitle } = req.body;
+    const { firstname, lastname, username, email, password, programTitle, profileImg } = req.body;
+
+    const profileImgString = await JSON.stringify(profileImg);
 
     const user = {
       firstname,
@@ -37,7 +39,8 @@ router.post('/register', async (req, res) => {
       username,
       email,
       password,
-      programTitle
+      programTitle,
+      profileImg: profileImgString,
     };
 
     const message = await register(user);
@@ -46,6 +49,7 @@ router.post('/register', async (req, res) => {
     res.status(500).send(err.message)
   }
 })
+
 
 
 export default router;

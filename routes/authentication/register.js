@@ -110,7 +110,6 @@ async function register(user) {
   // encrypt password
   user.password = await encryptPassword(user.password);
 
-  console.log('register:', user);
 
   const newUser = await createNewUser(user);
 

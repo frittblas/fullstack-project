@@ -6,7 +6,10 @@
   background-color: #f8f9fa;
 }
 
-#post-form {
-  margin-left: 10px;
-  margin-right: 10px;
+
+@media screen and (max-width: 600px) {
+  #post-form {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }

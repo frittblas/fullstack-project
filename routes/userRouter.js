@@ -5,6 +5,7 @@ import register from './authentication/register.js';
 
 const router = express.Router();
 
+//Get all users
 router.get('/', async (req, res) => {
   try {
     const users = await user.find({});
@@ -13,6 +14,20 @@ router.get('/', async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+//Get one user by id, remove id from response:
+router.get('/:id', async (req, res) => {
+  try {
+    const someUser = await user.findById(req.params.id);
+    const userObject = await JSON.parse(JSON.stringify(someUser));
+    delete userObject.profileImg;
+    res.send(userObject);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
+
+
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;

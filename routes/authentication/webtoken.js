@@ -3,18 +3,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-let currentKey = "";
+async function signJWT(res, username, program) {
 
-function signJWT(username, program) {
-  let result;
   console.log("LOGIN username, program = ", username, program);
 
-  console.log("login: true");
-  let token = jwt.sign({ username: username, program: program }, process.env.TOKEN);
+  let token = await jwt.sign({ username: username, program: program }, process.env.JWT_TOKEN);
   console.log("token: ", token);
-
-  // authenticate
-  currentKey = token;
 
   // create the cookie as access_token
   res.cookie('access_token', token, {
@@ -22,35 +16,30 @@ function signJWT(username, program) {
     maxAge: 600000 // set cookie to expire in 10 minutes
   });
 
-  // res.redirect("/granted");
-
-  return; // return function
-
-
 }
 
 // log out by clearing the access token and redirecting to login page
-function clearJWTCookie() {
+function clearJWT() {
   res.clearCookie('access_token');
-  res.redirect('/');
+  res.redirect('/login');
 }
 
-function authenticateToken(allowedRoles) {
+function authenticateJWT(allowedPrograms) {
   return async (req, res, next) => {
     try {
       const token = req.cookies['access_token'];
       if (!token) {
-        return res.redirect('/'); // redirect to login page if access token is not provided
+        return res.redirect('/login'); // redirect to login page if access token is not provided
       }
-      const decodedToken = jwt.verify(token, process.env.TOKEN);
-      const { username, role } = decodedToken;
-      if (!allowedRoles.includes(role)) {
-        return res.status(401).send('Unauthorized. Please go to "/identify" to log in with a user that has access to this page.');
+      const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
+      const { username, program } = decodedToken;
+      if (!allowedPrograms.includes(program)) {
+        return res.status(401).send('Unauthorized. Please go to "/login"');
       }
-      req.user = { username, role };
+      req.user = { username, program };
 
       // restrict the students so they only can check their own page.
-      if (role !== 'admin' && role !== 'teacher') {
+      if (program !== 'admin') {
         if (req.path === '/student1' && req.user.username !== 'user1') {
           return res.status(401).send('Unauthorized. You do not have access to this page.');
         }
@@ -62,7 +51,9 @@ function authenticateToken(allowedRoles) {
       next();
     } catch (error) {
       console.log('Error in authenticateToken:', error.message);
-      res.redirect('/'); // redirect to login page if the access token is not valid
+      res.redirect('/login'); // redirect to login page if the access token is not valid
     }
   };
 }
+
+export { signJWT, clearJWT, authenticateJWT };

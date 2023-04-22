@@ -33,7 +33,7 @@ router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const message = await login(username, password);
+    const message = await login(res, username, password);
     res.send(message);
   } catch (err) {
     res.status(500).send(err.message);
@@ -75,7 +75,7 @@ router.get('/:id/image', async (req, res) => {
 
     res.set('Content-Type', imageObj.type);
     res.send(image);
-    
+
   } catch (err) {
     res.status(500).send(err.message)
   }

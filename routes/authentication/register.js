@@ -66,8 +66,6 @@ async function validateUserInput(firstname, lastname, username, email, password,
     return 'Password is too short';
   }
 
-  password
-
   const programTitleExists = await Program.findOne({ programTitle });
   if (!programTitleExists) {
     return 'Program does not exist';

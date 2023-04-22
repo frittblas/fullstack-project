@@ -3,63 +3,37 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-app.post('/LOGIN', async (req, res) => {
+let currentKey = "";
+
+function signJWT(username, program) {
   let result;
-  console.log("LOGIN req.body = ", req.body);
+  console.log("LOGIN username, program = ", username, program);
 
-  if (req.body.user_name !== '' && req.body.user_password !== '') {
-    try {
+  console.log("login: true");
+  let token = jwt.sign({ username: username, program: program }, process.env.TOKEN);
+  console.log("token: ", token);
 
-      try {
-        result = await db.getUser(req.body.user_name, req.body.user_password);
-        console.log("getUser result: ", result);
-      } catch (error) {
-        console.log("getUser db error: ", error);
-      }
+  // authenticate
+  currentKey = token;
 
-      console.log("req.body.user_password = ", req.body.user_password);
-      console.log("result.password = ", result.password);
-      if (req.body.user_password == result.password) {
+  // create the cookie as access_token
+  res.cookie('access_token', token, {
+    httpOnly: true,
+    maxAge: 600000 // set cookie to expire in 10 minutes
+  });
 
-        // render the start page and log the token
-        console.log("login: true");
-        let token = jwt.sign({ username: req.body.user_name, role: result.role }, process.env.ACCESS_TOKEN_SECRET);
-        console.log("token: ", token);
+  // res.redirect("/granted");
 
-        // authenticate
-        currentKey = token;
+  return; // return function
 
-        res.cookie('access_token', token, {
-          httpOnly: true,
-          maxAge: 600000 // set cookie to expire in 10 minutes
-        });
 
-        res.redirect("/granted");
-
-        return; // return function
-
-      } else {
-        console.log("login: false");
-        res.render("fail.ejs");
-        return;
-      }
-
-    } catch (error) {
-      console.log("LOGIN error: ", error);
-    }
-
-    req.method = 'GET';
-    res.redirect("/");
-
-  }
-
-});
+}
 
 // log out by clearing the access token and redirecting to login page
-app.get('/logout', (req, res) => {
+function clearJWTCookie() {
   res.clearCookie('access_token');
   res.redirect('/');
-});
+}
 
 function authenticateToken(allowedRoles) {
   return async (req, res, next) => {
@@ -68,7 +42,7 @@ function authenticateToken(allowedRoles) {
       if (!token) {
         return res.redirect('/'); // redirect to login page if access token is not provided
       }
-      const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      const decodedToken = jwt.verify(token, process.env.TOKEN);
       const { username, role } = decodedToken;
       if (!allowedRoles.includes(role)) {
         return res.status(401).send('Unauthorized. Please go to "/identify" to log in with a user that has access to this page.');

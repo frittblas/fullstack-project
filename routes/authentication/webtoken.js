@@ -20,9 +20,9 @@ async function signJWT(res, username, program) {
 }
 
 // log out by clearing the access token and redirecting to login page
-function clearJWT() {
+function clearJWT(res) {
   res.clearCookie('access_token');
-  res.redirect('/login');
+  //return res.redirect('/login');
 }
 
 function authenticateJWT(allowedPrograms) {

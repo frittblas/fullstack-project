@@ -18,8 +18,6 @@ export default function Login() {
     }
     console.log(user)
 
-
-    // Reset form inputs
     setUsername('');
     setPassword('');
   };

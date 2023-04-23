@@ -1,7 +1,15 @@
 #post-list {
-	margin: 30px 0;
-	padding: 5%;
-	border: 1px solid #f8f9fa;
-	height: inherit;
-	background-color: #f8f9fa;
+  margin: 30px 0;
+  padding: 5%;
+  border: 1px solid #f8f9fa;
+  height: inherit;
+  background-color: #f8f9fa;
+}
+
+
+@media screen and (max-width: 600px) {
+  #post-form {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }

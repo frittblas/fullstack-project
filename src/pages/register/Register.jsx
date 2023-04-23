@@ -13,16 +13,16 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [programTitle, setProgramTitle] = useState("");
-  const [profilePic, setProfilePic] = useState(null);
-  const [profilePicPreview, setProfilePicPreview] = useState('');
+  const [programTitle, setProgramTitle] = useState('');
+  const [profileImg, setProfileImg] = useState(null);
+  const [profileImgPreview, setProfileImgPreview] = useState('');
   const [programsList, setProgramsList] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchPrograms() {
       try {
-        const data = await getPrograms("/api/programs");
+        const data = await getPrograms('/api/programs');
         setProgramsList(data);
       } catch (error) {
         console.error(error);
@@ -35,16 +35,20 @@ export default function Register() {
     e.preventDefault();
     if (password === confirmPassword) {
       setPasswordMatch(true);
+      if (profileImg != null) {
+        console.log(profileImg)
+      }
       const user = {
         firstname,
         lastname,
         username,
         email,
         password,
-        programTitle
+        programTitle,
+        profileImg
       }
-      console.log(user)
-      createUser(user)
+      const response = await createUser(user)
+      console.log(response)
       navigate('/login');
     } else {
       setPasswordMatch(false);
@@ -63,18 +67,17 @@ export default function Register() {
     ));
   };
 
-  // Function to handle file upload
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     const file = e.target.files[0];
-    setProfilePic(file);
-
-    // Preview the image using FileReader
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setProfilePicPreview(reader.result);
-    };
-    reader.readAsDataURL(file);
-  }
+    if (file) {
+      setProfileImg(await APIHelper.toBase64(file));
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfileImgPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <Container className="root-container">
@@ -88,6 +91,7 @@ export default function Register() {
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </Form.Group>
           <Form.Group controlId="firstname">
@@ -97,6 +101,7 @@ export default function Register() {
               placeholder="First name"
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
+              required
             />
           </Form.Group>
           <Form.Group controlId="lastname">
@@ -106,6 +111,7 @@ export default function Register() {
               placeholder="Last name"
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
+              required
             />
           </Form.Group>
           <Form.Group controlId="email">
@@ -115,6 +121,7 @@ export default function Register() {
               placeholder="E-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </Form.Group>
           <Form.Group controlId="password">
@@ -125,6 +132,7 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               minLength={6}
+              required
             />
           </Form.Group>
           <Form.Group controlId="confirmPassword">
@@ -134,6 +142,7 @@ export default function Register() {
               placeholder="******"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
             {!passwordMatch && (
               <Form.Text className="text-danger">Passwords do not match</Form.Text>
@@ -152,9 +161,9 @@ export default function Register() {
           <Form.Group controlId="profilepic">
             <Form.Label>Profile picture</Form.Label>
             <Form.Control type="file" onChange={handleFileUpload} />
-            {profilePicPreview && (
+            {profileImgPreview && (
               <div className="profile-pic-preview">
-                <img src={profilePicPreview} alt="Profile Picture Preview" />
+                <img src={profileImgPreview} alt="Profile Picture Preview" />
               </div>
             )}
           </Form.Group>

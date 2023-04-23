@@ -16,6 +16,7 @@ async function signJWT(res, username, program) {
     maxAge: 600000 // set cookie to expire in 10 minutes
   });
 
+
 }
 
 // log out by clearing the access token and redirecting to login page

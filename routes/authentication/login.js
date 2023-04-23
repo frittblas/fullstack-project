@@ -11,11 +11,12 @@ async function login(res, username, password) {
         return 'Invalid username';
     }
 
-    if (!comparePassword(password, user.password)) {
+    const cmpSuccess = await comparePassword(password, user.password);
+    if (!cmpSuccess) {
         return 'Invalid password';
     }
 
-    signJWT(res, user.username, user.programTitle);
+    await signJWT(res, user.username, user.programTitle);
 
     return user;
 

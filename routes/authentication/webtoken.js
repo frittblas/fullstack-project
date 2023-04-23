@@ -26,33 +26,34 @@ function clearJWT(res) {
 }
 
 function authenticateJWT(allowedPrograms) {
+  console.log('called authJWT! type of allowed programs: ', typeof (allowedPrograms));
   return async (req, res, next) => {
     try {
       const token = req.cookies['access_token'];
       if (!token) {
-        return res.redirect('/login'); // redirect to login page if access token is not provided
+        console.log('No token!');
+        return false; // no token, return false
       }
-      const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
+      const decodedToken = await jwt.verify(token, process.env.JWT_TOKEN);
       const { username, program } = decodedToken;
       if (!allowedPrograms.includes(program)) {
-        return res.status(401).send('Unauthorized. Please go to "/login"');
+        console.log('Program not allowed!');
+        return false; // no right to be here, return false
       }
+
       req.user = { username, program };
 
       // restrict the students so they only can check their own page.
       if (program !== 'admin') {
-        if (req.path === '/student1' && req.user.username !== 'user1') {
-          return res.status(401).send('Unauthorized. You do not have access to this page.');
-        }
-        if (req.path === '/student2' && req.user.username !== 'user2') {
-          return res.status(401).send('Unauthorized. You do not have access to this page.');
+        if (req.path === '/admin' && req.user.username !== 'admin') {
+          console.log('Only admin have access to admin!');
+          return false; // only admin can access /admin
         }
       }
-
+      console.log('next reached in authJWT!');
       next();
     } catch (error) {
-      console.log('Error in authenticateToken:', error.message);
-      res.redirect('/login'); // redirect to login page if the access token is not valid
+      console.log('Error in authenticateJWT:', error.message);
     }
   };
 }

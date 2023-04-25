@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  height: 1100px;
 }
 
 .auth-form-container,
@@ -42,6 +42,7 @@
     /* include padding and border in the element's total height */
     display: flex;
     flex-direction: column;
+    height: 80vh;
   }
 
   .auth-form-container {

@@ -60,9 +60,7 @@ function authenticateJWT(allowedPrograms) {
 
 //Decrypt a token and return it
 function decryptJWT(token) {
-  console.log("Called", token)
   const decryptedToken = jwt.verify(token, process.env.JWT_TOKEN);
-  console.log(decryptedToken);
   return decryptedToken;
 }
 

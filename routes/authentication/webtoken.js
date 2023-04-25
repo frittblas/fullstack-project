@@ -58,4 +58,10 @@ function authenticateJWT(allowedPrograms) {
   };
 }
 
-export { signJWT, clearJWT, authenticateJWT };
+//Decrypt a token and return it
+function decryptJWT(token) {
+  const decryptedToken = jwt.verify(token, process.env.JWT_TOKEN);
+  return decryptedToken;
+}
+
+export { signJWT, clearJWT, authenticateJWT, decryptJWT };

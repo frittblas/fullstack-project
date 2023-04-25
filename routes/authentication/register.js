@@ -102,6 +102,7 @@ async function register(res, user) {
     user.programTitle
   );
 
+
   if (validationError) {
     return validationError;
   }

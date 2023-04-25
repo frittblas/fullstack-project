@@ -35,9 +35,6 @@ export default function Register() {
     e.preventDefault();
     if (password === confirmPassword) {
       setPasswordMatch(true);
-      if (profileImg != null) {
-        console.log(profileImg)
-      }
       const user = {
         firstname,
         lastname,
@@ -48,8 +45,11 @@ export default function Register() {
         profileImg
       }
       const response = await createUser(user)
-      console.log(response)
-      navigate('/login');
+
+      if (response) {
+        navigate('/login');
+      }
+
     } else {
       setPasswordMatch(false);
     }

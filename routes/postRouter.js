@@ -1,5 +1,6 @@
 import express from 'express';
 import post from '../models/postModel.js';
+import {decryptJWT} from '../routes/authentication/webtoken.js'
 
 const router = express.Router();
 
@@ -16,9 +17,12 @@ router.get('/', async (req, res) => {
 //Get all posts for a specific program
 router.get('/program', async (req, res) => {
   try {
-    
+    const decryptedToken = decryptJWT(token);
+    const program = decryptedToken.program;
+    const posts = await post.find({program: program}).sort({date: 'desc'});
+    res.send(posts);
   } catch (err) {
-    
+    res.status(500).send(err);
   }
 })
 

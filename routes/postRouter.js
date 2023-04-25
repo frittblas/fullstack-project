@@ -13,6 +13,15 @@ router.get('/', async (req, res) => {
   }
 });
 
+//Get all posts for a specific program
+router.get('/program', async (req, res) => {
+  try {
+    
+  } catch (err) {
+    
+  }
+})
+
 // Get one post, remove the image from response.
 router.get('/:id', async (req, res) => {
   try {

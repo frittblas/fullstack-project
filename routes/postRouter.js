@@ -16,7 +16,6 @@ router.get('/', async (req, res) => {
 
 //Get all posts for program in jwt
 router.get('/program', async (req, res) => {
-  console.log("Program called")
   try {
     const decryptedToken = decryptJWT(req.cookies.access_token);
     const program = decryptedToken.program;

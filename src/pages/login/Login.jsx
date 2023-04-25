@@ -16,6 +16,9 @@ export default function Login() {
     if (user) {
       navigate('/users', { state: { user } })
     }
+    else {
+
+    }
     console.log(user)
 
     setUsername('');

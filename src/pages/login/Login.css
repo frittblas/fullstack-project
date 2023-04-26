@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 1100px;
+  min-height: 95vh;
 }
 
 .auth-form-container,

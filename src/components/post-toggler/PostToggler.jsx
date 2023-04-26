@@ -1,4 +1,5 @@
 import React from 'react';
+import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import './PostToggler.css';
 import Form from 'react-bootstrap/Form';
 import { useStates } from 'react-easier';
@@ -19,4 +20,4 @@ export default function PostToggler() {
   );
 }
 
-const programToggle = (curProgram, userProgram) => curProgram === userProgram ? 'All' : userProgram;
+const programToggle = (curProgram, userProgram) => curProgram === userProgram ? MAIN_POST_THREAD_NAME : userProgram;

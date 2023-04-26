@@ -73,7 +73,7 @@ async function createUser(data) {
     return resp.status == 200 ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
-    return false;
+    return [false, e.message];
   }
 }
 
@@ -84,7 +84,6 @@ async function loginUser(username, password) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
-    console.log(resp)
 
     return resp.status == 200 ? await resp.json() : null;
   } catch (e) {

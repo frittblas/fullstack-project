@@ -46,8 +46,10 @@ export default function Register() {
       }
       const response = await createUser(user)
 
-      if (response) {
+      if (response[0]) {
         navigate('/login');
+      } else {
+        console.error(response);
       }
 
     } else {

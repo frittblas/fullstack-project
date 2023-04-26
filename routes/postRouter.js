@@ -1,5 +1,6 @@
 import express from 'express';
 import post from '../models/postModel.js';
+import {decryptJWT} from '../routes/authentication/webtoken.js'
 
 const router = express.Router();
 
@@ -12,6 +13,18 @@ router.get('/', async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+//Get all posts for program in jwt
+router.get('/program', async (req, res) => {
+  try {
+    const decryptedToken = decryptJWT(req.cookies.access_token);
+    const program = decryptedToken.program;
+    const posts = await post.find({program: program}).sort({date: 'desc'});
+    res.send(posts);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
 
 // Get one post, remove the image from response.
 router.get('/:id', async (req, res) => {

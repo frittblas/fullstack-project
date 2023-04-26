@@ -58,7 +58,7 @@ router.post('/register', async (req, res) => {
       profileImg: profileImgString,
     };
 
-    const message = await register(user);
+    const message = await register(res, user);
     res.send(message);
   } catch (err) {
     res.status(500).send(err.message)

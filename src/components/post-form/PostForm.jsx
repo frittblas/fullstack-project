@@ -3,15 +3,17 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import APIHelper from '../../utilities/api-helper';
 import { setPost } from '../../services/api';
+import { useStates } from 'react-easier';
 import './PostForm.css';
 
 let onPostPostedHook;
 
 export default function PostForm({onPostPosted}) {
+  const state = useStates("main");
   onPostPostedHook = onPostPosted;
   
   return (
-    <Form id="post-form" method="POST" onSubmit={onPostSubmit}>
+    <Form id="post-form" method="POST" onSubmit={e => onPostSubmit(e, state.program)}>
       <Form.Group className="mb-3">
         <Form.Control type="input" placeholder="The Big Title" />
       </Form.Group>
@@ -29,7 +31,7 @@ export default function PostForm({onPostPosted}) {
   );
 }
 
-async function onPostSubmit(event) {
+async function onPostSubmit(event, program) {
   event.preventDefault();
   const file = event.target[2].files[0];
   const postData = {};
@@ -37,7 +39,7 @@ async function onPostSubmit(event) {
   postData.author = "Pancho Bambino"
   postData.title = event.target[0].value;
   postData.message = event.target[1].value;
-  postData.program = "Economics";
+  postData.program = program;
 
   if (file) {
     postData.image = await APIHelper.toBase64(file);

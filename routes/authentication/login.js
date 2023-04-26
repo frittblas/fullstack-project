@@ -1,6 +1,6 @@
 import users from '../../models/userModel.js';
 import { comparePassword } from '../authentication/encryption.js';
-import { signJWT } from '../authentication/webtoken.js';
+import { signJWT, clearJWT } from '../authentication/webtoken.js';
 
 async function login(res, username, password) {
 
@@ -11,11 +11,14 @@ async function login(res, username, password) {
         return 'Invalid username';
     }
 
-    if (!comparePassword(password, user.password)) {
+    const cmpSuccess = await comparePassword(password, user.password);
+    if (!cmpSuccess) {
         return 'Invalid password';
     }
 
-    signJWT(res, user.username, user.programTitle);
+    await signJWT(res, user.username, user.programTitle);
+
+    //clearJWT(res);
 
     return user;
 

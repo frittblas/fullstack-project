@@ -12,11 +12,13 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = await loginUser(username, password)
+    // delete user.password;
 
     if (user) {
       navigate('/users', { state: { user } })
     }
     console.log(user)
+
 
     setUsername('');
     setPassword('');

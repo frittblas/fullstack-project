@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  min-height: 100vh;
 }
 
 .auth-form-container,
@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
   max-width: 500px;
 }
 
@@ -42,6 +43,7 @@
     /* include padding and border in the element's total height */
     display: flex;
     flex-direction: column;
+    height: 80vh;
   }
 
   .auth-form-container {

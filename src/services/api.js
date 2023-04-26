@@ -16,6 +16,15 @@ async function getProgramPosts() {
   }
 }
 
+async function getPost(id) {
+  try {
+    const resp = await fetch('/api/posts/' + id);
+    return resp.ok ? await resp.json() : null;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
 async function getPosts() {
   try {
     const resp = await fetch('/api/posts');
@@ -100,4 +109,4 @@ async function loginUser(username, password) {
   }
 }
 
-export { getUsers, getPosts, getPrograms, getProgramPosts, setPost, setComment, createUser, loginUser }
+export { getUsers, getPost, getPosts, getPrograms, getProgramPosts, setPost, setComment, createUser, loginUser }

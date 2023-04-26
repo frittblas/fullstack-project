@@ -30,8 +30,7 @@ export default function CommentForm({onCommentHandler}) {
 }
 
 async function onComment(postId, comment) {
-  const data = {author: "Justin Timberlake", message: comment}
-  const resp = await setComment(postId, data);
+  const resp = await setComment(postId, {message: comment});
   
   if (resp != null) return resp.replies;
   else {console.error("Failed to submit a comment.")}

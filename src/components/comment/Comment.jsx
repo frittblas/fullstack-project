@@ -16,7 +16,7 @@ export default function Comment({comment}) {
           </Tooltip>
         }
       >
-        <Image roundedCircle="true" src="../../../public/user.jpeg" height="50" className="float-start me-4" />
+        <Image roundedCircle="true" src={`/api/users/${postData.author._id}/image`} height="50" className="float-start me-4" />
       </OverlayTrigger>
       <p>{comment.reply}</p>
     </ListGroup.Item>

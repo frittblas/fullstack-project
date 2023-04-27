@@ -1,13 +1,60 @@
 import express from 'express';
 import post from '../models/postModel.js';
+import user from '../models/userModel.js';
 import {decryptJWT} from '../routes/authentication/webtoken.js'
 
 const router = express.Router();
-
+/*
 //Get all posts
 router.get('/', async (req, res) => {
   try {
     const posts = await post.find({program: "All"}).sort({date: 'desc'});
+    res.send(posts);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}); */
+
+//Get all posts, combine with firstname and lastname
+router.get('/', async (req, res) => {
+  try {
+    const posts = await post.aggregate([
+      // Lookup the user collection to get the first name and last name based on the username field
+      {
+        $match: {
+          program: 'All'
+        }
+      },
+      {
+        $lookup: {
+          from: user.collection.name,
+          localField: 'author',
+          foreignField: 'username',
+          as: 'user'
+        }
+      },
+      // Unwind the user array to get a single document for each post
+      {
+        $unwind: '$user'
+      },
+      // Project only the fields that you need in the response
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          author: 1,
+          image: 1,
+          date: 1,
+          firstName: '$user.firstname',
+          lastName: '$user.lastname'
+        }
+      },
+      // Sort the posts by date in descending order
+      {
+        $sort: { date: -1 }
+      }
+    ]);
+
     res.send(posts);
   } catch (err) {
     res.status(500).send(err);

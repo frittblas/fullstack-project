@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
     res.status(500).send(err);
   }
 })
-
+/*
 //Create new post
 router.post('/', async (req, res) => {
   try {
@@ -50,12 +50,12 @@ router.post('/', async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-});
+});*/
 
 
 //New functionality for creating posts based on program.
-router.post('/all=:all', async (req, res) => {
-  const allPosts = req.params.all
+router.post('/', async (req, res) => {
+  const allPosts = req.query.all;
   let newPost = null;
 
   try {

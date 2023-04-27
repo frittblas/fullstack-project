@@ -42,6 +42,7 @@ router.get('/users/:name', authenticateJWT(['admin']), async (req, res) => {
   }
 });
 
+
 //Delete specific user from db. 
 router.delete('/users/:name', authenticateJWT(['admin']), async (req, res) => {
   const name = req.params.name;
@@ -55,5 +56,24 @@ router.delete('/users/:name', authenticateJWT(['admin']), async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+router.put('/users/:name', authenticateJWT(['admin']), async (req, res) => {
+  const name = req.params.name;
+  const updates = req.body;
+  try {
+    const updatedUser = await users.findOneAndUpdate(
+      { username: name },
+      updates,
+      { new: true } // Return the updated document
+    );
+    if (!updatedUser) {
+      return res.status(404).send('User not found');
+    }
+    res.send(updatedUser);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 
 export default router;

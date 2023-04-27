@@ -4,18 +4,8 @@ import user from '../models/userModel.js';
 import {decryptJWT} from '../routes/authentication/webtoken.js'
 
 const router = express.Router();
-/*
-//Get all posts
-router.get('/', async (req, res) => {
-  try {
-    const posts = await post.find({program: "All"}).sort({date: 'desc'});
-    res.send(posts);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-}); */
 
-//Get all posts, combine with firstname and lastname
+//Get all posts, combine with firstname and lastname from users collection
 router.get('/', async (req, res) => {
   try {
     const posts = await post.aggregate([

@@ -34,8 +34,9 @@ router.get('/', async (req, res) => {
           author: 1,
           image: 1,
           date: 1,
+          program: 1,
           firstname: '$user.firstname',
-          lastname: '$user.lastname'
+          lastname: '$user.lastname',
         }
       },
       {

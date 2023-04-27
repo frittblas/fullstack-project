@@ -45,8 +45,8 @@ router.get('/', async (req, res) => {
           author: 1,
           image: 1,
           date: 1,
-          firstName: '$user.firstname',
-          lastName: '$user.lastname'
+          firstname: '$user.firstname',
+          lastname: '$user.lastname'
         }
       },
       // Sort the posts by date in descending order

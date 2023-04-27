@@ -57,7 +57,7 @@ router.delete('/users/:name', authenticateJWT(['admin']), async (req, res) => {
   }
 });
 
-router.put('/users/:name', async (req, res) => {
+router.put('/users/:name', authenticateJWT(['admin']), async (req, res) => {
   const name = req.params.name;
   const updates = req.body;
   try {

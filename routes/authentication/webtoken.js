@@ -32,12 +32,14 @@ function authenticateJWT(allowedPrograms) {
       const token = req.cookies['access_token'];
       if (!token) {
         console.log('No token!');
+        res.status(401).send("No token!");
         return false; // no token, return false
       }
       const decodedToken = await jwt.verify(token, process.env.JWT_TOKEN);
       const { username, program } = decodedToken;
       if (!allowedPrograms.includes(program)) {
         console.log('Program not allowed!');
+        res.status(401).send("You don't have access to this!");
         return false; // no right to be here, return false
       }
 

@@ -7,6 +7,15 @@ async function getUsers() {
   }
 }
 
+async function getProgramPosts() {
+  try {
+    const resp = await fetch('/api/posts/program');
+    return resp.ok ? await resp.json() : null;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
 async function getPosts() {
   try {
     const resp = await fetch('/api/posts');
@@ -18,9 +27,9 @@ async function getPosts() {
 
 const getPrograms = async () => await _get('/api/programs');
 
-async function setPost(data) {
+async function setPost(data, all) {
   try {
-    const resp = await fetch('/api/posts', {
+    const resp = await fetch('/api/posts?all=' + Number(all), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -91,4 +100,4 @@ async function loginUser(username, password) {
   }
 }
 
-export { getUsers, getPosts, getPrograms, setPost, setComment, createUser, loginUser }
+export { getUsers, getPosts, getPrograms, getProgramPosts, setPost, setComment, createUser, loginUser }

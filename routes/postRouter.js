@@ -1,13 +1,49 @@
 import express from 'express';
 import post from '../models/postModel.js';
+import user from '../models/userModel.js';
 import {decryptJWT} from '../routes/authentication/webtoken.js'
 
 const router = express.Router();
 
-//Get all posts
+//Get all posts, combine with firstname and lastname from users collection
 router.get('/', async (req, res) => {
   try {
-    const posts = await post.find({}).sort({date: 'desc'});
+    const posts = await post.aggregate([
+      //fetch only those will program "all"
+      {
+        $match: {
+          program: 'All'
+        }
+      },
+      {
+        $lookup: {
+          from: user.collection.name,
+          localField: 'author',
+          foreignField: 'username',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      //fields to be included
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          author: 1,
+          image: 1,
+          date: 1,
+          program: 1,
+          firstname: '$user.firstname',
+          lastname: '$user.lastname',
+        }
+      },
+      {
+        $sort: { date: -1 }
+      }
+    ]);
+
     res.send(posts);
   } catch (err) {
     res.status(500).send(err);
@@ -26,6 +62,8 @@ router.get('/program', async (req, res) => {
   }
 })
 
+
+
 // Get one post, remove the image from response.
 router.get('/:id', async (req, res) => {
   try {
@@ -37,13 +75,40 @@ router.get('/:id', async (req, res) => {
     res.status(500).send(err);
   }
 })
-
+/*
 //Create new post
 router.post('/', async (req, res) => {
   try {
     const { author, title, message, image, program } = req.body;
     const imageString = JSON.stringify(image)
     const newPost = await post.create({ author: author, title: title, message: message, image: imageString, date: new Date(), program: program });
+    res.status(201).send(newPost);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});*/
+
+
+//New functionality for creating posts based on program.
+router.post('/', async (req, res) => {
+  const allPosts = req.query.all;
+  let newPost = null;
+
+  try {
+    const decryptedToken = decryptJWT(req.cookies.access_token);
+    const program = decryptedToken.program;
+    const username = decryptedToken.username;
+
+    const {  title, message, image } = req.body;
+    const imageString = JSON.stringify(image)
+
+    if (parseInt(allPosts) === 1) {
+      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: "All" });
+    } else if (parseInt(allPosts) === 0) {
+      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: program });
+    } else {
+      res.status(400).send("Bad request")
+    }
     res.status(201).send(newPost);
   } catch (err) {
     res.status(500).send(err);

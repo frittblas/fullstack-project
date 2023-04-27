@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import APIHelper from '../../utilities/api-helper';
 import { setPost } from '../../services/api';
 import { useStates } from 'react-easier';
@@ -36,16 +37,14 @@ async function onPostSubmit(event, program) {
   const file = event.target[2].files[0];
   const postData = {};
 
-  postData.author = "Pancho Bambino"
   postData.title = event.target[0].value;
   postData.message = event.target[1].value;
-  postData.program = program;
 
   if (file) {
     postData.image = await APIHelper.toBase64(file);
   }
 
-  const respData = await setPost(postData);
+  const respData = await setPost(postData, program === MAIN_POST_THREAD_NAME);
 
   if (respData != null) {
     onPostPostedHook(respData)

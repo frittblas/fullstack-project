@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const posts = await post.aggregate([
-      // Lookup the user collection to get the first name and last name based on the username field
+      //fetch only those will program "all"
       {
         $match: {
           program: 'All'
@@ -33,11 +33,10 @@ router.get('/', async (req, res) => {
           as: 'user'
         }
       },
-      // Unwind the user array to get a single document for each post
       {
         $unwind: '$user'
       },
-      // Project only the fields that you need in the response
+      //fields to be included
       {
         $project: {
           _id: 1,
@@ -49,7 +48,6 @@ router.get('/', async (req, res) => {
           lastname: '$user.lastname'
         }
       },
-      // Sort the posts by date in descending order
       {
         $sort: { date: -1 }
       }

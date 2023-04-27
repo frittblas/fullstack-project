@@ -1,6 +1,7 @@
 import express from 'express';
 import user from '../models/userModel.js';
 import login from './authentication/login.js';
+import logout from './authentication/logout.js';
 import register from './authentication/register.js';
 
 const router = express.Router();
@@ -35,6 +36,17 @@ router.post('/login', async (req, res) => {
   try {
     const message = await login(res, username, password);
     res.send(message);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+
+})
+
+router.post('/logout', (req, res) => {
+
+  try {
+    logout(res);
+    res.status(200).send("Logged out!");
   } catch (err) {
     res.status(500).send(err.message);
   }

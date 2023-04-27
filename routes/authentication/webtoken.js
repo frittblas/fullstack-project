@@ -26,7 +26,7 @@ function clearJWT(res) {
 }
 
 function authenticateJWT(allowedPrograms) {
-  console.log('called authJWT! type of allowed programs: ', typeof (allowedPrograms));
+  //console.log('called authJWT! type of allowed programs: ', typeof (allowedPrograms));
   return async (req, res, next) => {
     try {
       const token = req.cookies['access_token'];

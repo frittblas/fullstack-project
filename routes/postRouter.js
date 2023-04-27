@@ -26,6 +26,8 @@ router.get('/program', async (req, res) => {
   }
 })
 
+
+
 // Get one post, remove the image from response.
 router.get('/:id', async (req, res) => {
   try {
@@ -44,6 +46,33 @@ router.post('/', async (req, res) => {
     const { author, title, message, image, program } = req.body;
     const imageString = JSON.stringify(image)
     const newPost = await post.create({ author: author, title: title, message: message, image: imageString, date: new Date(), program: program });
+    res.status(201).send(newPost);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+
+//New functionality for creating posts based on program.
+router.post('/all=:all', async (req, res) => {
+  const allPosts = req.params.all
+  let newPost = null;
+
+  try {
+    const decryptedToken = decryptJWT(req.cookies.access_token);
+    const program = decryptedToken.program;
+    const username = decryptedToken.username;
+
+    const {  title, message, image } = req.body;
+    const imageString = JSON.stringify(image)
+
+    if (parseInt(allPosts) === 1) {
+      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: "All" });
+    } else if (parseInt(allPosts) === 0) {
+      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: program });
+    } else {
+      res.status(400).send("Bad request")
+    }
     res.status(201).send(newPost);
   } catch (err) {
     res.status(500).send(err);

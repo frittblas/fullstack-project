@@ -3,11 +3,13 @@ import user from '../models/userModel.js';
 import login from './authentication/login.js';
 import logout from './authentication/logout.js';
 import register from './authentication/register.js';
+import { authenticateJWT } from './authentication/webtoken.js';
+import { allowedPrograms } from './authentication/allowed.js';
 
 const router = express.Router();
 
 //Get all users
-router.get('/', async (req, res) => {
+router.get('/', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const users = await user.find({});
     res.send(users);
@@ -17,7 +19,7 @@ router.get('/', async (req, res) => {
 });
 
 //Get one user by id, remove id from response:
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const someUser = await user.findById(req.params.id);
     const userObject = await JSON.parse(JSON.stringify(someUser));
@@ -77,7 +79,7 @@ router.post('/register', async (req, res) => {
   }
 })
 
-router.get('/:id/image', async (req, res) => {
+router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const someUser = await user.findById(req.params.id);
     if (!someUser) return res.status(404).json("404: Page not found!");

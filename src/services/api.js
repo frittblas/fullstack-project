@@ -27,6 +27,8 @@ async function getPosts() {
 
 const getPrograms = async () => await _get('/api/programs');
 
+const getAboutData = async () => await _get('/api/about');
+
 async function setPost(data, all) {
   try {
     const resp = await fetch('/api/posts?all=' + Number(all), {
@@ -100,4 +102,4 @@ async function loginUser(username, password) {
   }
 }
 
-export { getUsers, getPosts, getPrograms, getProgramPosts, setPost, setComment, createUser, loginUser }
+export { getUsers, getPosts, getPrograms, getAboutData, getProgramPosts, setPost, setComment, createUser, loginUser}

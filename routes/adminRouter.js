@@ -57,6 +57,7 @@ router.delete('/users/:name', authenticateJWT(['admin']), async (req, res) => {
   }
 });
 
+//update user
 router.put('/users/:name', authenticateJWT(['admin']), async (req, res) => {
   const name = req.params.name;
   const updates = req.body;
@@ -74,6 +75,18 @@ router.put('/users/:name', authenticateJWT(['admin']), async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+//Create new user in db. 
+router.post('/users', authenticateJWT(['admin']), async (req, res) => {
+  try {
+    const newUser = new users(req.body);
+    await newUser.save();
+    res.send(newUser);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 
 
 export default router;

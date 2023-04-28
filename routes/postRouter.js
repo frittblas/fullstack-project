@@ -1,48 +1,18 @@
 import express from 'express';
 import post from '../models/postModel.js';
-import user from '../models/userModel.js';
-import {decryptJWT} from '../routes/authentication/webtoken.js'
+import { decryptJWT } from '../routes/authentication/webtoken.js'
+import { getPosts } from './handlers/posts.js'
 
 const router = express.Router();
 
 //Get all posts, combine with firstname and lastname from users collection
 router.get('/', async (req, res) => {
   try {
-    const posts = await post.aggregate([
-      //fetch only those will program "all"
-      {
-        $match: {
-          program: 'All'
-        }
-      },
-      {
-        $lookup: {
-          from: user.collection.name,
-          localField: 'author',
-          foreignField: 'username',
-          as: 'user'
-        }
-      },
-      {
-        $unwind: '$user'
-      },
-      //fields to be included
-      {
-        $project: {
-          _id: 1,
-          title: 1,
-          author: 1,
-          image: 1,
-          date: 1,
-          program: 1,
-          firstname: '$user.firstname',
-          lastname: '$user.lastname',
-        }
-      },
-      {
-        $sort: { date: -1 }
-      }
-    ]);
+    const allPosts = req.query.all;
+    const decryptedToken = decryptJWT(req.cookies.access_token);
+    
+    const posts = await getPosts(allPosts, decryptedToken);
+    if (!posts) res.status(400).send('Bad request');
 
     res.send(posts);
   } catch (err) {

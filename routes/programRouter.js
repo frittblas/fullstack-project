@@ -1,9 +1,11 @@
 import express from 'express';
 import programs from '../models/programModel.js';
+import { authenticateJWT } from './authentication/webtoken.js';
+import { allowedPrograms } from './authentication/allowed.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const allPrograms = await programs.find({});
     res.send(allPrograms);

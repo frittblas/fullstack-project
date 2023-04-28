@@ -22,7 +22,7 @@ export default function About() {
 
   return (
     <>
-      <Row >
+      <Row className="justify-content-center" >
         {aboutData.map((dataItem) => (
           <Col className="mt-4" sm={6} md={6} lg={4} xl={2} key={dataItem._id}>
           <Card>

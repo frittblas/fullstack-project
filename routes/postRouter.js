@@ -1,7 +1,7 @@
 import express from 'express';
 import post from '../models/postModel.js';
 import { decryptJWT } from '../routes/authentication/webtoken.js'
-import { getPosts } from './handlers/posts.js'
+import { getPosts, getPostById } from './handlers/posts.js'
 
 const router = express.Router();
 
@@ -37,26 +37,12 @@ router.get('/program', async (req, res) => {
 // Get one post, remove the image from response.
 router.get('/:id', async (req, res) => {
   try {
-    const onePost = await post.findById(req.params.id);
-    const postObject = await JSON.parse(JSON.stringify(onePost));
-    delete postObject.image;
-    res.send(postObject);
+    const post = await getPostById(req.params.id);
+    res.send(post);
   } catch (err) {
     res.status(500).send(err);
   }
 })
-/*
-//Create new post
-router.post('/', async (req, res) => {
-  try {
-    const { author, title, message, image, program } = req.body;
-    const imageString = JSON.stringify(image)
-    const newPost = await post.create({ author: author, title: title, message: message, image: imageString, date: new Date(), program: program });
-    res.status(201).send(newPost);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});*/
 
 
 //New functionality for creating posts based on program.

@@ -6,6 +6,20 @@ async function getUsers() {
     console.error(e.message);
   }
 }
+async function deleteUser(username) {
+  try {
+    const resp = await fetch('/api/admin/users/' + username, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return resp.ok ? await resp.json() : null;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
 
 async function getProgramPosts() {
   try {
@@ -100,4 +114,4 @@ async function loginUser(username, password) {
   }
 }
 
-export { getUsers, getPosts, getPrograms, getProgramPosts, setPost, setComment, createUser, loginUser }
+export { getUsers, getPosts, getPrograms, getProgramPosts, setPost, setComment, createUser, loginUser, deleteUser }

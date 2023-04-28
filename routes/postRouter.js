@@ -38,6 +38,9 @@ router.get('/program', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const post = await getPostById(req.params.id);
+
+    if (!post) res.status(404).send('Post not found');
+
     res.send(post);
   } catch (err) {
     res.status(500).send(err);

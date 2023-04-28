@@ -91,6 +91,8 @@ async function getPostById(id) {
     }
   ]);
 
+  if (post.length === 0) return;
+
   return post;
 }
 

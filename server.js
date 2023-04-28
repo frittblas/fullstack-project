@@ -7,6 +7,7 @@ import userRouter from './routes/userRouter.js';
 import postRouter from './routes/postRouter.js';
 import programRouter from './routes/programRouter.js';
 import adminRouter from './routes/adminRouter.js';
+import aboutRouter from './routes/aboutRouter.js';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/programs', programRouter);
 app.use('/api/admin', adminRouter);   // Hans changed this to /api/admin (was /admin before)
+app.use('/api/about', aboutRouter);
 
 app.all('*');
 

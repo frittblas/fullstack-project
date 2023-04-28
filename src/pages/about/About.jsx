@@ -22,15 +22,15 @@ export default function About() {
 
   return (
     <>
-      <Row className="justify-content-center" >
+      <Row className="d-flex flex-wrap justify-content-center" >
         {aboutData.map((dataItem) => (
-          <Col className="mt-4" sm={6} md={6} lg={4} xl={2} key={dataItem._id}>
-          <Card>
+          <Col className="mt-4 m-3" xs={10} sm={8} md={5} lg={3} xl={3} key={dataItem._id}>
+          <Card className="h-100">
           <Image src="../../../public/user.jpeg"  />
           <Card.Header>{dataItem.name}</Card.Header>
             <Card.Body>
             <Card.Text style={{fontWeight: 'bold'}}>{dataItem.title}</Card.Text>
-            <Card.Text>{dataItem.comment}</Card.Text>
+            <Card.Text className="d-flex align-items-start">{dataItem.comment}</Card.Text>
           </Card.Body>
             </Card>
       </Col>

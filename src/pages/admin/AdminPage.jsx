@@ -114,8 +114,7 @@ function filterUsers(keyword, userList) {
 }
 
 
-  function resetSearchField() {
-    const inputField = document.getElementById("userSearch");
-    inputField.value = "";
-  }
+function resetSearchField() {
+  userSearch.value = '';
+}
   

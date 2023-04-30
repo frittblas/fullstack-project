@@ -116,4 +116,4 @@ async function loginUser(username, password) {
   }
 }
 
-export { getUsers, getPosts, getPrograms, getProgramPosts, setPost, setComment, createUser, loginUser, deleteUser }
+export { getUsers, getPosts, getPrograms, getAboutData, getProgramPosts, setPost, setComment, createUser, loginUser, deleteUser }

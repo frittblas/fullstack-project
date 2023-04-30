@@ -41,6 +41,8 @@ async function getPosts() {
 
 const getPrograms = async () => await _get('/api/programs');
 
+const getAboutData = async () => await _get('/api/about');
+
 async function setPost(data, all) {
   try {
     const resp = await fetch('/api/posts?all=' + Number(all), {

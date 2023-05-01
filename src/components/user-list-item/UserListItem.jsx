@@ -5,7 +5,7 @@ import Image from 'react-bootstrap/Image';
 export default function UserListItem({userData}) {
   return (
       <tr>
-        <td><Image roundedCircle="true" src={`/api/users/${userData._id}/image`} height="50" /></td>
+        <td><Image thumbnail="true" roundedCircle="true" src={`/api/users/${userData._id}/image`} height="50" /></td>
         <td>{`${userData.firstname} ${userData.lastname}`}</td>
         <td>{userData.programTitle}</td>
       </tr>

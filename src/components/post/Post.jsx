@@ -11,7 +11,7 @@ export default function Post({postData}) {
         <Link to={`/posts/${postData._id}`}>
           <Image fluid="true" src={`/api/posts/${postData._id}/image`} />
         </Link>
-        <Image roundedCircle="true" src="../../../public/user.jpeg" height="50" />
+        <Image roundedCircle="true" src={`/api/users/${postData._id}/image`} height="50" />
         <Link to={`/posts/${postData._id}`}>
           <Card.Title>{postData.title}</Card.Title>
         </Link>

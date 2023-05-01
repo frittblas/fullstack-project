@@ -35,6 +35,7 @@ async function getPosts(all, token) {
         _id: 1,
         title: 1,
         message: 1,
+        replies: 1,
         author: {
           _id: '$User._id',
           username: '$User.username',
@@ -79,6 +80,7 @@ async function getPostById(id) {
         _id: 1,
         title: 1,
         message: 1,
+        replies: 1,
         author: {
           _id: '$User._id',
           username: '$User.username',
@@ -93,7 +95,7 @@ async function getPostById(id) {
 
   if (post.length === 0) return;
 
-  return post;
+  return post[0];
 }
 
 

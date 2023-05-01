@@ -11,11 +11,11 @@ export default function Post({postData}) {
         <Link to={`/posts/${postData._id}`}>
           <Image fluid="true" src={`/api/posts/${postData._id}/image`} />
         </Link>
-        <Image roundedCircle="true" src={`/api/users/${postData._id}/image`} height="50" />
+        <Image roundedCircle="true" src={`/api/users/${postData.author._id}/image`} height="50" />
         <Link to={`/posts/${postData._id}`}>
           <Card.Title>{postData.title}</Card.Title>
         </Link>
-        <Card.Subtitle className="mb-2 text-muted">by {postData.author}</Card.Subtitle>
+        <Card.Subtitle className="mb-2 text-muted">by {`${postData.author.firstname} ${postData.author.lastname}`}</Card.Subtitle>
         <Card.Text>
           {postData.message}
         </Card.Text>

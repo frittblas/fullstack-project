@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import PostForm from '../../components/post-form/PostForm';
 import Post from '../../components/post/Post';
-import { getPosts, getProgramPosts } from '../../services/api';
+import { getPosts } from '../../services/api';
 import { useStates } from 'react-easier';
 import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import './UsersPage.css';
@@ -12,8 +12,7 @@ export default function UsersPage() {
   const [getPostList, setPostList] = useState([])
 
   useEffect(() => {
-    if (state.program === MAIN_POST_THREAD_NAME) { (async () => {setPostList(await getPosts())})() }
-    else { (async () => {setPostList(await getProgramPosts())})() }
+    (async () => {const a = await getPosts(state.program === MAIN_POST_THREAD_NAME); console.log(a); setPostList(a)})();
   }, [state.program]);
 
   return (

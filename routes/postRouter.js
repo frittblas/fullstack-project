@@ -1,13 +1,21 @@
 import express from 'express';
 import post from '../models/postModel.js';
-import {decryptJWT} from '../routes/authentication/webtoken.js'
+import { decryptJWT } from '../routes/authentication/webtoken.js'
+import { getPosts, getPostById } from './handlers/posts.js'
+import { authenticateJWT } from './authentication/webtoken.js';
+import { allowedPrograms } from './authentication/allowed.js';
 
 const router = express.Router();
 
-//Get all posts
-router.get('/', async (req, res) => {
+//Get all posts, combine with firstname and lastname from users collection
+router.get('/', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
-    const posts = await post.find({}).sort({date: 'desc'});
+    const allPosts = req.query.all;
+    const decryptedToken = decryptJWT(req.cookies.access_token);
+
+    const posts = await getPosts(allPosts, decryptedToken);
+    if (!posts) res.status(400).send('Bad request');
+
     res.send(posts);
   } catch (err) {
     res.status(500).send(err);
@@ -15,35 +23,53 @@ router.get('/', async (req, res) => {
 });
 
 //Get all posts for program in jwt
-router.get('/program', async (req, res) => {
+router.get('/program', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const decryptedToken = decryptJWT(req.cookies.access_token);
     const program = decryptedToken.program;
-    const posts = await post.find({program: program}).sort({date: 'desc'});
+    const posts = await post.find({ program: program }).sort({ date: 'desc' });
     res.send(posts);
   } catch (err) {
     res.status(500).send(err);
   }
 })
 
+
+
 // Get one post, remove the image from response.
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
-    const onePost = await post.findById(req.params.id);
-    const postObject = await JSON.parse(JSON.stringify(onePost));
-    delete postObject.image;
-    res.send(postObject);
+    const post = await getPostById(req.params.id);
+
+    if (!post) res.status(404).send('Post not found');
+
+    res.send(post);
   } catch (err) {
     res.status(500).send(err);
   }
 })
 
-//Create new post
-router.post('/', async (req, res) => {
+
+//New functionality for creating posts based on program.
+router.post('/', authenticateJWT(allowedPrograms), async (req, res) => {
+  const allPosts = req.query.all;
+  let newPost = null;
+
   try {
-    const { author, title, message, image, program } = req.body;
+    const decryptedToken = decryptJWT(req.cookies.access_token);
+    const program = decryptedToken.program;
+    const username = decryptedToken.username;
+
+    const { title, message, image } = req.body;
     const imageString = JSON.stringify(image)
-    const newPost = await post.create({ author: author, title: title, message: message, image: imageString, date: new Date(), program: program });
+
+    if (parseInt(allPosts) === 1) {
+      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: "All" });
+    } else if (parseInt(allPosts) === 0) {
+      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: program });
+    } else {
+      res.status(400).send("Bad request")
+    }
     res.status(201).send(newPost);
   } catch (err) {
     res.status(500).send(err);
@@ -51,7 +77,7 @@ router.post('/', async (req, res) => {
 });
 
 //Get an image from post
-router.get('/:id/image', async (req, res) => {
+router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const newPost = await post.findById(req.params.id);
     if (!newPost) {
@@ -69,11 +95,11 @@ router.get('/:id/image', async (req, res) => {
 });
 
 //Insert a reply into a post
-router.put('/:id/reply', async (req, res) => {
+router.put('/:id/reply', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const postId = req.params.id;
     const { author, message } = req.body;
-    const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: author, reply: message, date: new Date() } } },{ new: true } 
+    const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: author, reply: message, date: new Date() } } }, { new: true }
     )
     const updatedPostObject = await JSON.parse(JSON.stringify(updatedPost));
     delete updatedPostObject.image;

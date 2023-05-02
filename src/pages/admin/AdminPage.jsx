@@ -66,6 +66,15 @@ export default function AdminPage() {
   return (
     <div>
       <Form.Group className="d-flex">
+      <Button
+          variant="danger"
+          onClick={() => handleDeleteUsers()}
+          type="button"
+          className="delete ms-1"
+          disabled={selectedUsers.length === 0}
+        >
+          Delete
+        </Button>
         <Form.Control id="userSearch" type="text" placeholder="first, last, username" />
         <Button
           variant="success"
@@ -83,17 +92,7 @@ export default function AdminPage() {
           Reset
         </Button>
       </Form.Group>
-      <div className="d-flex mb-3">
-        <Button
-          variant="danger"
-          onClick={() => handleDeleteUsers()}
-          type="button"
-          className="delete ms-1"
-          disabled={selectedUsers.length === 0}
-        >
-          Delete
-        </Button>
-      </div>
+
       {isInitLoad ? (
         <div className="spinner-wrap">
           <Spinner animation="border" />

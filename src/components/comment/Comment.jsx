@@ -12,11 +12,11 @@ export default function Comment({comment}) {
         placement="top"
         overlay={
           <Tooltip>
-            <p>{comment.author}</p>
+            <p>{`${comment.author.firstname} ${comment.author.lastname}`}</p>
           </Tooltip>
         }
       >
-        <Image roundedCircle="true" src="../../../public/user.jpeg" height="50" className="float-start me-4" />
+        <Image roundedCircle="true" src={`/api/users/${comment.author._id}/image`} height="50" className="float-start me-4" />
       </OverlayTrigger>
       <p>{comment.reply}</p>
     </ListGroup.Item>

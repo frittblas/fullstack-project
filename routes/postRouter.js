@@ -38,9 +38,11 @@ router.get('/program', authenticateJWT(allowedPrograms), async (req, res) => {
 
 // Get one post, remove the image from response.
 router.get('/:id', authenticateJWT(allowedPrograms), async (req, res) => {
-  try {
-    const post = await getPostById(req.params.id);
 
+  try {
+   
+    const post = await getPostById(req.params.id);
+    
     if (!post) res.status(404).send('Post not found');
 
     res.send(post);
@@ -57,16 +59,15 @@ router.post('/', authenticateJWT(allowedPrograms), async (req, res) => {
 
   try {
     const decryptedToken = decryptJWT(req.cookies.access_token);
-    const program = decryptedToken.program;
-    const username = decryptedToken.username;
-
+    const { program } = decryptedToken.user
+    
     const { title, message, image } = req.body;
     const imageString = JSON.stringify(image)
 
     if (parseInt(allPosts) === 1) {
-      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: "All" });
+      newPost = await post.create({ author: decryptedToken.user, title: title, message: message, replies: [], image: imageString, date: new Date(), program: "All" });
     } else if (parseInt(allPosts) === 0) {
-      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: program });
+      newPost = await post.create({ author: decryptedToken.user, title: title, message: message, replies: [], image: imageString, date: new Date(), program: program });
     } else {
       res.status(400).send("Bad request")
     }
@@ -102,8 +103,9 @@ router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
 router.put('/:id/reply', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const postId = req.params.id;
-    const { author, message } = req.body;
-    const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: author, reply: message, date: new Date() } } }, { new: true }
+    const decryptedToken = decryptJWT(req.cookies.access_token);
+    const { message } = req.body;
+    const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: decryptedToken.user, reply: message, date: new Date() } } }, { new: true }
     )
     const updatedPostObject = await JSON.parse(JSON.stringify(updatedPost));
     delete updatedPostObject.image;

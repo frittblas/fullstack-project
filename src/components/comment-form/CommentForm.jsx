@@ -9,7 +9,7 @@ export default function CommentForm({onCommentHandler}) {
   const { postId } = useParams();
 
   return (
-    <div id="post-form" method="POST">
+    <div id="post-form">
       <Form.Group className="mb-3">
         <Form.Control id="postCommentMsg" as="textarea" placeholder="I like that idea ..." />
       </Form.Group>
@@ -21,7 +21,7 @@ export default function CommentForm({onCommentHandler}) {
           variant="success" 
           type="submit" 
           className="ms-3" 
-          onClick={async () => onCommentHandler(await onComment(postId, postCommentMsg.value))}>
+          onClick={async () => onCommentHandler(await onComment(postId, postCommentMsg))}>
           Comment
         </Button>
       </Form.Group>
@@ -29,10 +29,12 @@ export default function CommentForm({onCommentHandler}) {
   );
 }
 
-async function onComment(postId, comment) {
-  const data = {author: "Justin Timberlake", message: comment}
-  const resp = await setComment(postId, data);
+async function onComment(postId, postCommentMsgObj) {
+  const resp = await setComment(postId, {message: postCommentMsgObj.value});
   
-  if (resp != null) return resp.replies;
+  if (resp != null) {
+    postCommentMsgObj.value = "";
+    return resp.replies;
+  }
   else {console.error("Failed to submit a comment.")}
 }

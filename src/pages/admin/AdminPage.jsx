@@ -9,6 +9,7 @@ import { getUsers, getPrograms } from '../../services/api';
 import { deleteUser } from '../../services/api';
 import { createNewUser } from '../../services/api';
 import { useStates } from 'react-easier';
+import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import './AdminPage.css';
 import Modal from 'react-bootstrap/Modal';
 
@@ -18,7 +19,7 @@ import Modal from 'react-bootstrap/Modal';
 export default function AdminPage() {
   const state = useStates('main');
   const [isInitLoad, setInitLoad] = useState(true);
-  const [getCurrentProg, setCurrentProg] = useState('All');
+  const [getCurrentProg, setCurrentProg] = useState(MAIN_POST_THREAD_NAME);
   const [getMainUserList, setMainUserList] = useState([]);
   const [getUsersList, setUsersList] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -100,11 +101,11 @@ export default function AdminPage() {
   };
   
   
-  if (state.program !== getCurrentProg) {
+  if (state.adminProgramSelected !== getCurrentProg) {
     resetSearchField();
-    setCurrentProg(state.program);
-    if (state.program === 'All') setUsersList(getMainUserList);
-    else setUsersList(getMainUserList.filter(u => u.programTitle === state.program));
+    setCurrentProg(state.adminProgramSelected);
+    if (state.adminProgramSelected === MAIN_POST_THREAD_NAME) setUsersList(getMainUserList);
+    else setUsersList(getMainUserList.filter(u => u.programTitle === state.adminProgramSelected));
   }
 
   return (

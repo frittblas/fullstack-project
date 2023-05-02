@@ -47,20 +47,18 @@ async function deleteUser(username) {
   }
 }
 
-
-
-async function getProgramPosts() {
+async function getPost(id) {
   try {
-    const resp = await fetch('/api/posts/program');
+    const resp = await fetch('/api/posts/' + id);
     return resp.ok ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
   }
 }
 
-async function getPosts() {
+async function getPosts(all) {
   try {
-    const resp = await fetch('/api/posts');
+    const resp = await fetch('/api/posts?all=' + Number(all));
     return resp.ok ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
@@ -160,4 +158,4 @@ async function logoutUser() {
   }
 }
 
-export { getUsers, getPosts, getPrograms, getAboutData, getProgramPosts, setPost, setComment, createUser, loginUser, deleteUser,getAllUsers ,logoutUser, createNewUser}
+export { getUsers, getPost, getPosts, getPrograms, getAboutData, setPost, setComment, createUser, loginUser, deleteUser, getAllUsers ,logoutUser, createNewUser}

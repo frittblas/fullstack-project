@@ -3,11 +3,19 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-async function signJWT(res, username, program) {
+async function signJWT(res, user) {
+  //create new user variable for the token
+  const userForToken = {
+    _id: user._id,
+    username: user.username,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    email: user.email,
+    program: user.programTitle
+  };
 
-  console.log("LOGIN username, program = ", username, program);
 
-  let token = await jwt.sign({ username: username, program: program }, process.env.JWT_TOKEN);
+  let token = await jwt.sign({ user: userForToken }, process.env.JWT_TOKEN);
   console.log("token: ", token);
 
   // create the cookie as access_token
@@ -36,7 +44,9 @@ function authenticateJWT(allowedPrograms) {
         return false; // no token, return false
       }
       const decodedToken = await jwt.verify(token, process.env.JWT_TOKEN);
-      const { username, program } = decodedToken;
+      console.log("decodedTOken:" , decodedToken)
+      const { username, program } = decodedToken.user;
+      console.log(username, program)
       if (!allowedPrograms.includes(program)) {
         console.log('Program not allowed!');
         res.status(401).send("You don't have access to this!");

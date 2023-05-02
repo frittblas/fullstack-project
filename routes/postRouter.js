@@ -57,16 +57,15 @@ router.post('/', authenticateJWT(allowedPrograms), async (req, res) => {
 
   try {
     const decryptedToken = decryptJWT(req.cookies.access_token);
-    const program = decryptedToken.program;
-    const username = decryptedToken.username;
-
+    const { program } = decryptedToken.user
+    
     const { title, message, image } = req.body;
     const imageString = JSON.stringify(image)
 
     if (parseInt(allPosts) === 1) {
-      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: "All" });
+      newPost = await post.create({ author: decryptedToken.user, title: title, message: message, replies: [], image: imageString, date: new Date(), program: "All" });
     } else if (parseInt(allPosts) === 0) {
-      newPost = await post.create({ author: username, title: title, message: message, image: imageString, date: new Date(), program: program });
+      newPost = await post.create({ author: decryptedToken.user, title: title, message: message, replies: [], image: imageString, date: new Date(), program: program });
     } else {
       res.status(400).send("Bad request")
     }

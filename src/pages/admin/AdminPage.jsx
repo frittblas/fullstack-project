@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import UserListItem from '../../components/user-list-item/UserListItem';
 import { getUsers, getPrograms } from '../../services/api';
+import { deleteUser } from '../../services/api';
 import { useStates } from 'react-easier';
 import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import './AdminPage.css';
@@ -19,8 +20,10 @@ export default function AdminPage() {
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   useEffect(() => {
+    console.log("useEffect executed");
     (async () => {
       const users = await getUsers();
+       console.log(users);
       setMainUserList(users);
       setUsersList(users);
       setInitLoad(false);
@@ -36,11 +39,23 @@ export default function AdminPage() {
     }
   };
 
-  const handleDeleteUsers = () => {
-    const updatedUserList = getMainUserList.filter(u => !selectedUsers.includes(u._id));
-    setUsersList(updatedUserList);
-    setSelectedUsers([]);
+  const handleDeleteUsers = async () => {
+    console.log("clicked on delete button")
+    try {
+      console.log("selectedUsers:", selectedUsers);
+      const promises = selectedUsers.map((username) => deleteUser(username));
+      console.log("promises:", promises);
+      await Promise.all(promises);
+      const updatedUserList = await getUsers();
+      console.log("updatedUserList:", updatedUserList);
+      setMainUserList(updatedUserList);
+      setUsersList(updatedUserList);
+      setSelectedUsers([]);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
+  
   
   if (state.program !== getCurrentProg) {
     resetSearchField();
@@ -52,6 +67,15 @@ export default function AdminPage() {
   return (
     <div>
       <Form.Group className="d-flex">
+      <Button
+          variant="danger"
+          onClick={() => handleDeleteUsers()}
+          type="button"
+          className="delete ms-1"
+          disabled={selectedUsers.length === 0}
+        >
+          Delete
+        </Button>
         <Form.Control id="userSearch" type="text" placeholder="first, last, username" />
         <Button
           variant="success"
@@ -69,17 +93,7 @@ export default function AdminPage() {
           Reset
         </Button>
       </Form.Group>
-      <div className="d-flex mb-3">
-        <Button
-          variant="danger"
-          onClick={() => handleDeleteUsers()}
-          type="button"
-          className="delete ms-1"
-          disabled={selectedUsers.length === 0}
-        >
-          Delete
-        </Button>
-      </div>
+
       {isInitLoad ? (
         <div className="spinner-wrap">
           <Spinner animation="border" />

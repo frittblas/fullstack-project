@@ -102,8 +102,9 @@ router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
 router.put('/:id/reply', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const postId = req.params.id;
-    const { author, message } = req.body;
-    const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: author, reply: message, date: new Date() } } }, { new: true }
+    const decryptedToken = decryptJWT(req.cookies.access_token);
+    const { message } = req.body;
+    const updatedPost = await post.findByIdAndUpdate(postId, { $push: { replies: { author: decryptedToken.user, reply: message, date: new Date() } } }, { new: true }
     )
     const updatedPostObject = await JSON.parse(JSON.stringify(updatedPost));
     delete updatedPostObject.image;

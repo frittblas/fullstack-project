@@ -6,6 +6,7 @@ async function getUsers() {
     console.error(e.message);
   }
 }
+
 async function deleteUser(username) {
   try {
     const resp = await fetch('/api/admin/users/' + username, {
@@ -98,7 +99,7 @@ async function createUser(data) {
     return resp.status == 200 ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
-    return [false, e.message];
+    return e.message;
   }
 }
 
@@ -113,7 +114,18 @@ async function loginUser(username, password) {
     return resp.status == 200 ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
+    return e.message;
   }
 }
 
-export { getUsers, getPosts, getPrograms, getAboutData, getProgramPosts, setPost, setComment, createUser, loginUser, deleteUser }
+
+async function logoutUser() {
+  try {
+    const resp = await fetch('/api/users/logout');
+    return resp.ok ? await resp.json() : null;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
+export { getUsers, getPosts, getPrograms, getAboutData, getProgramPosts, setPost, setComment, createUser, loginUser, logoutUser, deleteUser }

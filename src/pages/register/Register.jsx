@@ -12,6 +12,7 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [registrationError, setRegistrationError] = useState(null);
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [programTitle, setProgramTitle] = useState('');
   const [profileImg, setProfileImg] = useState(null);
@@ -46,10 +47,10 @@ export default function Register() {
       }
       const response = await createUser(user)
 
-      if (response[0]) {
+      if (response.message == null) {
         navigate('/login');
       } else {
-        console.error(response);
+        setRegistrationError(response.message);
       }
 
     } else {
@@ -170,6 +171,9 @@ export default function Register() {
             )}
           </Form.Group>
           <Button className="auth-btn" type="submit">Register</Button>
+          {registrationError && (
+            <Form.Text className="text-danger">{registrationError}</Form.Text>
+          )}
         </Form>
         <Button className="link-btn" onClick={handleLogin}>
           Already have an account? Login here.

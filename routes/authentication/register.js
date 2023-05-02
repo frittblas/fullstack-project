@@ -104,7 +104,7 @@ async function register(res, user) {
 
 
   if (validationError) {
-    return validationError;
+    return { message: validationError };
   }
 
   // encrypt password

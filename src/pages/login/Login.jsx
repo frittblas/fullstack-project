@@ -7,21 +7,25 @@ import { loginUser } from '../../services/api'
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = await loginUser(username, password)
-    // delete user.password;
+    const response = await loginUser(username, password)
+    delete response.password;
+    setLoginError(response.message);
 
-    if (user) {
-      navigate('/users', { state: { user } })
+    if (response.message) {
+      if (response.message.includes('username')) {
+        setUsername('');
+      }
+      if (response.message.includes('password')) {
+        setPassword('');
+      }
+    } else {
+      navigate('/users');
     }
-    console.log(user)
-
-
-    setUsername('');
-    setPassword('');
   };
 
   const handleRegister = () => {
@@ -47,11 +51,15 @@ export default function Login() {
             <Form.Control
               type="password"
               placeholder="********"
+              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
           <Button className="auth-btn" type="submit">Log In</Button>
+          {loginError && (
+            <Form.Text className="text-danger">{loginError}</Form.Text>
+          )}
         </Form>
         <Button className="link-btn" onClick={handleRegister}>
           Don't have an account? Register here.

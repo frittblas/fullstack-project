@@ -3,11 +3,18 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import { Link, useLocation } from "react-router-dom";
-import {default as ReactNavbar} from 'react-bootstrap/Navbar';
+import { default as ReactNavbar } from 'react-bootstrap/Navbar';
 import './Navbar.css';
 
 import PostToggler from "../post-toggler/PostToggler";
 import ProgramsDropdown from "../programs-dropdown/ProgramsDropdown";
+import { logoutUser } from '../../services/api';
+
+
+const handleLogout = async (event) => {
+  event.preventDefault();
+  console.log("logoutUser?")
+}
 
 export default function Navbar() {
   return (
@@ -24,16 +31,16 @@ export default function Navbar() {
         </ReactNavbar.Brand>
         {
           useLocation().pathname === '/users' ?
-          <PostToggler />:
-          ""
+            <PostToggler /> :
+            ""
         }
         {
           useLocation().pathname === '/admin' ?
-          <ProgramsDropdown />:
-          ""
+            <ProgramsDropdown /> :
+            ""
         }
         <div className="d-flex logout-wrap">
-          <Nav.Link as={Link} to="/about">Logout</Nav.Link>
+          <Nav.Link as={Link} to="/login" onClick={handleLogout}>Logout</Nav.Link>
         </div>
       </Container>
     </ReactNavbar>

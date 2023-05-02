@@ -38,9 +38,11 @@ router.get('/program', authenticateJWT(allowedPrograms), async (req, res) => {
 
 // Get one post, remove the image from response.
 router.get('/:id', authenticateJWT(allowedPrograms), async (req, res) => {
-  try {
-    const post = await getPostById(req.params.id);
 
+  try {
+   
+    const post = await getPostById(req.params.id);
+    
     if (!post) res.status(404).send('Post not found');
 
     res.send(post);

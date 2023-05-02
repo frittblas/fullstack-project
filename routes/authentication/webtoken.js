@@ -44,9 +44,8 @@ function authenticateJWT(allowedPrograms) {
         return false; // no token, return false
       }
       const decodedToken = await jwt.verify(token, process.env.JWT_TOKEN);
-      console.log("decodedTOken:" , decodedToken)
       const { username, program } = decodedToken.user;
-      console.log(username, program)
+
       if (!allowedPrograms.includes(program)) {
         console.log('Program not allowed!');
         res.status(401).send("You don't have access to this!");

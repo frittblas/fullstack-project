@@ -44,10 +44,10 @@ router.get('/users/:name', authenticateJWT(['admin']), async (req, res) => {
 
 
 //Delete specific user from db. 
-router.delete('/users/:name', authenticateJWT(['admin']), async (req, res) => {
-  const name = req.params.name;
+router.delete('/users/:user_id', authenticateJWT(['admin']), async (req, res) => {
+  const user_id = req.params.user_id;
   try {
-    const user = await users.findOneAndDelete({ username: name });
+    const user = await users.findOneAndDelete({ _id: user_id });
     if (!user) {
       return res.status(404).send('User not found');
     }

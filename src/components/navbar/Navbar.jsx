@@ -20,7 +20,7 @@ export default function Navbar() {
   return (
     <ReactNavbar expand="lg" sticky="top">
       <Container fluid>
-        <ReactNavbar.Brand href="#home">
+        <ReactNavbar.Brand as={Link} to="/users" >
           <img
             alt=""
             src="../../../public/hkr-logo.svg"

@@ -21,7 +21,7 @@ export default function CommentForm({onCommentHandler}) {
           variant="success" 
           type="submit" 
           className="ms-3" 
-          onClick={async () => onCommentHandler(await onComment(postId, postCommentMsg.value))}>
+          onClick={async () => onCommentHandler(await onComment(postId, postCommentMsg))}>
           Comment
         </Button>
       </Form.Group>
@@ -29,9 +29,12 @@ export default function CommentForm({onCommentHandler}) {
   );
 }
 
-async function onComment(postId, comment) {
-  const resp = await setComment(postId, {message: comment});
+async function onComment(postId, postCommentMsgObj) {
+  const resp = await setComment(postId, {message: postCommentMsgObj.value});
   
-  if (resp != null) return resp.replies;
+  if (resp != null) {
+    postCommentMsgObj.value = "";
+    return resp.replies;
+  }
   else {console.error("Failed to submit a comment.")}
 }

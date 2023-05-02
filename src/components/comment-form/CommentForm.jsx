@@ -9,7 +9,7 @@ export default function CommentForm({onCommentHandler}) {
   const { postId } = useParams();
 
   return (
-    <div id="post-form" method="POST">
+    <div id="post-form">
       <Form.Group className="mb-3">
         <Form.Control id="postCommentMsg" as="textarea" placeholder="I like that idea ..." />
       </Form.Group>

@@ -6,6 +6,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import './Comment.css';
 
 export default function Comment({comment}) {
+  console.log(comment);
   return (
     <ListGroup.Item className="p-3">
       <OverlayTrigger
@@ -16,7 +17,7 @@ export default function Comment({comment}) {
           </Tooltip>
         }
       >
-        <Image roundedCircle="true" src={`/api/users/${postData.author._id}/image`} height="50" className="float-start me-4" />
+        <Image roundedCircle="true" src={`/api/users/${comment.author._id}/image`} height="50" className="float-start me-4" />
       </OverlayTrigger>
       <p>{comment.reply}</p>
     </ListGroup.Item>

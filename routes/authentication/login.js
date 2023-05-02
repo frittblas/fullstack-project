@@ -4,21 +4,21 @@ import { signJWT } from '../authentication/webtoken.js';
 
 async function login(res, username, password) {
 
-    console.log("login function called!");
+  console.log("login function called!");
 
-    const user = await users.findOne({ username });
-    if (!user) {
-        return 'Invalid username';
-    }
+  const user = await users.findOne({ username });
+  if (!user) {
+    return { message: 'Invalid username' };
+  }
 
-    const cmpSuccess = await comparePassword(password, user.password);
-    if (!cmpSuccess) {
-        return 'Invalid password';
-    }
+  const cmpSuccess = await comparePassword(password, user.password);
+  if (!cmpSuccess) {
+    return { message: 'Invalid password' };
+  }
 
-    await signJWT(res, user.username, user.programTitle);
+  await signJWT(res, user.username, user.programTitle);
 
-    return user;
+  return user;
 
 }
 

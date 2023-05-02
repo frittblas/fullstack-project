@@ -48,7 +48,7 @@ router.post('/logout', (req, res) => {
 
   try {
     logout(res);
-    res.status(200).send("Logged out!");
+    res.status(200).send({ message: "Logged out!" });
   } catch (err) {
     res.status(500).send(err.message);
   }

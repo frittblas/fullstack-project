@@ -2,7 +2,7 @@ import Post from '../../models/postModel.js';
 import User from '../../models/userModel.js';
 import { ObjectId } from 'mongodb';
 
-async function getPosts(all, token) {
+/*async function getPosts(all, token) {
   let program;
   if (parseInt(all) === 1) {
      program = "All";
@@ -36,14 +36,7 @@ async function getPosts(all, token) {
         title: 1,
         message: 1,
         replies: 1,
-        author: {
-          _id: '$User._id',
-          username: '$User.username',
-          firstname: '$User.firstname',
-          lastname: '$User.lastname',
-          program: '$User.programTitle'
-          },
-        date: 1,
+        author: 1,
       }
     },
     {
@@ -52,8 +45,25 @@ async function getPosts(all, token) {
   ]);
 
   return posts;
+}*/
+
+async function getPosts(all, token) {
+  let program;
+  if (parseInt(all) === 1) {
+     program = "All";
+  } else if (parseInt(all) === 0) {
+    program = token.program;
+  } else {
+    return;
+  }
+
+
+  const posts = await Post.find({ program: program }, { image: 0 }).sort({ date: -1 });
+
+  return posts;
 }
 
+/*
 async function getPostById(id) {
   const objId = new ObjectId(id);
 
@@ -94,6 +104,16 @@ async function getPostById(id) {
   ]);
 
   if (post.length === 0) return;
+
+  return post[0];
+}
+*/
+
+async function getPostById(id, token) {
+  const objId = new ObjectId(id);
+
+  const post = await Post.find({ _id: objId }, { image: 0 }).sort({ date: -1 });
+
 
   return post[0];
 }

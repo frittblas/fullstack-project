@@ -4,7 +4,6 @@ import PostForm from '../../components/post-form/PostForm';
 import Post from '../../components/post/Post';
 import { getPosts } from '../../services/api';
 import { useStates } from 'react-easier';
-import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import './UsersPage.css';
 
 export default function UsersPage() {
@@ -12,8 +11,8 @@ export default function UsersPage() {
   const [getPostList, setPostList] = useState([])
 
   useEffect(() => {
-    (async () => {setPostList(await getPosts(state.program === MAIN_POST_THREAD_NAME))})();
-  }, [state.program]);
+    (async () => setPostList(await getPosts(state.programMain)))();
+  }, [state.programMain]);
 
   return (
     <div>

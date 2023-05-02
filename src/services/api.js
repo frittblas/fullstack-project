@@ -118,13 +118,17 @@ async function loginUser(username, password) {
   }
 }
 
-
 async function logoutUser() {
   try {
-    const resp = await fetch('/api/users/logout');
-    return resp.ok ? await resp.json() : null;
+    const resp = await fetch('/api/users/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    return resp.status == 200 ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
+    return e.message;
   }
 }
 

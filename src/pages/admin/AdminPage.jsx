@@ -7,12 +7,13 @@ import Spinner from 'react-bootstrap/Spinner';
 import UserListItem from '../../components/user-list-item/UserListItem';
 import { getUsers, getPrograms } from '../../services/api';
 import { useStates } from 'react-easier';
+import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import './AdminPage.css';
 
 export default function AdminPage() {
   const state = useStates('main');
   const [isInitLoad, setInitLoad] = useState(true);
-  const [getCurrentProg, setCurrentProg] = useState('All');
+  const [getCurrentProg, setCurrentProg] = useState(MAIN_POST_THREAD_NAME);
   const [getMainUserList, setMainUserList] = useState([]);
   const [getUsersList, setUsersList] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -44,7 +45,7 @@ export default function AdminPage() {
   if (state.program !== getCurrentProg) {
     resetSearchField();
     setCurrentProg(state.program);
-    if (state.program === 'All') setUsersList(getMainUserList);
+    if (state.program === MAIN_POST_THREAD_NAME) setUsersList(getMainUserList);
     else setUsersList(getMainUserList.filter(u => u.programTitle === state.program));
   }
 

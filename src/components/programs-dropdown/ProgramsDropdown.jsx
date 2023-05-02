@@ -8,7 +8,7 @@ import './ProgramsDropdown.css';
 export default function ProgramsDropdown() {
   const state = useStates('main');
   return (
-      <Form.Group className="programs-select" onChange={event => {state.program = event.target.value;}}>
+      <Form.Group className="programs-select" onChange={event => {state.adminProgramSelected = event.target.value;}}>
         <span>Programs:</span>
         <Form.Select>
           <option key="all" value="All">All</option>

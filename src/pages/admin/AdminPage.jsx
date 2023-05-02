@@ -57,11 +57,11 @@ export default function AdminPage() {
   };
   
   
-  if (state.program !== getCurrentProg) {
+  if (state.adminProgramSelected !== getCurrentProg) {
     resetSearchField();
-    setCurrentProg(state.program);
-    if (state.program === MAIN_POST_THREAD_NAME) setUsersList(getMainUserList);
-    else setUsersList(getMainUserList.filter(u => u.programTitle === state.program));
+    setCurrentProg(state.adminProgramSelected);
+    if (state.adminProgramSelected === MAIN_POST_THREAD_NAME) setUsersList(getMainUserList);
+    else setUsersList(getMainUserList.filter(u => u.programTitle === state.adminProgramSelected));
   }
 
   return (

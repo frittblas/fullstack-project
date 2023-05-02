@@ -12,8 +12,8 @@ import { logoutUser } from '../../services/api';
 
 
 const handleLogout = async (event) => {
-  event.preventDefault();
-  console.log("logoutUser?")
+  // Have tried logoutUser, but token isnt deleted.
+  logoutUser();
 }
 
 export default function Navbar() {

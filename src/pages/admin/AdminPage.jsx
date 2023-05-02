@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import UserListItem from '../../components/user-list-item/UserListItem';
 import { getUsers, getPrograms } from '../../services/api';
+import { deleteUser } from '../../services/api';
 import { useStates } from 'react-easier';
 import './AdminPage.css';
 
@@ -18,8 +19,10 @@ export default function AdminPage() {
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   useEffect(() => {
+    console.log("useEffect executed");
     (async () => {
       const users = await getUsers();
+       console.log(users);
       setMainUserList(users);
       setUsersList(users);
       setInitLoad(false);
@@ -35,11 +38,23 @@ export default function AdminPage() {
     }
   };
 
-  const handleDeleteUsers = () => {
-    const updatedUserList = getMainUserList.filter(u => !selectedUsers.includes(u._id));
-    setUsersList(updatedUserList);
-    setSelectedUsers([]);
+  const handleDeleteUsers = async () => {
+    console.log("clicked on delete button")
+    try {
+      console.log("selectedUsers:", selectedUsers);
+      const promises = selectedUsers.map((username) => deleteUser(username));
+      console.log("promises:", promises);
+      await Promise.all(promises);
+      const updatedUserList = await getUsers();
+      console.log("updatedUserList:", updatedUserList);
+      setMainUserList(updatedUserList);
+      setUsersList(updatedUserList);
+      setSelectedUsers([]);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
+  
   
   if (state.program !== getCurrentProg) {
     resetSearchField();

@@ -6,19 +6,29 @@ async function getUsers() {
     console.error(e.message);
   }
 }
-async function deleteUser(username) {
+
+async function getAllUsers() {
   try {
-    const resp = await fetch('/api/admin/users/' + username, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    const resp = await fetch('/api/admin/users');
     return resp.ok ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
   }
 }
+
+async function deleteUser(username) {
+  console.log(`button clicked ${username}`);
+  try {
+    const resp = await fetch(`/api/admin/users/${username}`, {
+      method: 'DELETE'
+    });
+    console.log(`Server responded with ${JSON.stringify(resp)}`);
+    return resp.ok ? await resp.json() : null;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
 
 
 async function getProgramPosts() {
@@ -58,6 +68,7 @@ async function setPost(data, all) {
     console.error(e.message);
   }
 }
+
 
 async function setComment(postId, data) {
   try {
@@ -116,4 +127,4 @@ async function loginUser(username, password) {
   }
 }
 
-export { getUsers, getPosts, getPrograms, getAboutData, getProgramPosts, setPost, setComment, createUser, loginUser, deleteUser }
+export { getUsers, getPosts, getPrograms, getAboutData, getProgramPosts, setPost, setComment, createUser, loginUser, deleteUser,getAllUsers }

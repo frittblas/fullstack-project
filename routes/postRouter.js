@@ -81,7 +81,11 @@ router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const newPost = await post.findById(req.params.id);
     if (!newPost) {
-      return res.status(404).json("404: Post not found!");
+      return res.status(404).json("404: Post not found");
+    }
+
+    if (newPost.image === undefined) {
+      return res.status(404).json("404: Image not found")
     }
 
     const imageObj = await JSON.parse(newPost.image);

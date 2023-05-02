@@ -20,7 +20,7 @@ export default function App() {
     program: MAIN_POST_THREAD_NAME
   });
   const location = useLocation();
-  const hideNavbar = location.pathname === '/login' || location.pathname === '/register';
+  const hideNavbar = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/about';
 
   return (<>
     <main>

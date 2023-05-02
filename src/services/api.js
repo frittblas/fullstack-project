@@ -109,7 +109,7 @@ async function createUser(data) {
     return resp.status == 200 ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
-    return [false, e.message];
+    return e.message;
   }
 }
 
@@ -124,6 +124,21 @@ async function loginUser(username, password) {
     return resp.status == 200 ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
+    return e.message;
+  }
+}
+
+async function logoutUser() {
+  try {
+    const resp = await fetch('/api/users/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    return resp.status == 200 ? await resp.json() : null;
+  } catch (e) {
+    console.error(e.message);
+    return e.message;
   }
 }
 

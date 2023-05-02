@@ -52,10 +52,11 @@ async function getPosts(all, token) {
   if (parseInt(all) === 1) {
      program = "All";
   } else if (parseInt(all) === 0) {
-    program = token.program;
+    program = token.user.program;
   } else {
     return;
   }
+
 
 
   const posts = await Post.find({ program: program }, { image: 0 }).sort({ date: -1 });

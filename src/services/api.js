@@ -142,4 +142,4 @@ async function logoutUser() {
   }
 }
 
-export { getUsers, getPosts, getPrograms, getAboutData, getProgramPosts, setPost, setComment, createUser, loginUser, deleteUser,getAllUsers }
+export { getUsers, getPosts, getPrograms, getAboutData, getProgramPosts, setPost, setComment, createUser, loginUser, deleteUser,getAllUsers ,logoutUser}

@@ -12,7 +12,7 @@ export default function PostFull({postData}) {
         <Image roundedCircle="true" src={`/api/users/${postData.author._id}/image`} height="50" className="float-start me-3"/>
         <div>
           <span>by {`${postData.author.firstname} ${postData.author.lastname}`}</span>
-          <p className="mb-2 text-muted">[{postData.author.programTitle}]</p>
+          <p className="mb-2 text-muted">[{postData.author.program}]</p>
         </div>
       </div>
       <p>{postData.message}</p>

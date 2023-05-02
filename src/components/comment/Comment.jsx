@@ -6,14 +6,13 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import './Comment.css';
 
 export default function Comment({comment}) {
-  console.log(comment);
   return (
     <ListGroup.Item className="p-3">
       <OverlayTrigger
         placement="top"
         overlay={
           <Tooltip>
-            <p>{comment.author}</p>
+            <p>{`${comment.author.firstname} ${comment.author.lastname}`}</p>
           </Tooltip>
         }
       >

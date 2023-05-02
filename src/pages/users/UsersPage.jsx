@@ -12,7 +12,7 @@ export default function UsersPage() {
   const [getPostList, setPostList] = useState([])
 
   useEffect(() => {
-    (async () => {const a = await getPosts(state.program === MAIN_POST_THREAD_NAME); console.log(a); setPostList(a)})();
+    (async () => {setPostList(await getPosts(state.program === MAIN_POST_THREAD_NAME))})();
   }, [state.program]);
 
   return (

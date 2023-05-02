@@ -27,7 +27,7 @@ export default function PostsPage() {
         <div className="spinner-wrap"><Spinner animation="border" /></div> :
         <div>
           <PostFull postData={getPostData} />
-          <CommentForm onCommentHandler={replies => setPostData({...getPostData, replies: replies.concat(getPostData.replies)})}/>
+          <CommentForm onCommentHandler={replies => setPostData({...getPostData, replies: replies})}/>
           <ListGroup className="mt-5">
             {getPostData.replies.map(c => <Comment key={dateToUTStamp(c.date)} comment={c} />)}
           </ListGroup>

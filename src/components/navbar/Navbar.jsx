@@ -8,15 +8,11 @@ import './Navbar.css';
 
 import PostToggler from "../post-toggler/PostToggler";
 import ProgramsDropdown from "../programs-dropdown/ProgramsDropdown";
-import { logoutUser } from '../../services/api';
+import { useApi } from '../../hooks/useApi';
 
-
-const handleLogout = async (event) => {
-  // Have tried logoutUser, but token isnt deleted.
-  logoutUser();
-}
 
 export default function Navbar() {
+  const api = useApi();
   return (
     <ReactNavbar expand="lg" sticky="top">
       <Container fluid>
@@ -40,7 +36,7 @@ export default function Navbar() {
             ""
         }
         <div className="d-flex logout-wrap">
-          <Nav.Link as={Link} to="/login" onClick={handleLogout}>Logout</Nav.Link>
+          <Nav.Link as={Link} to="/login" onClick={() => api.logoutUser()}>Logout</Nav.Link>
         </div>
       </Container>
     </ReactNavbar>

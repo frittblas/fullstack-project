@@ -3,9 +3,10 @@ import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import APIHelper from '../../utilities/api-helper';
-import { createUser, getPrograms } from '../../services/api';
+import { useApi } from '../../hooks/useApi';
 
 export default function Register() {
+  const api = useApi();
   const [username, setUsername] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
@@ -23,7 +24,7 @@ export default function Register() {
   useEffect(() => {
     async function fetchPrograms() {
       try {
-        const data = await getPrograms('/api/programs');
+        const data = await api.getPrograms('/api/programs');
         setProgramsList(data);
       } catch (error) {
         console.error(error);
@@ -45,7 +46,7 @@ export default function Register() {
         programTitle,
         profileImg
       }
-      const response = await createUser(user)
+      const response = await api.createUser(user)
 
       if (response.message == null) {
         navigate('/login');

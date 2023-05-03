@@ -33,7 +33,6 @@ async function createNewUser(data) {
   }
 }
 
-
 async function deleteUser(username) {
   console.log(`button clicked ${username}`);
   try {

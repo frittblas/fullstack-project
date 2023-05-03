@@ -1,20 +1,20 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import APIHelper from '../../utilities/api-helper';
-import { setPost } from '../../services/api';
 import { useStates } from 'react-easier';
 import './PostForm.css';
+import { useApi } from '../../hooks/useApi';
 
 let onPostPostedHook;
 
 export default function PostForm({onPostPosted}) {
+  const api = useApi();
   const state = useStates("main");
   onPostPostedHook = onPostPosted;
   
   return (
-    <Form id="post-form" method="POST" onSubmit={e => onPostSubmit(e, state.program)}>
+    <Form id="post-form" method="POST" onSubmit={e => onPostSubmit(e, api, state.programMain)}>
       <Form.Group className="mb-3">
         <Form.Control type="input" placeholder="The Big Title" />
       </Form.Group>
@@ -32,7 +32,7 @@ export default function PostForm({onPostPosted}) {
   );
 }
 
-async function onPostSubmit(event, program) {
+async function onPostSubmit(event, api, programMain) {
   event.preventDefault();
   const file = event.target[2].files[0];
   const postData = {};
@@ -44,7 +44,7 @@ async function onPostSubmit(event, program) {
     postData.image = await APIHelper.toBase64(file);
   }
 
-  const respData = await setPost(postData, program === MAIN_POST_THREAD_NAME);
+  const respData = await api.setPost(postData, programMain);
 
   if (respData != null) {
     onPostPostedHook(respData)

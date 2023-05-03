@@ -11,12 +11,11 @@ import { createUser } from '../../services/api';
 import { useStates } from 'react-easier';
 import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import './AdminPage.css';
+import { useApi } from '../../hooks/useApi';
 import Modal from 'react-bootstrap/Modal';
 
-
-
-
 export default function AdminPage() {
+  const api = useApi();
   const state = useStates('main');
   const [isInitLoad, setInitLoad] = useState(true);
   const [getCurrentProg, setCurrentProg] = useState(MAIN_POST_THREAD_NAME);
@@ -39,7 +38,7 @@ export default function AdminPage() {
   useEffect(() => {
     console.log("useEffect executed");
     (async () => {
-      const users = await getUsers();
+      const users = await api.getUsers();
        console.log(users);
       setMainUserList(users);
       setUsersList(users);
@@ -87,7 +86,7 @@ export default function AdminPage() {
     console.log("clicked on delete button")
     try {
       console.log("selectedUsers:", selectedUsers);
-      const promises = selectedUsers.map((username) => deleteUser(username));
+      const promises = selectedUsers.map((username) => api.deleteUser(username));
       console.log("promises:", promises);
       await Promise.all(promises);
       const updatedUserList = await getUsers();

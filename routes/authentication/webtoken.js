@@ -53,16 +53,17 @@ function authenticateJWT(allowedPrograms) {
       }
 
       req.user = { username, program };
-      console.log(username,program);
+      /*
+            // restrict the students so they only can check their own page.
+            if (program !== 'admin') {
+              if (req.path === '/admin' && req.user.username !== 'admin') {
+                console.log('Only admin have access to admin!');
+                return false; // only admin can access /admin
+              }
+            }
+            console.log('next reached in authJWT!');
+            */
 
-      // restrict the students so they only can check their own page.
-      if (program !== 'admin') {
-        if (req.path === '/admin' && req.user.username !== 'admin') {
-          console.log('Only admin have access to admin!');
-          return false; // only admin can access /admin
-        }
-      }
-      console.log('next reached in authJWT!');
       next();
     } catch (error) {
       console.log('Error in authenticateJWT:', error.message);

@@ -1,0 +1,14 @@
+.form-label {
+  color: black !important;
+  margin-top: 10px;
+}
+
+.title {
+  font-weight: 00;
+  font-size: 25px;
+  padding: 0px;
+}
+
+.modal-header {
+  padding: 10px;
+}

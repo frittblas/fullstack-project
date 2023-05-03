@@ -6,46 +6,35 @@ export const useApi = () => {
 	return {
 		async getUsers() {return await this._get('/api/users')},
 
-		// async getAllUsers() {
-		//   try {
-		//     const resp = await fetch('/api/admin/users');
-		//     if (resp.status == 401) navigate('/login');
-		//     return resp.ok ? await resp.json() : null;
-		//   } catch (e) {
-		//     console.error(e.message);
-		//   }
-		// },
-
-		async createNewUser(data) {
-		  try {
-		    const resp = await fetch('/api/admin/users', {
-		      method: 'POST',
-		      headers: {
-		        'Content-Type': 'application/json'
-		      },
-		      body: JSON.stringify(data)
-		    });
-
-		    if (resp.status == 401) navigate('/login');
-
-		    return resp.status == 200 ? await resp.json() : null;
-		  } catch (e) {
-		    console.error(e);
-		    return e.message;
-		  }
+		async getAllUsers() {
+			console.error("delete me");
+		  // try {
+		  //   const resp = await fetch('/api/admin/users');
+		  //   if (resp.status == 401) navigate('/login');
+		  //   return resp.ok ? await resp.json() : null;
+		  // } catch (e) {
+		  //   console.error(e.message);
+		  // }
 		},
 
-		async deleteUser(username) {
-		  console.log(`button clicked ${username}`);
-		  try {
-		    const resp = await fetch(`/api/admin/users/${username}`, {
-		      method: 'DELETE'
-		    });
+		async createNewUser(data) {
+			console.error("delete me");
+		  // try {
+		  //   const resp = await fetch('/api/admin/users', {
+		  //     method: 'POST',
+		  //     headers: {
+		  //       'Content-Type': 'application/json'
+		  //     },
+		  //     body: JSON.stringify(data)
+		  //   });
 
-		    return resp.ok ? await resp.json() : null;
-		  } catch (e) {
-		    console.error(e.message);
-		  }
+		  //   if (resp.status == 401) navigate('/login');
+
+		  //   return resp.status == 200 ? await resp.json() : null;
+		  // } catch (e) {
+		  //   console.error(e);
+		  //   return e.message;
+		  // }
 		},
 
 		async getPost(id) {return await this._get('/api/posts/' + id)},
@@ -72,27 +61,7 @@ export const useApi = () => {
 		//   }
 		// }
 
-
-
 		async setComment(postId, data) {return this._put(`/api/posts/${postId}/reply`, data)},
-
-		// async setComment(postId, data) {
-		//   try {
-		//     const resp = await fetch(`/api/posts/${postId}/reply`, {
-		//       method: 'PUT',
-		//       headers: {
-		//         'Content-Type': 'application/json'
-		//       },
-		//       body: JSON.stringify(data)
-		//     });
-
-		//     if (resp.status == 401) navigate('/login');
-
-		//     return resp.status == 200 ? await resp.json() : null;
-		//   } catch (e) {
-		//     console.error(e.message);
-		//   }
-		// },
 
 		// async function createUser(data) {
 		//   try {
@@ -140,7 +109,8 @@ export const useApi = () => {
 		//   }
 		// }
 
-		// generic getter
+		async deleteUser(username) {return await this._delete(`/api/admin/users/${username}`)},
+
 		async _get(url) {
 		  try {
 		    const resp = await fetch(url);
@@ -151,7 +121,6 @@ export const useApi = () => {
 		  }
 		},
 
-		// generic post
 		async _post(url, bodyObj) {
 		  try {
 		    const resp = await fetch(url, {
@@ -169,7 +138,6 @@ export const useApi = () => {
 		  }
 		},
 
-
 		async _put(url, bodyObj) {
 		  try {
 		    const resp = await fetch(url, {
@@ -185,6 +153,18 @@ export const useApi = () => {
 		    console.error(e.message);
 		    return e.message;
 		  }
-		}
+		},
+
+		async _delete(url) {
+		  try {
+		    const resp = await fetch(url, {
+		      method: 'DELETE'
+		    });
+
+		    return resp.ok ? await resp.json() : null;
+		  } catch (e) {
+		    console.error(e.message);
+		  }
+		},
 	}
 }

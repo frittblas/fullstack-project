@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import { loginUser } from '../../services/api'
+import { useApi } from '../../hooks/useApi';
 
 export default function Login() {
+  const api = useApi();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(null);
@@ -12,7 +13,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await loginUser(username, password)
+    const response = await api.loginUser(username, password)
     delete response.password;
     setLoginError(response.message);
 

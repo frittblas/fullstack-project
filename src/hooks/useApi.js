@@ -7,7 +7,7 @@ export const useApi = () => {
 		async getUsers() {return await this._get('/api/users')},
 
 		async getAllUsers() {
-			console.error("delete me");
+			console.error("delete me and use getUsers()");
 		  // try {
 		  //   const resp = await fetch('/api/admin/users');
 		  //   if (resp.status == 401) navigate('/login');
@@ -18,7 +18,7 @@ export const useApi = () => {
 		},
 
 		async createNewUser(data) {
-			console.error("delete me");
+			console.error("delete me and use createUser()");
 		  // try {
 		  //   const resp = await fetch('/api/admin/users', {
 		  //     method: 'POST',
@@ -45,69 +45,15 @@ export const useApi = () => {
 
 		async getAboutData() {return await this._get('/api/about')},
 
-		// async function setPost(data, all) {
-		//   try {
-		//     const resp = await fetch('/api/posts?all=' + Number(all), {
-		//       method: 'POST',
-		//       headers: {
-		//         'Content-Type': 'application/json'
-		//       },
-		//       body: JSON.stringify(data)
-		//     });
-
-		//     return resp.status == 201 ? await resp.json() : null;
-		//   } catch (e) {
-		//     console.error(e.message);
-		//   }
-		// }
+		async setPost(data, all) {return await this._post('/api/posts?all=' + Number(all), data)},
 
 		async setComment(postId, data) {return this._put(`/api/posts/${postId}/reply`, data)},
 
-		// async function createUser(data) {
-		//   try {
-		//     const resp = await fetch(`/api/users/register`, {
-		//       method: 'POST',
-		//       headers: {
-		//         'Content-Type': 'application/json'
-		//       },
-		//       body: JSON.stringify(data)
-		//     });
-
-		//     return resp.status == 200 ? await resp.json() : null;
-		//   } catch (e) {
-		//     console.error(e.message);
-		//     return e.message;
-		//   }
-		// }
-
-		// async function loginUser(username, password) {
-		//   try {
-		//     const resp = await fetch('/api/users/login', {
-		//       method: 'POST',
-		//       headers: { 'Content-Type': 'application/json' },
-		//       body: JSON.stringify({ username, password })
-		//     });
-
-		//     return resp.status == 200 ? await resp.json() : null;
-		//   } catch (e) {
-		//     console.error(e.message);
-		//     return e.message;
-		//   }
-		// }
-
-		// async function logoutUser() {
-		//   try {
-		//     const resp = await fetch('/api/users/logout', {
-		//       method: 'POST',
-		//       headers: { 'Content-Type': 'application/json' }
-		//     });
-
-		//     return resp.status == 200 ? await resp.json() : null;
-		//   } catch (e) {
-		//     console.error(e.message);
-		//     return e.message;
-		//   }
-		// }
+		async createUser(data) {return await this._post('/api/users/register', data)},
+		
+		async loginUser(username, password) {return await this._post('/api/users/login', {username, password})},
+		
+		async logoutUser() {return await this._post('/api/users/logout', {})},
 
 		async deleteUser(username) {return await this._delete(`/api/admin/users/${username}`)},
 
@@ -131,7 +77,7 @@ export const useApi = () => {
 
 		    if (resp.status == 401) navigate('/login');
 
-		    return resp.status == 200 ? await resp.json() : null;
+		    return (resp.status == 200 || resp.status == 201) ? await resp.json() : null;
 		  } catch (e) {
 		    console.error(e.message);
 		    return e.message;
@@ -148,7 +94,7 @@ export const useApi = () => {
 
 		    if (resp.status == 401) navigate('/login');
 
-		    return resp.status == 200 ? await resp.json() : null;
+		    return (resp.status == 200 || resp.status == 201) ? await resp.json() : null;
 		  } catch (e) {
 		    console.error(e.message);
 		    return e.message;

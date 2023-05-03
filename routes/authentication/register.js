@@ -2,7 +2,7 @@ import express from 'express';
 import User from '../../models/userModel.js';
 import Program from '../../models/programModel.js';
 import { encryptPassword } from '../authentication/encryption.js';
-import { signJWT } from '../authentication/webtoken.js';
+//import { signJWT } from '../authentication/webtoken.js';
 
 const router = express.Router();
 
@@ -114,7 +114,7 @@ async function register(res, user) {
   const newUser = await createNewUser(user);
 
   // create token
-  await signJWT(res, user.username, user.programTitle);
+  //await signJWT(res, user.username, user.programTitle);
 
   return newUser;
 

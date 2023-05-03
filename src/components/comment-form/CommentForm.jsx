@@ -1,12 +1,13 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { setComment } from '../../services/api';
 import { useParams } from 'react-router-dom';
 import './CommentForm.css';
+import { useApi } from '../../hooks/useApi';
 
 export default function CommentForm({onCommentHandler}) {
   const { postId } = useParams();
+  const api = useApi();
 
   return (
     <div id="post-form">
@@ -21,7 +22,7 @@ export default function CommentForm({onCommentHandler}) {
           variant="success" 
           type="submit" 
           className="ms-3" 
-          onClick={async () => onCommentHandler(await onComment(postId, postCommentMsg))}>
+          onClick={async () => onCommentHandler(await onComment(api, postId, postCommentMsg))}>
           Comment
         </Button>
       </Form.Group>
@@ -29,8 +30,8 @@ export default function CommentForm({onCommentHandler}) {
   );
 }
 
-async function onComment(postId, postCommentMsgObj) {
-  const resp = await setComment(postId, {message: postCommentMsgObj.value});
+async function onComment(api, postId, postCommentMsgObj) {
+  const resp = await api.setComment(postId, {message: postCommentMsgObj.value});
   
   if (resp != null) {
     postCommentMsgObj.value = "";

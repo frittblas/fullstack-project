@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import UserListItem from '../../components/user-list-item/UserListItem';
 import { getUsers, getPrograms } from '../../services/api';
 import { deleteUser } from '../../services/api';
-import { createNewUser } from '../../services/api';
+import { createUser } from '../../services/api';
 import { useStates } from 'react-easier';
 import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import './AdminPage.css';
@@ -63,7 +63,7 @@ export default function AdminPage() {
     try {
       // add code to submit the form data to the server
       setShowModal(false);
-      await createNewUser(formData); // change to createNewUser
+      await createUser(formData); // change to createNewUser
       const updatedUserList = await getUsers();
       setMainUserList(updatedUserList);
       setUsersList(updatedUserList);

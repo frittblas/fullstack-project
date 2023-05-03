@@ -1,38 +1,11 @@
 async function getUsers() {
   try {
-    const resp = await fetch('/api/users');
+    const resp = await fetch('/api/users', { credentials: 'include' });
     return resp.ok ? await resp.json() : null;
   } catch (e) {
     console.error(e.message);
   }
 }
-
-async function getAllUsers() {
-  try {
-    const resp = await fetch('/api/admin/users');
-    return resp.ok ? await resp.json() : null;
-  } catch (e) {
-    console.error(e.message);
-  }
-}
-
-async function createNewUser(data) {
-  try {
-    const resp = await fetch('/api/admin/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-
-    return resp.status == 200 ? await resp.json() : null;
-  } catch (e) {
-    console.error(e);
-    return e.message;
-  }
-}
-
 
 async function deleteUser(username) {
   console.log(`button clicked ${username}`);
@@ -158,4 +131,4 @@ async function logoutUser() {
   }
 }
 
-export { getUsers, getPost, getPosts, getPrograms, getAboutData, setPost, setComment, createUser, loginUser, deleteUser, getAllUsers ,logoutUser, createNewUser}
+export { getUsers, getPost, getPosts, getPrograms, getAboutData, setPost, setComment, createUser, loginUser, deleteUser ,logoutUser}

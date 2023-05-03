@@ -4,6 +4,11 @@
 }
 
 .title {
-  font-weight: 500;
+  font-weight: 00;
   font-size: 25px;
+  padding: 0px;
+}
+
+.modal-header {
+  padding: 10px;
 }

@@ -34,6 +34,7 @@ export default function Register() {
   }, []);
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     if (password === confirmPassword) {
       setPasswordMatch(true);
       const user = {

@@ -114,7 +114,7 @@ async function register(res, user) {
   const newUser = await createNewUser(user);
 
   // create token
-  await signJWT(res, user.username, user.programTitle);
+  //await signJWT(res, user.username, user.programTitle);
 
   return newUser;
 

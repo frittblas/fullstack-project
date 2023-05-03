@@ -77,18 +77,4 @@ router.put('/users/:name', authenticateJWT(['admin']), async (req, res) => {
   }
 });
 
-//Create new user in db. 
-router.post('/users',authenticateJWT(['admin']), async (req, res) => {
-  console.log(req);
-  try {
-    const newUser = new users(req.body);
-    await newUser.save();
-    res.send(newUser);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-
-
 export default router;

@@ -12,6 +12,7 @@ export default function PostToggler() {
       <Form.Check
         type="switch"
         id="post-toggler"
+        checked={!state.programMain}
         onClick={() => state.programMain = !state.programMain}
       />
       <span>IT</span>

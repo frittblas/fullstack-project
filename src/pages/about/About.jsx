@@ -1,15 +1,15 @@
-import { getAboutData } from '../../services/api';
 import { useState, useEffect } from 'react';
 import { Card, Col, Row, Image } from 'react-bootstrap';
+import { useApi } from '../../hooks/useApi';
 
 export default function About() {
-
+  const api = useApi();
   const [aboutData, setAboutData] = useState([]);
 
   useEffect(() => {
     async function fetchAboutData() {
       try {
-        const data = await getAboutData();
+        const data = await api.getAboutData();
         setAboutData(data);
       } catch (error) {
         console.error(error);

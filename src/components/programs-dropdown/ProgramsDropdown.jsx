@@ -3,11 +3,11 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useStates } from 'react-easier';
-import { getPrograms } from '../../services/api';
 import './ProgramsDropdown.css';
+import { useApi } from '../../hooks/useApi';
 
 export default function ProgramsDropdown() {
-
+  const api = useApi();
   const state = useStates('main');
   const [programsList, setProgramsList] = useState([]);
 
@@ -15,9 +15,8 @@ export default function ProgramsDropdown() {
 
     async function fetchProgramList() {
       try {
-        const result = await getPrograms();
+        const result = await api.getPrograms();
         setProgramsList(result);
-        console.log("program-list: ", programsList);
       } catch (error) {
         console.error(error);
       }

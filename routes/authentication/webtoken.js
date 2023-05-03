@@ -53,6 +53,7 @@ function authenticateJWT(allowedPrograms) {
       }
 
       req.user = { username, program };
+      console.log(username,program);
 
       // restrict the students so they only can check their own page.
       if (program !== 'admin') {

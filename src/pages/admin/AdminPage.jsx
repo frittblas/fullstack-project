@@ -60,7 +60,7 @@ export default function AdminPage() {
       // add code to submit the form data to the server
       setShowModal(false);
       await api.createUser(formData); // change to createNewUser
-      const updatedUserList = await api.getUsers();
+      const updatedUserList = await getUsers();
       setMainUserList(updatedUserList);
       setUsersList(updatedUserList);
       setFormData({

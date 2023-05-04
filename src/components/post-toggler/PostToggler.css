@@ -1,5 +1,6 @@
 .post-toggler-wrap {
 	display: flex;
+	margin-right: 10px;
 }
 
 .form-switch {

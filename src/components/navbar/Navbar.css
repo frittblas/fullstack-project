@@ -7,6 +7,16 @@ nav .form-switch input {
 	border-radius: 8px !important;
 }
 
+nav .navbar-link-group {
+	padding: 0 10px 0;
+	border-left: 1px solid white;
+}
+
+nav .navbar-link-group a {
+	color: white;
+	text-decoration: none;
+}
+
 .navbar-light a.navbar-brand {
 	color: white;
 	margin-right: 3%;

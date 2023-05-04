@@ -3,6 +3,7 @@ import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { useApi } from '../../hooks/useApi';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export default function Login() {
   const api = useApi();
@@ -10,11 +11,15 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(null);
   const navigate = useNavigate();
+  const [user, setUser] = useLocalStorage('user', null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await api.loginUser(username, password)
     delete response.password;
+    
+    setUser(response);
+
     setLoginError(response.message);
 
     if (response.message) {

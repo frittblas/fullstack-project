@@ -32,6 +32,7 @@ export const useApi = () => {
       try {
         const resp = await fetch(url);
         if (resp.status == 401) navigate('/login');
+        else if (resp.status == 403) navigate('/unauth');
         return resp.ok ? await resp.json() : null;
       } catch (e) {
         console.error(e.message);

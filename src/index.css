@@ -49,3 +49,22 @@ textarea, input {
   padding: 2px;
   background-color: #50aa00;
 }
+
+#content .accordion {
+  color: black;
+}
+
+#content .accordion .accordion-button:not(.collapsed) {
+  color: white;
+  background-color: #6dc71d;
+}
+
+#content .accordion .accordion-button:focus {
+  border-color: red;
+  box-shadow: none;
+}
+
+a:hover {
+  color: #f3f785 !important;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}

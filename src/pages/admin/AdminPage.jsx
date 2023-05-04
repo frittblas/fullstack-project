@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import SearchBar from '../../components/search-bar/SearchBar';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -32,10 +33,8 @@ export default function AdminPage() {
   });
 
   useEffect(() => {
-    console.log("useEffect executed");
     (async () => {
       const users = await api.getUsers();
-       console.log(users);
       setMainUserList(users);
       setUsersList(users);
       setInitLoad(false);
@@ -169,6 +168,7 @@ return (
             </Button>
           </div>
         </div>
+        <SearchBar onSearch={(e, val) => setUsersList(filterUsers(val, getUsersList))} onReset={() => setCurrentProg('')} placeholder="first, last, username" />
       </Form.Group>
       {isInitLoad ? (
         <div className="spinner-wrap">
@@ -204,6 +204,6 @@ function filterUsers(keyword, userList) {
 }
 
 function resetSearchField() {
-  userSearch.value = '';
+  searchBar.value = '';
 }
   

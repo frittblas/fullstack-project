@@ -3,7 +3,6 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
-import SearchBar from '../../components/search-bar/SearchBar';
 import Spinner from 'react-bootstrap/Spinner';
 import UserListItem from '../../components/user-list-item/UserListItem';
 import { useStates } from 'react-easier';
@@ -76,7 +75,7 @@ export default function AdminPage() {
       console.error(error.message);
     }
   };
-
+  
   const handleDeleteUsers = async () => {
     console.log("clicked on delete button")
     try {
@@ -147,50 +146,10 @@ export default function AdminPage() {
           Reset
         </Button>
       </Form.Group>
-              <Form.Group controlId="formBasicRole">
-                <Form.Label>profileImg</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter image"
-                  onChange={(e) =>
-                    setFormData({ ...formData, profileImg: e.target.value })
-                  }
-                  value={formData.profileImg}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={() => handleAddUser()}>
-              Create User
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        <SearchBar onSearch={(e, val) => setUsersList(filterUsers(val, getUsersList))} onReset={() => setCurrentProg('')} placeholder="first, last, username" />
-      </Form.Group>
-
-          {isInitLoad ? (
-            <div className="spinner-wrap">
-              <Spinner animation="border" />
-            </div>
-          ) : (
-            <Table responsive className="align-middle user-table">
-              <tbody>
-              {getUsersList && getUsersList.map(u => (
-            <UserListItem
-              key={u._id}
-              userData={u}
-              selected={selectedUsers.includes(u._id)}
-              onSelect={() => handleSelectUser(u._id)}
-            />
-          ))}
-              </tbody>
-            </Table>
-          )}
+  
+      {isInitLoad ? (
+        <div className="spinner-wrap">
+          <Spinner animation="border" />
         </div>
       ) : (
         <Table responsive className="align-middle user-table">
@@ -224,6 +183,6 @@ function filterUsers(keyword, userList) {
 
 
 function resetSearchField() {
-  searchBar.value = '';
+  userSearch.value = '';
 }
   

@@ -9,7 +9,7 @@ import { allowedPrograms } from './authentication/allowed.js';
 const router = express.Router();
 
 //Get all users
-router.get('/', authenticateJWT(allowedPrograms), async (req, res) => {
+router.get('/', authenticateJWT(['admin']), async (req, res) => {
   try {
     const users = await user.find({});
     res.send(users);

@@ -4,7 +4,6 @@ import Image from 'react-bootstrap/Image';
 import './PostFull.css';
 
 export default function PostFull({ postData }) {
-  console.log("hej är i postFull, id, ", postData.author._id);
   return (
     <div className="post-full">
       <h3>{postData.title}</h3>

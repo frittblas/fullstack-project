@@ -33,10 +33,8 @@ export default function AdminPage() {
   });
 
   useEffect(() => {
-    console.log("useEffect executed");
     (async () => {
       const users = await api.getUsers();
-       console.log(users);
       setMainUserList(users);
       setUsersList(users);
       setInitLoad(false);

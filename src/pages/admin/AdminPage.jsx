@@ -59,8 +59,8 @@ export default function AdminPage() {
     try {
       // add code to submit the form data to the server
       setShowModal(false);
-      await api.createNewUser(formData); // change to createNewUser
-      const updatedUserList = await getUsers();
+      await api.createUser(formData); // change to createNewUser
+      const updatedUserList = await api.getUsers();
       setMainUserList(updatedUserList);
       setUsersList(updatedUserList);
       setFormData({
@@ -86,7 +86,7 @@ export default function AdminPage() {
       const promises = selectedUsers.map((username) => api.deleteUser(username));
       console.log("promises:", promises);
       await Promise.all(promises);
-      const updatedUserList = await getUsers();
+      const updatedUserList = await api.getUsers();
       console.log("updatedUserList:", updatedUserList);
       setMainUserList(updatedUserList);
       setUsersList(updatedUserList);

@@ -9,10 +9,13 @@ import './Navbar.css';
 import PostToggler from "../post-toggler/PostToggler";
 import ProgramsDropdown from "../programs-dropdown/ProgramsDropdown";
 import { useApi } from '../../hooks/useApi';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 
 export default function Navbar() {
   const api = useApi();
+  const [user] = useLocalStorage('user', []);
+
   return (
     <ReactNavbar expand="lg" sticky="top">
       <Container fluid>
@@ -29,6 +32,11 @@ export default function Navbar() {
           useLocation().pathname === '/users' ?
             <PostToggler /> :
             ""
+        }
+        {
+          (user.programTitle === "admin" && useLocation().pathname !== '/admin') ?
+          <div className="navbar-link-group"><Link to="/admin">Admin</Link></div> :
+          ""
         }
         {
           useLocation().pathname === '/admin' ?

@@ -63,3 +63,8 @@ textarea, input {
   border-color: red;
   box-shadow: none;
 }
+
+a:hover {
+  color: #f3f785 !important;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}

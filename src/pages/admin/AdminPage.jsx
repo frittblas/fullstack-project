@@ -100,25 +100,44 @@ export default function AdminPage() {
     else setUsersList(getMainUserList.filter(u => u.programTitle === state.adminProgramSelected));
   }
 
-  return (
+return (
     <div>
-      <Form.Group className="d-flex">
+      <Form.Group className="d-flex flex-wrap align-items-center justify-content-center" style={{ gap: '40px' }}>
         <Button
           variant="danger"
           onClick={() => handleDeleteUsers()}
           type="button"
-          className="delete me-1"
+          className="delete rounded btn-light-green"
+          style={{ width: '120px' }}
           disabled={selectedUsers.length === 0}
-          size="sm"
         >
           Delete
         </Button>
         <Button
-          variant="danger"
+          variant="success"
           onClick={() => setShowModal(true)}
-          size="sm"
+          style={{ width: '120px' }}
+          className="rounded btn-light-green"
         >
           New User
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => handleStats()}
+          type="button"
+          style={{ width: '120px' }}
+          className="rounded new-user-btn btn-light-green"
+        >
+          Stats
+        </Button>
+        <Button
+          variant="info"
+          onClick={() => handlePosts()}
+          type="button"
+          style={{ width: '120px' }}
+          className="rounded new-user-btn btn-light-green"
+        >
+          Posts
         </Button>
         <AddUserModal
           showModal={showModal}
@@ -127,26 +146,30 @@ export default function AdminPage() {
           setFormData={setFormData}
           handleAddUser={handleAddUser}
         />
-        <Form.Control id="userSearch" type="text" placeholder="first, last, username" />
-        <Button
-          variant="success"
-          onClick={() => setUsersList(filterUsers(userSearch.value, getUsersList))}
-          type="submit"
-          size="sm"
-        >
-          Search
-        </Button>
-        <Button
-          variant="disabled"
-          onClick={() => setCurrentProg('')}
-          type="reset"
-          className="ms-1"
-          size="sm"
-        >
-          Reset
-        </Button>
+        <div className="w-100">
+          <div className="input-group input-group-sm">
+            <Form.Control id="userSearch" type="text" placeholder="Search" className="flex-grow-1 custom-search" />
+            <Button
+              variant="success"
+              onClick={() => setUsersList(filterUsers(userSearch.value, getUsersList))}
+              type="submit"
+              className="rounded"
+              style={{ width: '90px', height: '40px' }}
+            >
+              Search
+            </Button>
+            <Button
+              variant="disabled"
+              onClick={() => setCurrentProg('')}
+              type="reset"
+              className="ms-1 rounded"
+              style={{ width: '90px', height: '40px' }}
+            >
+              Reset
+            </Button>
+          </div>
+        </div>
       </Form.Group>
-  
       {isInitLoad ? (
         <div className="spinner-wrap">
           <Spinner animation="border" />
@@ -166,8 +189,7 @@ export default function AdminPage() {
         </Table>
       )}
     </div>
-  );
-}
+  );}
 
 function filterUsers(keyword, userList) {
   const result = userList.filter(u => {
@@ -180,7 +202,6 @@ function filterUsers(keyword, userList) {
 
   return result;
 }
-
 
 function resetSearchField() {
   userSearch.value = '';

@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://fullstack-deploy-g3pd.onrender.com:3000',
         changeOrigin: true,
         secure: true
       }

@@ -9,7 +9,13 @@ import programRouter from './routes/programRouter.js';
 import adminRouter from './routes/adminRouter.js';
 import aboutRouter from './routes/aboutRouter.js';
 
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
@@ -24,7 +30,15 @@ app.use('/api/programs', programRouter);
 app.use('/api/admin', adminRouter);   // Hans changed this to /api/admin (was /admin before)
 app.use('/api/about', aboutRouter);
 
-app.all('*');
+//app.all('*');
+
+// Serve the static files from the React app
+app.use(express.static(join(__dirname, 'dist')));
+
+// Handle any requests that don't match the ones above
+app.get('*', (req, res) => {
+  res.sendFile(join(__dirname, 'dist/index.html'));
+});
 
 mongoose.connect(process.env.DB_URI)
   .then(() => {

@@ -15,4 +15,17 @@
 .modal-dialog {
 	width: 400px;
   }
+
+.modal-header .modal-title {
+	color: rgb(17, 127, 24);
+  }
+
+  .modal-body label {
+	color: #f81818; /* replace with your desired color */
+  }
+  
+
+.modal-content {
+	background-color: #a8f4af;
+  }
   

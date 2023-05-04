@@ -1,12 +1,14 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import './UserListItem.css';
+import { useApi } from '../../hooks/useApi';
 
 export default function UserListItem({ userData, onSelect }) {
 
+  const api = useApi();
   const [username, setUsername] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
@@ -15,6 +17,15 @@ export default function UserListItem({ userData, onSelect }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [formValid, setFormValid] = useState(false);
+
+  useEffect(() => {
+    if (password === confirmPassword && password.length >= 6 || password.length === 0) {
+      setFormValid(true);
+    } else {
+      setFormValid(false);
+    }
+  }, [username, firstname, lastname, email, password, confirmPassword]);
 
   const updatedUser = {
     username: username,
@@ -30,6 +41,7 @@ export default function UserListItem({ userData, onSelect }) {
 
   const handleSaveChanges = async (event) => {
     if (password === confirmPassword) {
+      setPasswordMatch(true)
 
       Object.keys(updatedUser).forEach(key => {
         if (updatedUser[key] === '') {
@@ -37,10 +49,9 @@ export default function UserListItem({ userData, onSelect }) {
         }
       });
 
-      console.log(updatedUser);
-      setPasswordMatch(true)
-      console.log(userData);
-      console.log("saving...")
+      console.log("changes: " + updatedUser);
+      const resp = await api.updateUser(userData.username, updatedUser)
+      window.location.reload();
     } else {
       setPasswordMatch(false);
       console.log("no pw match!")
@@ -48,6 +59,12 @@ export default function UserListItem({ userData, onSelect }) {
   };
 
   function closeModal() {
+    setUsername("");
+    setFirstname("");
+    setLastname("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
     setShowModal(false)
   }
 
@@ -96,7 +113,11 @@ export default function UserListItem({ userData, onSelect }) {
               type="email"
               placeholder={userData.email}
               onChange={(e) => setEmail(e.target.value)}
+              isInvalid={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length > 0}
             />
+            <Form.Control.Feedback type="invalid">
+              Please enter a valid email address.
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
@@ -106,8 +127,11 @@ export default function UserListItem({ userData, onSelect }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               minLength={6}
-              required
+              isInvalid={password.length > 0 && password.length < 6}
             />
+            <Form.Control.Feedback type="invalid">
+              Password must be at least 6 characters long
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="confirmPassword">
             <Form.Label>Confirm Password</Form.Label>
@@ -117,16 +141,16 @@ export default function UserListItem({ userData, onSelect }) {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               minLength={6}
-              required
+              isInvalid={confirmPassword.length > 0 && confirmPassword.length < 6 || confirmPassword !== password}
             />
-            {!passwordMatch && (
-              <Form.Text className="text-danger">Passwords do not match</Form.Text>
-            )}
+            <Form.Control.Feedback type="invalid">
+              Passwords do not match
+            </Form.Control.Feedback>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="success" onClick={() => closeModal()}>Cancel</Button>
-          <Button variant="success" onClick={() => handleSaveChanges()}>Save Changes</Button>
+          <Button variant="success" onClick={() => handleSaveChanges()} disabled={!formValid}>Save Changes</Button>
         </Modal.Footer>
       </Modal>
     </>

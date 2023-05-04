@@ -1,6 +1,7 @@
 import express from 'express';
 import users from '../models/userModel.js';
 import { authenticateJWT } from './authentication/webtoken.js';
+import { encryptPassword } from './authentication/encryption.js';
 
 const router = express.Router();
 
@@ -63,6 +64,10 @@ router.put('/users/:name', authenticateJWT(['admin']), async (req, res) => {
   const name = req.params.name;
   const updates = req.body;
   try {
+    if (updates.password) {
+      const enc = await encryptPassword(updates.password)
+      updates.password = enc
+    }
     const updatedUser = await users.findOneAndUpdate(
       { username: name },
       updates,
@@ -78,7 +83,7 @@ router.put('/users/:name', authenticateJWT(['admin']), async (req, res) => {
 });
 
 //Create new user in db. 
-router.post('/users',authenticateJWT(['admin']), async (req, res) => {
+router.post('/users', authenticateJWT(['admin']), async (req, res) => {
   console.log(req);
   try {
     const newUser = new users(req.body);

@@ -36,7 +36,7 @@ export default function AdminPage() {
     console.log("useEffect executed");
     (async () => {
       const users = await api.getUsers();
-       console.log(users);
+      console.log(users);
       setMainUserList(users);
       setUsersList(users);
       setInitLoad(false);
@@ -76,8 +76,8 @@ export default function AdminPage() {
       console.error(error.message);
     }
   };
-  
-  
+
+
 
   const handleDeleteUsers = async () => {
     console.log("clicked on delete button")
@@ -95,8 +95,8 @@ export default function AdminPage() {
       console.error(error.message);
     }
   };
-  
-  
+
+
   if (state.adminProgramSelected !== getCurrentProg) {
     resetSearchField();
     setCurrentProg(state.adminProgramSelected);
@@ -145,7 +145,7 @@ export default function AdminPage() {
                   value={formData.firstname}
                 />
               </Form.Group>
-  
+
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>lastname</Form.Label>
                 <Form.Control
@@ -157,7 +157,7 @@ export default function AdminPage() {
                   value={formData.lastname}
                 />
               </Form.Group>
-  
+
               <Form.Group controlId="formBasicFirstName">
                 <Form.Label>username</Form.Label>
                 <Form.Control
@@ -169,7 +169,7 @@ export default function AdminPage() {
                   value={formData.username}
                 />
               </Form.Group>
-  
+
               <Form.Group controlId="formBasicLastName">
                 <Form.Label>email</Form.Label>
                 <Form.Control
@@ -181,7 +181,7 @@ export default function AdminPage() {
                   value={formData.email}
                 />
               </Form.Group>
-  
+
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>password</Form.Label>
                 <Form.Control
@@ -193,7 +193,7 @@ export default function AdminPage() {
                   value={formData.password}
                 />
               </Form.Group>
-  
+
               <Form.Group controlId="formBasicProgram">
                 <Form.Label>programTitle</Form.Label>
                 <Form.Control
@@ -208,7 +208,7 @@ export default function AdminPage() {
                   value={formData.programTitle}
                 />
               </Form.Group>
-  
+
               <Form.Group controlId="formBasicRole">
                 <Form.Label>profileImg</Form.Label>
                 <Form.Control
@@ -233,46 +233,46 @@ export default function AdminPage() {
         </Modal>
 
         <Form.Control id="userSearch" type="text" placeholder="first, last, username" />
-            <Button
-              variant="success"
-              onClick={() => setUsersList(filterUsers(userSearch.value, getUsersList))}
-              type="submit"
-              size= "sm"
-            >
-              Search
-            </Button>
-            <Button
-              variant="disabled"
-              onClick={() => setCurrentProg('')}
-              type="reset"
-              className="ms-1"
-              size= "sm"
-            >
-              Reset
-            </Button>
-          </Form.Group>
+        <Button
+          variant="success"
+          onClick={() => setUsersList(filterUsers(userSearch.value, getUsersList))}
+          type="submit"
+          size="sm"
+        >
+          Search
+        </Button>
+        <Button
+          variant="disabled"
+          onClick={() => setCurrentProg('')}
+          type="reset"
+          className="ms-1"
+          size="sm"
+        >
+          Reset
+        </Button>
+      </Form.Group>
 
-          {isInitLoad ? (
-            <div className="spinner-wrap">
-              <Spinner animation="border" />
-            </div>
-          ) : (
-            <Table responsive className="align-middle user-table">
-              <tbody>
-              {getUsersList && getUsersList.map(u => (
-            <UserListItem
-              key={u._id}
-              userData={u}
-              selected={selectedUsers.includes(u._id)}
-              onSelect={() => handleSelectUser(u._id)}
-            />
-          ))}
-              </tbody>
-            </Table>
-          )}
+      {isInitLoad ? (
+        <div className="spinner-wrap">
+          <Spinner animation="border" />
         </div>
-      );
-    }
+      ) : (
+        <Table responsive className="align-middle user-table">
+          <tbody>
+            {getUsersList && getUsersList.map(u => (
+              <UserListItem
+                key={u._id}
+                userData={u}
+                selected={selectedUsers.includes(u._id)}
+                onSelect={() => handleSelectUser(u._id)}
+              />
+            ))}
+          </tbody>
+        </Table>
+      )}
+    </div>
+  );
+}
 
 function filterUsers(keyword, userList) {
   const result = userList.filter(u => {
@@ -290,4 +290,3 @@ function filterUsers(keyword, userList) {
 function resetSearchField() {
   userSearch.value = '';
 }
-  

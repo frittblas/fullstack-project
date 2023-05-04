@@ -99,7 +99,7 @@ export default function AdminPage() {
     else setUsersList(getMainUserList.filter(u => u.programTitle === state.adminProgramSelected));
   }
 
-return (
+  return (
     <div>
       <Form.Group className="d-flex flex-wrap align-items-center justify-content-center" style={{ gap: '40px' }}>
         <Button
@@ -147,28 +147,14 @@ return (
         />
         <div className="w-100">
           <div className="input-group input-group-sm">
-            <Form.Control id="userSearch" type="text" placeholder="Search" className="flex-grow-1 custom-search" />
-            <Button
-              variant="success"
-              onClick={() => setUsersList(filterUsers(userSearch.value, getUsersList))}
-              type="submit"
-              className="rounded"
-              style={{ width: '90px', height: '40px' }}
-            >
-              Search
-            </Button>
-            <Button
-              variant="disabled"
-              onClick={() => setCurrentProg('')}
-              type="reset"
-              className="ms-1 rounded"
-              style={{ width: '90px', height: '40px' }}
-            >
-              Reset
-            </Button>
+            <SearchBar 
+              onSearch={(e, val) => setUsersList(filterUsers(val, getMainUserList))}
+              onReset={() => setUsersList(getMainUserList)}
+              placeholder="first, last, username"
+              style={{ width: '300px' }} 
+            />
           </div>
         </div>
-        <SearchBar onSearch={(e, val) => setUsersList(filterUsers(val, getUsersList))} onReset={() => setCurrentProg('')} placeholder="first, last, username" />
       </Form.Group>
       {isInitLoad ? (
         <div className="spinner-wrap">
@@ -189,8 +175,8 @@ return (
         </Table>
       )}
     </div>
-  );}
-
+  );
+  
 function filterUsers(keyword, userList) {
   const result = userList.filter(u => {
     return (
@@ -203,7 +189,7 @@ function filterUsers(keyword, userList) {
   return result;
 }
 
+
 function resetSearchField() {
   searchBar.value = '';
-}
-  
+}}

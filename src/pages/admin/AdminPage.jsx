@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import SearchBar from '../../components/search-bar/SearchBar';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -127,24 +128,7 @@ export default function AdminPage() {
           setFormData={setFormData}
           handleAddUser={handleAddUser}
         />
-        <Form.Control id="userSearch" type="text" placeholder="first, last, username" />
-        <Button
-          variant="success"
-          onClick={() => setUsersList(filterUsers(userSearch.value, getUsersList))}
-          type="submit"
-          size="sm"
-        >
-          Search
-        </Button>
-        <Button
-          variant="disabled"
-          onClick={() => setCurrentProg('')}
-          type="reset"
-          className="ms-1"
-          size="sm"
-        >
-          Reset
-        </Button>
+        <SearchBar onSearch={(e, val) => setUsersList(filterUsers(val, getUsersList))} onReset={() => setCurrentProg('')} placeholder="first, last, username" />
       </Form.Group>
   
       {isInitLoad ? (
@@ -183,6 +167,6 @@ function filterUsers(keyword, userList) {
 
 
 function resetSearchField() {
-  userSearch.value = '';
+  searchBar.value = '';
 }
   

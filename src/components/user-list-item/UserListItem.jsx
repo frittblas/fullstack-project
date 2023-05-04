@@ -113,7 +113,11 @@ export default function UserListItem({ userData, onSelect }) {
               type="email"
               placeholder={userData.email}
               onChange={(e) => setEmail(e.target.value)}
+              isInvalid={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length > 0}
             />
+            <Form.Control.Feedback type="invalid">
+              Please enter a valid email address.
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>

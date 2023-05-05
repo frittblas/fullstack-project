@@ -10,6 +10,7 @@ import Login from '../../pages/login/Login';
 import Register from '../../pages/register/Register';
 import About from '../../pages/about/About';
 import Unauthorised from '../../pages/unauthorised/Unauthorised';
+import Statistics from '../../pages/statistics/Statistics';
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useStates } from 'react-easier';
 import './App.css';
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="/register" element={<Register />}> </Route>
           <Route path="/about" element={<About />}> </Route>
           <Route path="/unauth" element={<Unauthorised />}> </Route>
+          <Route path="/statistics" element={<Statistics />}> </Route>
         </Routes>
       </Container>
     </main>

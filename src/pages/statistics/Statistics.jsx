@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Card, Col, Row, Image } from 'react-bootstrap';
 import { CanvasJSChart } from 'canvasjs-react-charts';
+import APIHelper from '../../utilities/api-helper';
+import { useApi } from '../../hooks/useApi';
 
-export default function About() {
+export default function Statistics() {
+  const api = useApi();
   const [data, setData] = useState([]);
+
+  const [numberOfUsers, setNumberOfUsers] = useState();
+
+  const [usersPerProgram, setUsersPerProgram] = useState([]);
 
   useEffect(() => {
     // Simulate API call and set the state
@@ -17,6 +24,31 @@ export default function About() {
     setData(mockData);
   }, []);
 
+  useEffect(() => {
+    async function fetchNumberOfUsers() {
+      try {
+        const data = await api.getNumberOfUsers();
+        setNumberOfUsers(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchNumberOfUsers();
+  }, []); 
+
+  useEffect(() => {
+    async function fetchUsersPerProgram() {
+      try {
+        const data = await api.getUsersPerProgram();
+        setUsersPerProgram(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchUsersPerProgram();
+  }, []);
+
+
   const pieOptions = {
     title: {
       text: 'Number of users',
@@ -24,10 +56,11 @@ export default function About() {
     data: [
       {
         type: 'pie',
-        dataPoints: data.map((item) => ({
-          label: item.label,
-          y: item.value,
-        })),
+        dataPoints: Array.isArray(usersPerProgram) ? usersPerProgram.map((item) => ({
+          label: item.program,
+          y: item.numberOfUsers,
+        })) : [],
+        
       },
     ],
   };
@@ -55,7 +88,7 @@ export default function About() {
             <Card.Header>User statistics</Card.Header>
             <Card.Body>
               <CanvasJSChart options={pieOptions} />
-              <div>Total number of users: 55</div>
+              <div>Total number of users: {numberOfUsers.users}</div>
             </Card.Body>
           </Card>
         </Col>

@@ -2,6 +2,7 @@ import express from 'express';
 import users from '../models/userModel.js';
 import { authenticateJWT } from './authentication/webtoken.js';
 import { encryptPassword } from './authentication/encryption.js';
+import { getUsersPerProgram } from './handlers/statistics.js';
 
 const router = express.Router();
 
@@ -89,6 +90,26 @@ router.post('/users', authenticateJWT(['admin']), async (req, res) => {
     const newUser = new users(req.body);
     await newUser.save();
     res.send(newUser);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+
+
+
+router.get('/statistics/users/', authenticateJWT(['admin']), async (req, res) => {
+  try {
+    const getStudents = await users.find({});
+    res.send({users: getStudents.length});
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+router.get('/statistics/users/program', authenticateJWT(['admin']), async (req, res) => {
+  try {
+    const numberOfUsers = await getUsersPerProgram();
+    res.send(numberOfUsers);
   } catch (err) {
     res.status(500).send(err);
   }

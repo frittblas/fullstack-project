@@ -14,6 +14,10 @@ export const useApi = () => {
 
     async getAboutData() { return await this._get('/api/about') },
 
+    async getNumberOfUsers() { return await this._get('/api/admin/statistics/users') },
+
+    async getUsersPerProgram() { return await this._get('/api/admin/statistics/users/program') },
+
     async setPost(data, all) { return await this._post('/api/posts?all=' + Number(all), data) },
 
     async setComment(postId, data) { return this._put(`/api/posts/${postId}/reply`, data) },

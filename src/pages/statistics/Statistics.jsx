@@ -6,7 +6,6 @@ import { useApi } from '../../hooks/useApi';
 
 export default function Statistics() {
   const api = useApi();
-  const [data, setData] = useState([]);
 
   const [numberOfUsers, setNumberOfUsers] = useState();
   const [numberOfPosts, setNumberOfPosts] = useState();

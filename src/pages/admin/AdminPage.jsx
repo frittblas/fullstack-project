@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/SearchBar';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -15,6 +16,7 @@ import AddUserModal from './UserModal';
 
 export default function AdminPage() {
   const api = useApi();
+  const navigate = useNavigate();
   const state = useStates('main');
   const [isInitLoad, setInitLoad] = useState(true);
   const [getCurrentProg, setCurrentProg] = useState(MAIN_POST_THREAD_NAME);
@@ -90,6 +92,10 @@ export default function AdminPage() {
     } catch (error) {
       console.error(error.message);
     }
+  };
+
+  const handleStats = () => {
+    navigate('/statistics')
   };
   
   if (state.adminProgramSelected !== getCurrentProg) {

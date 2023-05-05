@@ -96,15 +96,6 @@ export default function AdminPage() {
     navigate('/statistics')
   };
  
-  const handlePosts = async () => {
-    try {
-      const posts = await api.getUsers(true);
-      console.log(posts); 
-      navigate('/users');
-    } catch (error) {
-      console.error(error); 
-    }
-  };
   
   if (state.adminProgramSelected !== getCurrentProg) {
     resetSearchField();
@@ -142,15 +133,6 @@ export default function AdminPage() {
           className="rounded new-user-btn btn-light-green"
         >
           Stats
-        </Button>
-        <Button
-          variant="info"
-          onClick={() => handlePosts()}
-          type="button"
-          style={{ width: '120px' }}
-          className="rounded new-user-btn btn-light-green"
-        >
-          Posts
         </Button>
         <AddUserModal
           showModal={showModal}

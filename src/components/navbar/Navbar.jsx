@@ -22,7 +22,7 @@ export default function Navbar() {
         <ReactNavbar.Brand as={Link} to="/users" >
           <img
             alt=""
-            src="../../../public/hkr-logo.svg"
+            src="../../../hkr-logo.svg"
             height="30"
             className="d-inline-block align-top"
           />{' '}
@@ -35,8 +35,8 @@ export default function Navbar() {
         }
         {
           (user.programTitle === "admin" && useLocation().pathname !== '/admin') ?
-          <div className="navbar-link-group"><Link to="/admin">Admin</Link></div> :
-          ""
+            <div className="navbar-link-group"><Link to="/admin">Admin</Link></div> :
+            ""
         }
         {
           useLocation().pathname === '/admin' ?

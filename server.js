@@ -33,11 +33,11 @@ app.use('/api/about', aboutRouter);
 //app.all('*');
 
 // Serve the static files from the React app
-app.use(express.static(join(__dirname, 'public')));
+app.use(express.static(join(__dirname, 'dist')));
 
 // Handle any requests that don't match the ones above
 app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, 'public/index.html'));
+  res.sendFile(join(__dirname, 'dist/index.html'));
 });
 
 mongoose.connect(process.env.DB_URI)

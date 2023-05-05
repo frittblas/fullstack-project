@@ -1,8 +1,9 @@
 import express from 'express';
 import users from '../models/userModel.js';
+import posts from '../models/postModel.js';
 import { authenticateJWT } from './authentication/webtoken.js';
 import { encryptPassword } from './authentication/encryption.js';
-import { getUsersPerProgram } from './handlers/statistics.js';
+import { getUsersPerProgram, getPostsPerProgram, getNumberOfPosts, getNumberOfUsers } from './handlers/statistics.js';
 
 const router = express.Router();
 
@@ -96,19 +97,37 @@ router.post('/users', authenticateJWT(['admin']), async (req, res) => {
 });
 
 
-
-
 router.get('/statistics/users/', authenticateJWT(['admin']), async (req, res) => {
   try {
-    const getStudents = await users.find({});
-    res.send({users: getStudents.length});
+    const numberOfUsers = await getNumberOfUsers();
+    res.send({users: numberOfUsers});
   } catch (err) {
     res.status(500).send(err);
   }
 });
+
 router.get('/statistics/users/program', authenticateJWT(['admin']), async (req, res) => {
   try {
     const numberOfUsers = await getUsersPerProgram();
+    res.send(numberOfUsers);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.get('/statistics/posts/', authenticateJWT(['admin']), async (req, res) => {
+  try {
+    const numberOfPosts = await getNumberOfPosts();
+
+    res.send({posts: numberOfPosts});
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.get('/statistics/posts/program', authenticateJWT(['admin']), async (req, res) => {
+  try {
+    const numberOfUsers = await getPostsPerProgram();
     res.send(numberOfUsers);
   } catch (err) {
     res.status(500).send(err);

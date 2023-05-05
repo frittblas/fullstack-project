@@ -9,20 +9,10 @@ export default function Statistics() {
   const [data, setData] = useState([]);
 
   const [numberOfUsers, setNumberOfUsers] = useState();
-
+  const [numberOfPosts, setNumberOfPosts] = useState();
   const [usersPerProgram, setUsersPerProgram] = useState([]);
+  const [postsPerProgram, setPostsPerProgram] = useState([]);
 
-  useEffect(() => {
-    // Simulate API call and set the state
-    const mockData = [
-      { label: 'Economics', value: 10 },
-      { label: 'Software Development', value: 20 },
-      { label: 'Iot Engineers', value: 15 },
-      { label: 'Business Administration', value: 25 },
-      { label: 'HR', value: 30 },
-    ];
-    setData(mockData);
-  }, []);
 
   useEffect(() => {
     async function fetchNumberOfUsers() {
@@ -36,6 +26,8 @@ export default function Statistics() {
     fetchNumberOfUsers();
   }, []); 
 
+  
+
   useEffect(() => {
     async function fetchUsersPerProgram() {
       try {
@@ -46,6 +38,30 @@ export default function Statistics() {
       }
     }
     fetchUsersPerProgram();
+  }, []);
+
+  useEffect(() => {
+    async function fetchNumberOfPosts() {
+      try {
+        const data = await api.getNumberOfPosts();
+        setNumberOfPosts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchNumberOfPosts();
+  }, []); 
+
+  useEffect(() => {
+    async function fetchPostsPerProgram() {
+      try {
+        const data = await api.getPostsPerProgram();
+        setPostsPerProgram(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchPostsPerProgram();
   }, []);
 
 
@@ -72,10 +88,10 @@ export default function Statistics() {
     data: [
       {
         type: 'column',
-        dataPoints: data.map((item) => ({
-          label: item.label,
-          y: item.value,
-        })),
+        dataPoints: Array.isArray(postsPerProgram) ? postsPerProgram.map((item) => ({
+          label: item.program,
+          y: item.numberOfPosts,
+        })) : [],
       },
     ],
   };
@@ -88,7 +104,7 @@ export default function Statistics() {
             <Card.Header>User statistics</Card.Header>
             <Card.Body>
               <CanvasJSChart options={pieOptions} />
-              <div>Total number of users: {numberOfUsers.users}</div>
+              <div>Total number of users: {numberOfUsers?.users || ""}</div>
             </Card.Body>
           </Card>
         </Col>
@@ -100,7 +116,7 @@ export default function Statistics() {
             <Card.Header>Posts statistics</Card.Header>
             <Card.Body>
               <CanvasJSChart options={chartOptions} />
-              <div>Total number of posts: 100</div>
+              <div>Total number of posts: {numberOfPosts?.posts || ""}</div>
             </Card.Body>
           </Card>
         </Col>

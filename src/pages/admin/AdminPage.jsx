@@ -106,7 +106,6 @@ export default function AdminPage() {
     }
   };
   
-  
   if (state.adminProgramSelected !== getCurrentProg) {
     resetSearchField();
     setCurrentProg(state.adminProgramSelected);
@@ -203,8 +202,6 @@ function filterUsers(keyword, userList) {
 
   return result;
 }
-
-
 function resetSearchField() {
   searchBar.value = '';
 }}

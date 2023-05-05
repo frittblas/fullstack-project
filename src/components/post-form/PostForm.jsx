@@ -26,7 +26,7 @@ export default function PostForm({onPostPosted}) {
       </Form.Group>
       <Form.Group className="btn-ctl-post mb-1 d-flex">
         <Form.Control type="file" />
-        <Button variant="success" type="submit" className="ms-3">Post</Button>
+        <Button variant="success" type="submit" className="ms-3 rounded">Post</Button>
       </Form.Group>
     </Form>
   );

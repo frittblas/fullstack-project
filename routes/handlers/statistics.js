@@ -33,7 +33,11 @@ async function getUsersPerProgram() {
 async function getPostsPerProgram() {
   try {
     const posts = await Post.find({}, {image: 0});
-    const programs = await Program.find({});
+    const programs = await Program.find({}).sort({ programTitle: 1 });
+
+    programs.push({ programTitle: "All" });
+
+
     let programCounter;
     let resultArray = []
     
@@ -50,6 +54,8 @@ async function getPostsPerProgram() {
       resultArray.push(programObj)
     }
 
+  
+
     return resultArray;
   } catch (err) {
     return err;
@@ -58,7 +64,7 @@ async function getPostsPerProgram() {
 
 async function getNumberOfUsers() {
   try {
-    const users = await User.find({}, { profileImg: 0 });
+    const users = await User.find({ programTitle: { $ne: "admin" }}, { profileImg: 0 });
 
     return users.length;
   } catch (err) {
@@ -68,7 +74,8 @@ async function getNumberOfUsers() {
 
 async function getNumberOfPosts() {
   try {
-    const posts = await Post.find({}, { image: 0 });
+    const posts = await Post.find({ program: { $ne: "admin" }}, { image: 0 });
+
 
     return posts.length;
   } catch (err) {

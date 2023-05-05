@@ -84,6 +84,9 @@ export default function Statistics() {
     title: {
       text: 'Number of posts',
     },
+    axisX: {
+      labelAngle: 270
+    },
     data: [
       {
         type: 'column',

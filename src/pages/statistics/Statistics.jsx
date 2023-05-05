@@ -1,66 +1,29 @@
 import { useState, useEffect } from 'react';
 import { Card, Col, Row, Image } from 'react-bootstrap';
 import { CanvasJSChart } from 'canvasjs-react-charts';
-import APIHelper from '../../utilities/api-helper';
 import { useApi } from '../../hooks/useApi';
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function Statistics() {
   const api = useApi();
-
+  const [isInitLoad, setInitLoad] = useState(true);
   const [numberOfUsers, setNumberOfUsers] = useState();
   const [numberOfPosts, setNumberOfPosts] = useState();
   const [usersPerProgram, setUsersPerProgram] = useState([]);
   const [postsPerProgram, setPostsPerProgram] = useState([]);
 
-
   useEffect(() => {
-    async function fetchNumberOfUsers() {
-      try {
-        const data = await api.getNumberOfUsers();
-        setNumberOfUsers(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchNumberOfUsers();
-  }, []); 
-
-  
-
-  useEffect(() => {
-    async function fetchUsersPerProgram() {
-      try {
-        const data = await api.getUsersPerProgram();
-        setUsersPerProgram(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchUsersPerProgram();
-  }, []);
-
-  useEffect(() => {
-    async function fetchNumberOfPosts() {
-      try {
-        const data = await api.getNumberOfPosts();
-        setNumberOfPosts(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchNumberOfPosts();
-  }, []); 
-
-  useEffect(() => {
-    async function fetchPostsPerProgram() {
-      try {
-        const data = await api.getPostsPerProgram();
-        setPostsPerProgram(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchPostsPerProgram();
+    (async () => {
+      const users = await api.getUsersPerProgram();
+      const posts = await api.getPostsPerProgram();
+      const numberOfUsers = await api.getNumberOfUsers();
+      const numberOfPosts = await api.getNumberOfPosts();
+      setUsersPerProgram(users);
+      setPostsPerProgram(posts);
+      setNumberOfUsers(numberOfUsers);
+      setNumberOfPosts(numberOfPosts);
+      setInitLoad(false);
+    })();
   }, []);
 
 
@@ -100,6 +63,12 @@ export default function Statistics() {
 
   return (
     <>
+             {isInitLoad ? (
+        <div className="spinner-wrap">
+          <Spinner animation="border" />
+        </div>
+      ) : (
+          <>
       <Row className="d-flex flex-wrap justify-content-center">
         <Col className="mt-4 m-3" xs={10} sm={10} md={10} lg={10} xl={10}>
           <Card className="h-100">
@@ -111,6 +80,8 @@ export default function Statistics() {
           </Card>
         </Col>
       </Row>
+      
+     
 
       <Row className="d-flex flex-wrap justify-content-center">
         <Col className="mt-4 m-3" xs={10} sm={10} md={10} lg={10} xl={10}>
@@ -123,6 +94,10 @@ export default function Statistics() {
           </Card>
         </Col>
       </Row>
+     </>
+          
+     )}
+     
     </>
   );
 }

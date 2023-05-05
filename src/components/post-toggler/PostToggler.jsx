@@ -10,6 +10,7 @@ export default function PostToggler() {
     <div className="post-toggler-wrap">
       <span>All</span>
       <Form.Check
+        readOnly={true}
         type="switch"
         id="post-toggler"
         checked={!state.programMain}

@@ -1,4 +1,8 @@
-.group9-link:hover {
+.about-link {
+  color: #6dc71d;
+}
+
+.about-link:hover {
   color: rgb(189, 187, 187) !important;
   text-decoration: underline;
 }

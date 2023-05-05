@@ -1,6 +1,9 @@
 import express from 'express';
 import users from '../models/userModel.js';
+import posts from '../models/postModel.js';
 import { authenticateJWT } from './authentication/webtoken.js';
+import { encryptPassword } from './authentication/encryption.js';
+import { getUsersPerProgram, getPostsPerProgram, getNumberOfPosts, getNumberOfUsers } from './handlers/statistics.js';
 
 const router = express.Router();
 
@@ -63,6 +66,10 @@ router.put('/users/:name', authenticateJWT(['admin']), async (req, res) => {
   const name = req.params.name;
   const updates = req.body;
   try {
+    if (updates.password) {
+      const enc = await encryptPassword(updates.password)
+      updates.password = enc
+    }
     const updatedUser = await users.findOneAndUpdate(
       { username: name },
       updates,
@@ -84,6 +91,44 @@ router.post('/users', authenticateJWT(['admin']), async (req, res) => {
     const newUser = new users(req.body);
     await newUser.save();
     res.send(newUser);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+
+router.get('/statistics/users/', authenticateJWT(['admin']), async (req, res) => {
+  try {
+    const numberOfUsers = await getNumberOfUsers();
+    res.send({users: numberOfUsers});
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.get('/statistics/users/program', authenticateJWT(['admin']), async (req, res) => {
+  try {
+    const numberOfUsers = await getUsersPerProgram();
+    res.send(numberOfUsers);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.get('/statistics/posts/', authenticateJWT(['admin']), async (req, res) => {
+  try {
+    const numberOfPosts = await getNumberOfPosts();
+
+    res.send({posts: numberOfPosts});
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.get('/statistics/posts/program', authenticateJWT(['admin']), async (req, res) => {
+  try {
+    const numberOfUsers = await getPostsPerProgram();
+    res.send(numberOfUsers);
   } catch (err) {
     res.status(500).send(err);
   }

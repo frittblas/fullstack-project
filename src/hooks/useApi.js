@@ -6,37 +6,6 @@ export const useApi = () => {
   return {
     async getUsers() { return await this._get('/api/users') },
 
-    async getAllUsers() {
-      console.error("delete me and use getUsers()");
-      // try {
-      //   const resp = await fetch('/api/admin/users');
-      //   if (resp.status == 401) navigate('/login');
-      //   return resp.ok ? await resp.json() : null;
-      // } catch (e) {
-      //   console.error(e.message);
-      // }
-    },
-
-    async createNewUser(data) {
-      console.error("delete me and use createUser()");
-      // try {
-      //   const resp = await fetch('/api/admin/users', {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     },
-      //     body: JSON.stringify(data)
-      //   });
-
-      //   if (resp.status == 401) navigate('/login');
-
-      //   return resp.status == 200 ? await resp.json() : null;
-      // } catch (e) {
-      //   console.error(e);
-      //   return e.message;
-      // }
-    },
-
     async getPost(id) { return await this._get('/api/posts/' + id) },
 
     async getPosts(all) { return await this._get('/api/posts?all=' + Number(all)) },
@@ -44,6 +13,14 @@ export const useApi = () => {
     async getPrograms() { return await this._get('/api/programs') },
 
     async getAboutData() { return await this._get('/api/about') },
+
+    async getNumberOfUsers() { return await this._get('/api/admin/statistics/users') },
+
+    async getUsersPerProgram() { return await this._get('/api/admin/statistics/users/program') },
+
+    async getNumberOfPosts() { return await this._get('/api/admin/statistics/posts') },
+
+    async getPostsPerProgram() { return await this._get('/api/admin/statistics/posts/program') },
 
     async setPost(data, all) { return await this._post('/api/posts?all=' + Number(all), data) },
 
@@ -63,6 +40,7 @@ export const useApi = () => {
       try {
         const resp = await fetch(url);
         if (resp.status == 401) navigate('/login');
+        else if (resp.status == 403) navigate('/unauth');
         return resp.ok ? await resp.json() : null;
       } catch (e) {
         console.error(e.message);

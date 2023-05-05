@@ -48,21 +48,11 @@ function authenticateJWT(allowedPrograms) {
 
       if (!allowedPrograms.includes(program)) {
         console.log('Program not allowed!');
-        res.status(401).send("You don't have access to this!");
+        res.status(403).send("You don't have access to this!");
         return false; // no right to be here, return false
       }
 
-      req.user = { username, program };
-      /*
-            // restrict the students so they only can check their own page.
-            if (program !== 'admin') {
-              if (req.path === '/admin' && req.user.username !== 'admin') {
-                console.log('Only admin have access to admin!');
-                return false; // only admin can access /admin
-              }
-            }
-            console.log('next reached in authJWT!');
-            */
+      req.user = { username, program }; // not used atm
 
       next();
     } catch (error) {

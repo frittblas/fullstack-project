@@ -72,10 +72,10 @@ export default function UserListItem({ userData, onSelect }) {
     <>
       <tr>
         <td><Form.Check type="checkbox" onChange={() => onSelect(userData._id)} /></td>
-        <td><Image roundedCircle="true" src={`/api/users/${userData._id}/image`} height="50" width="50" /></td>
+        <td><Image roundedCircle="true" src={`/api/users/${userData._id}/image`} onError={(event) => event.target.src = '../../../noavatar.png'} height="50" width="50" /></td>
         <td>{`${userData.firstname} ${userData.lastname}`}</td>
         <td>{userData.programTitle}</td>
-        <td><Button variant="success" onClick={() => handleEditUser(userData)}>Edit</Button></td>
+        <td><Button className="rounded new-user-btn btn-light-green" variant="success" onClick={() => handleEditUser(userData)}>Edit</Button></td>
       </tr>
 
       <Modal show={showModal} onHide={() => closeModal()}>
@@ -113,7 +113,11 @@ export default function UserListItem({ userData, onSelect }) {
               type="email"
               placeholder={userData.email}
               onChange={(e) => setEmail(e.target.value)}
+              isInvalid={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length > 0}
             />
+            <Form.Control.Feedback type="invalid">
+              Please enter a valid email address.
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>

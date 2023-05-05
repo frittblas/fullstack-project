@@ -86,7 +86,7 @@ export default function Register() {
   return (
     <Container className="root-container">
       <Container className="auth-form-container">
-        <h2>Register</h2>
+        <h1 style={{ color: "white" }}>Register</h1>
         <Form className="register-form" method="POST" onSubmit={handleSubmit}>
           <Form.Group controlId="username">
             <Form.Label>Username</Form.Label>

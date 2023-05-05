@@ -10,6 +10,15 @@ export default function AddUserModal(props) {
     handleAddUser,
   } = props;
 
+  const programTitles = [
+    'Software Development',
+    'Economics',
+    'IOT Engineers',
+    'Business Administration',
+    'Digital Design',
+    'Food and Meal Science'
+  ];
+
   return (
     <Modal show={showModal} onHide={() => setShowModal(false)} title="Create new user">
       <Modal.Header closeButton>
@@ -18,10 +27,10 @@ export default function AddUserModal(props) {
       <Modal.Body>
         <Form onSubmit={handleAddUser}>
           <Form.Group controlId="formBasicUsername">
-            <Form.Label>firstname</Form.Label>
+            <Form.Label>First Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter firstname"
+              placeholder="Enter first name"
               onChange={(e) =>
                 setFormData({ ...formData, firstname: e.target.value })
               }
@@ -30,10 +39,10 @@ export default function AddUserModal(props) {
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>lastname</Form.Label>
+            <Form.Label>Last Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter lastname"
+              placeholder="Enter last name"
               onChange={(e) =>
                 setFormData({ ...formData, lastname: e.target.value })
               }
@@ -42,7 +51,7 @@ export default function AddUserModal(props) {
           </Form.Group>
 
           <Form.Group controlId="formBasicFirstName">
-            <Form.Label>username</Form.Label>
+            <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter username"
@@ -54,7 +63,7 @@ export default function AddUserModal(props) {
           </Form.Group>
 
           <Form.Group controlId="formBasicLastName">
-            <Form.Label>email</Form.Label>
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter email"
@@ -66,7 +75,7 @@ export default function AddUserModal(props) {
           </Form.Group>
 
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>password</Form.Label>
+            <Form.Label>Password</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter password"
@@ -78,25 +87,30 @@ export default function AddUserModal(props) {
           </Form.Group>
 
           <Form.Group controlId="formBasicProgram">
-            <Form.Label>programTitle</Form.Label>
+            <Form.Label>Program Title</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Enter program"
+              as="select"
               onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  programTitle: e.target.value,
-                })
+                setFormData({ ...formData, programTitle: e.target.value })
               }
               value={formData.programTitle}
-            />
+            >
+              <option disabled selected value="">
+                Choose a program title
+              </option>
+              {programTitles.map((title) => (
+                <option key={title}>
+                  {title}
+                </option>
+              ))}
+            </Form.Control>
           </Form.Group>
 
           <Form.Group controlId="formBasicRole">
-            <Form.Label>profileImg</Form.Label>
+            <Form.Label>Profile Image</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter image"
+              placeholder="Enter image URL"
               onChange={(e) =>
                 setFormData({ ...formData, profileImg: e.target.value })
               }

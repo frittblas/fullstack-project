@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/SearchBar';
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
@@ -11,7 +10,6 @@ import { useStates } from 'react-easier';
 import { MAIN_POST_THREAD_NAME } from './../../constants.js';
 import './AdminPage.css';
 import { useApi } from '../../hooks/useApi';
-import Modal from 'react-bootstrap/Modal';
 import AddUserModal from './UserModal';
 
 export default function AdminPage() {
@@ -97,6 +95,7 @@ export default function AdminPage() {
   const handleStats = () => {
     navigate('/statistics')
   };
+ 
   
   if (state.adminProgramSelected !== getCurrentProg) {
     resetSearchField();
@@ -134,15 +133,6 @@ export default function AdminPage() {
           className="rounded new-user-btn btn-light-green"
         >
           Stats
-        </Button>
-        <Button
-          variant="info"
-          onClick={() => handlePosts()}
-          type="button"
-          style={{ width: '120px' }}
-          className="rounded new-user-btn btn-light-green"
-        >
-          Posts
         </Button>
         <AddUserModal
           showModal={showModal}
@@ -194,8 +184,6 @@ function filterUsers(keyword, userList) {
 
   return result;
 }
-
-
 function resetSearchField() {
   searchBar.value = '';
 }}

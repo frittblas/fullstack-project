@@ -11,6 +11,7 @@ export default function SearchBar({ onSearch, onReset, placeholder }) {
         variant="success"
         onClick={(e) => onSearch(e, searchBar.value)}
         size="sm"
+        className= "rounded"
       >
         Search
       </Button>
@@ -18,7 +19,7 @@ export default function SearchBar({ onSearch, onReset, placeholder }) {
         variant="success"
         onClick={(e) => onReset(e, searchBar.value)}
         type="reset"
-        className="ms-1"
+        className="ms-1 rounded"
         size="sm"
       >
         Reset

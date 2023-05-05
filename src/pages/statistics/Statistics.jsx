@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Card, Col, Row, Image } from 'react-bootstrap';
-import { CanvasJSChart } from 'canvasjs-react-charts';
+import { Tab, Tabs, Card, Col, Row, Image } from 'react-bootstrap';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend,   CategoryScale, LinearScale, BarElement, Title, } from "chart.js";
+import { Bar, Doughnut } from "react-chartjs-2";
 import { useApi } from '../../hooks/useApi';
 import Spinner from 'react-bootstrap/Spinner';
+import './Statistics.css';
 
 export default function Statistics() {
+  ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
+
   const api = useApi();
   const [isInitLoad, setInitLoad] = useState(true);
   const [numberOfUsers, setNumberOfUsers] = useState();
@@ -16,7 +20,6 @@ export default function Statistics() {
     (async () => {
       const users = await api.getUsersPerProgram();
       const posts = await api.getPostsPerProgram();
-      const numberOfUsers = await api.getNumberOfUsers();
       const numberOfPosts = await api.getNumberOfPosts();
       setUsersPerProgram(users);
       setPostsPerProgram(posts);
@@ -26,78 +29,85 @@ export default function Statistics() {
     })();
   }, []);
 
-
-  const pieOptions = {
-    title: {
-      text: 'Number of users',
-    },
-    data: [
+  const usersData = {
+    labels: usersPerProgram.map(i => i.program),
+    datasets: [
       {
-        type: 'pie',
-        dataPoints: Array.isArray(usersPerProgram) ? usersPerProgram.map((item) => ({
-          label: item.program,
-          y: item.numberOfUsers,
-        })) : [],
-        
+        label: '# of Users',
+        data: usersPerProgram.map(i => i.numberOfUsers),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 2,
       },
     ],
   };
 
-  const chartOptions = {
-    title: {
-      text: 'Number of posts',
-    },
-    axisX: {
-      labelAngle: 270
-    },
-    data: [
+  const postsData = {
+    labels: postsPerProgram.map(p => p.program),
+    datasets: [
       {
-        type: 'column',
-        dataPoints: Array.isArray(postsPerProgram) ? postsPerProgram.map((item) => ({
-          label: item.program,
-          y: item.numberOfPosts,
-        })) : [],
-      },
+        label: "Posts in Program",
+        data: postsPerProgram.map(i => i.numberOfPosts),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+      }
     ],
+  };
+
+  const postOptions = {
+    plugins: {
+      legend: {
+        display:false,
+      },
+      title: {
+        display: false,
+        text: 'Chart.js Bar Chart',
+      },
+      responsive: true,
+      maintainAspectRatio: true
+    },
   };
 
   return (
     <>
-             {isInitLoad ? (
+      {isInitLoad ? (
         <div className="spinner-wrap">
           <Spinner animation="border" />
         </div>
-      ) : (
-          <>
-      <Row className="d-flex flex-wrap justify-content-center">
-        <Col className="mt-4 m-3" xs={10} sm={10} md={10} lg={10} xl={10}>
-          <Card className="h-100">
-            <Card.Header>User statistics</Card.Header>
-            <Card.Body>
-              <CanvasJSChart options={pieOptions} />
-              <div>Total number of users: {numberOfUsers?.users || ""}</div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      
-     
-
-      <Row className="d-flex flex-wrap justify-content-center">
-        <Col className="mt-4 m-3" xs={10} sm={10} md={10} lg={10} xl={10}>
-          <Card className="h-100">
-            <Card.Header>Posts statistics</Card.Header>
-            <Card.Body>
-              <CanvasJSChart options={chartOptions} />
-              <div>Total number of posts: {numberOfPosts?.posts || ""}</div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-     </>
-          
-     )}
-     
+        ) : (
+        <Tabs
+        defaultActiveKey="posts-stts"
+        id="uncontrolled-tab"
+        className="mb-3">
+          <Tab eventKey="posts-stts" title="Posts">
+            <Bar data={postsData} options={postOptions}/>
+            <div>Total number of posts: {numberOfPosts?.posts || ""}</div>
+          </Tab>
+          <Tab eventKey="users-stts" title="Users">
+            <Doughnut data={usersData} />
+          </Tab>
+        </Tabs>
+      )}
     </>
   );
 }

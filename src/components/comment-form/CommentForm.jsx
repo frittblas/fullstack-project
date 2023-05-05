@@ -21,7 +21,7 @@ export default function CommentForm({onCommentHandler}) {
         <Button 
           variant="success" 
           type="submit" 
-          className="ms-3" 
+          className="ms-3 rounded" 
           onClick={async () => onCommentHandler(await onComment(api, postId, postCommentMsg))}>
           Comment
         </Button>

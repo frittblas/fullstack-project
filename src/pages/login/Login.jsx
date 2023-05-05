@@ -17,7 +17,7 @@ export default function Login() {
     e.preventDefault();
     const response = await api.loginUser(username, password)
     delete response.password;
-    
+
     setUser(response);
 
     setLoginError(response.message);
@@ -41,7 +41,10 @@ export default function Login() {
   return (
     <Container className="root-container">
       <Container className="auth-form-container">
-        <h2>Login</h2>
+        <div className="header-container" style={{ display: "flex", alignItems: "center" }}>
+          <img src="/hkr-logo.svg" alt="hkr-logo" style={{ width: "50px", marginRight: "10px" }} />
+          <h1 style={{ margin: "0", color: "white" }}>Forum</h1>
+        </div>
         <Form className="login-form" onSubmit={handleSubmit}>
           <Form.Group controlId="username">
             <Form.Label>Username</Form.Label>

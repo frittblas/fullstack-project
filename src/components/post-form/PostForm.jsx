@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import APIHelper from '../../utilities/api-helper';
@@ -15,11 +15,11 @@ export default function PostForm({onPostPosted}) {
   
   return (
     <Form id="post-form" method="POST" onSubmit={e => onPostSubmit(e, api, state.programMain)}>
-      <Form.Group className="mb-3">
-        <Form.Control type="input" placeholder="The Big Title" />
+      <Form.Group className="mb-3" controlId="validationPostTitle">
+        <Form.Control onItype="input" placeholder="The Big Title" required />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Control as="textarea" placeholder="..." />
+        <Form.Control as="textarea" placeholder="..." required />
         <Form.Text className="text-muted">
           Let us know what is on your mind.
         </Form.Text>

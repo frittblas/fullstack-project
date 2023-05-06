@@ -8,15 +8,15 @@ import { useApi } from '../../hooks/useApi';
 
 let onPostPostedHook;
 
-export default function PostForm({onPostPosted}) {
+export default function PostForm({ onPostPosted }) {
   const api = useApi();
   const state = useStates("main");
   onPostPostedHook = onPostPosted;
-  
+
   return (
     <Form id="post-form" method="POST" onSubmit={e => onPostSubmit(e, api, state.programMain)}>
       <Form.Group className="mb-3" controlId="validationPostTitle">
-        <Form.Control onItype="input" placeholder="The Big Title" required />
+        <Form.Control type="input" placeholder="The Big Title" required />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Control as="textarea" placeholder="..." required />

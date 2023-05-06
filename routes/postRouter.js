@@ -87,7 +87,7 @@ router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
 
     if (newPost.image === undefined) {
       //return res.status(404).json("404: Image not found")
-      return res.sendFile('public/noimage.png', { root: './' });
+      return res.sendFile('dist/noimage.png', { root: './' });
     }
 
     const imageObj = await JSON.parse(newPost.image);

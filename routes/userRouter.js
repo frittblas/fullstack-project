@@ -82,7 +82,7 @@ router.post('/register', async (req, res) => {
 router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const someUser = await user.findById(req.params.id);
-    if (!someUser) return res.sendFile('public/noavatar.png', { root: './' });
+    if (!someUser) return res.sendFile('dist/noavatar.png', { root: './' });
 
     const imageObj = await JSON.parse(someUser.profileImg);
     const image = Buffer.from(imageObj.contents, 'base64');
@@ -92,7 +92,7 @@ router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
 
   } catch (err) {
     //res.status(500).send(err.message)
-    return res.sendFile('public/noavatar.png', { root: './' });
+    return res.sendFile('dist/noavatar.png', { root: './' });
   }
 })
 

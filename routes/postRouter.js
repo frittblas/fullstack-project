@@ -40,9 +40,9 @@ router.get('/program', authenticateJWT(allowedPrograms), async (req, res) => {
 router.get('/:id', authenticateJWT(allowedPrograms), async (req, res) => {
 
   try {
-   
+
     const post = await getPostById(req.params.id);
-    
+
     if (!post) res.status(404).send('Post not found');
 
     res.send(post);
@@ -60,7 +60,7 @@ router.post('/', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const decryptedToken = decryptJWT(req.cookies.access_token);
     const { program } = decryptedToken.user
-    
+
     const { title, message, image } = req.body;
     const imageString = JSON.stringify(image)
 
@@ -86,7 +86,8 @@ router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
     }
 
     if (newPost.image === undefined) {
-      return res.status(404).json("404: Image not found")
+      //return res.status(404).json("404: Image not found")
+      return res.sendFile('public/noimage.png', { root: './' });
     }
 
     const imageObj = await JSON.parse(newPost.image);

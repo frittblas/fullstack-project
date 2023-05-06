@@ -1,11 +1,11 @@
 #admin-page {
-	margin: 0 10px;
+  margin: 0 10px;
 }
 
-.table-responsive > table.user-table {
-	margin-top: 20px;
-	border-collapse:separate; 
- 	border-spacing: 0 2em;
+.table-responsive>table.user-table {
+  margin-top: 20px;
+  border-collapse: separate;
+  border-spacing: 0 2em;
 }
 
 .table-responsive>table.user-table tr td {
@@ -18,6 +18,25 @@
 
 .modal-dialog {
   width: 400px;
+}
+
+@media screen and (max-width: 600px) {
+  .modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+  }
+
+  .modal-content {
+    background-image: linear-gradient(79deg, #d0dfc3, #bde29d, white);
+    display: flex;
+    position: fixed;
+    max-width: 96%;
+    max-height: 96%;
+    overflow: auto;
+    margin: auto;
+  }
 }
 
 .modal-content {

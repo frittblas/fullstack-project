@@ -70,7 +70,7 @@ export default function UserListItem({ userData, onSelect }) {
 
   return (
     <>
-      <tr>
+      <tr id="user-list-items-tbl">
         <td><Form.Check type="checkbox" onChange={() => onSelect(userData._id)} /></td>
         <td><Image roundedCircle="true" src={`/api/users/${userData._id}/image`} onError={(event) => event.target.src = '../../../noavatar.png'} height="50" width="50" /></td>
         <td><a onClick={() => handleEditUser(userData)}>{`${userData.firstname} ${userData.lastname}`}</a></td>

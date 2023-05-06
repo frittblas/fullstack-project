@@ -2,3 +2,19 @@
   color: black !important;
   margin-top: 10px;
 }
+
+.title {
+  font-weight: 00;
+  font-size: 25px;
+  padding: 0px;
+}
+
+.modal-header {
+  padding: 10px;
+}
+
+@media screen and (max-width: 420px) {
+  .new-user-btn-row {
+    display: none;
+  }
+}

@@ -1,7 +1,11 @@
-.table-responsive>table.user-table {
-  margin-top: 20px;
-  border-collapse: separate;
-  border-spacing: 0 2em;
+#admin-page {
+	margin: 0 10px;
+}
+
+.table-responsive > table.user-table {
+	margin-top: 20px;
+	border-collapse:separate; 
+ 	border-spacing: 0 2em;
 }
 
 .table-responsive>table.user-table tr td {

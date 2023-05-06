@@ -16,7 +16,7 @@ export default function PostToggler() {
         checked={!state.programMain}
         onClick={() => state.programMain = !state.programMain}
       />
-      <span>IT</span>
+      <span>Program</span>
     </div>
   );
 }

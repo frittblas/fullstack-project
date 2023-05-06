@@ -1,7 +1,11 @@
+import { useLocalStorage } from './useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 
 export const useApi = () => {
+  const [user, setUser] = useLocalStorage('user', []);
   const navigate = useNavigate();
+
+  const resetUserLogin = () => setUser(null);
 
   return {
     async getUsers() { return await this._get('/api/users') },
@@ -39,7 +43,7 @@ export const useApi = () => {
     async _get(url) {
       try {
         const resp = await fetch(url);
-        if (resp.status == 401) navigate('/login');
+        if (resp.status == 401) {resetUserLogin(); navigate('/login')}
         else if (resp.status == 403) navigate('/unauth');
         return resp.ok ? await resp.json() : null;
       } catch (e) {
@@ -55,7 +59,7 @@ export const useApi = () => {
           body: JSON.stringify(bodyObj)
         });
 
-        if (resp.status == 401) navigate('/login');
+        if (resp.status == 401) {resetUserLogin(); navigate('/login')};
 
         return (resp.status == 200 || resp.status == 201) ? await resp.json() : null;
       } catch (e) {
@@ -72,7 +76,7 @@ export const useApi = () => {
           body: JSON.stringify(bodyObj)
         });
 
-        if (resp.status == 401) navigate('/login');
+        if (resp.status == 401) {resetUserLogin(); navigate('/login')};
 
         return (resp.status == 200 || resp.status == 201) ? await resp.json() : null;
       } catch (e) {
@@ -87,6 +91,8 @@ export const useApi = () => {
           method: 'DELETE'
         });
 
+        if (resp.status == 401) {resetUserLogin(); navigate('/login')};
+        
         return resp.ok ? await resp.json() : null;
       } catch (e) {
         console.error(e.message);

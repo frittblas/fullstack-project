@@ -21,7 +21,7 @@ export default function App() {
     programMain: true
   });
   const location = useLocation();
-  const hideNavbar = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/about';
+  const hideNavbar = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/register';
 
   return (<>
     <main>

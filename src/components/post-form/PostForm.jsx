@@ -49,4 +49,8 @@ async function onPostSubmit(event, api, programMain) {
   if (respData != null) {
     onPostPostedHook(respData)
   }
+
+  event.target[0].value = '';
+  event.target[1].value = '';
+  event.target[2].value = '';
 }

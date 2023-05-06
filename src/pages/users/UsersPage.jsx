@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Container from 'react-bootstrap/Container';
+import Spinner from 'react-bootstrap/Spinner';
 import Form from 'react-bootstrap/Form';
 import PostForm from '../../components/post-form/PostForm';
 import Post from '../../components/post/Post';
@@ -12,6 +13,7 @@ import { useApi } from '../../hooks/useApi';
 export default function UsersPage() {
   const api = useApi();
   const state = useStates("main");
+  const [isInitLoad, setInitLoad] = useState(true);
   const [getMainPostList, setMainPostList] = useState([])
   const [getShownPostList, setShownPostList] = useState([])
 
@@ -21,6 +23,7 @@ export default function UsersPage() {
       const posts = await api.getPosts(state.programMain);
       setMainPostList(posts);
       setShownPostList(posts);
+      setInitLoad(false);
     })();
   }, [state.programMain]);
 
@@ -41,7 +44,11 @@ export default function UsersPage() {
         </Accordion.Item>
       </Accordion>
       <Container id="post-list">
-        { getShownPostList ? getShownPostList.map(p => <Post key={p._id} postData={p} />) : ''}
+        {
+          isInitLoad ?
+          <div className="spinner-wrap"><Spinner animation="border" /></div> :
+          <>{ getShownPostList ? getShownPostList.map(p => <Post key={p._id} postData={p} />) : ''}</>
+        }
       </Container>
     </div>
   );

@@ -17,7 +17,7 @@ export default function Navbar() {
   const [user] = useLocalStorage('user', []);
 
   return (
-    <ReactNavbar expand="lg" sticky="top">
+    <ReactNavbar expand="sm" sticky="top">
       <Container fluid>
         <ReactNavbar.Brand as={Link} to="/users" >
           <img
@@ -29,22 +29,24 @@ export default function Navbar() {
           Forum
         </ReactNavbar.Brand>
         {
-          useLocation().pathname === '/users' ?
-            <PostToggler /> :
-            ""
-        }
-        {
-          (user.programTitle === "admin" && useLocation().pathname !== '/admin') ?
-            <div className="navbar-link-group"><Link to="/admin">Admin</Link></div> :
-            ""
-        }
-        {
           useLocation().pathname === '/admin' ?
             <ProgramsDropdown /> :
             ""
         }
-        <div className="d-flex logout-wrap">
-          <Nav.Link as={Link} to="/login" onClick={() => api.logoutUser()}>Logout</Nav.Link>
+        <div className="d-flex main-menu-wrap">
+          {
+            useLocation().pathname === '/users' ?
+              <PostToggler /> :
+              ""
+          }
+          {
+            (user.programTitle === "admin" && useLocation().pathname !== '/admin') ?
+              <div className="navbar-link-group"><Link to="/admin">Admin</Link></div> :
+              ""
+          }
+          <div className="d-flex logout-wrap">
+            <Nav.Link as={Link} to="/login" onClick={() => api.logoutUser()}>Logout</Nav.Link>
+          </div>
         </div>
       </Container>
     </ReactNavbar>

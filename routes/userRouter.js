@@ -83,6 +83,11 @@ router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
   try {
     const someUser = await user.findById(req.params.id);
     if (!someUser) return res.status(404).json("404: Page not found!");
+    /*
+        if (someUser.profileImage === undefined) {
+          return res.status(404).json("404: Image not found")
+          //return res.sendFile('public/noavatar.png', { root: './' });
+        } */
 
     const imageObj = await JSON.parse(someUser.profileImg);
     const image = Buffer.from(imageObj.contents, 'base64');
@@ -91,7 +96,8 @@ router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
     res.send(image);
 
   } catch (err) {
-    res.status(500).send(err.message)
+    //res.status(500).send(err.message)
+    return res.sendFile('public/noavatar.png', { root: './' });
   }
 })
 

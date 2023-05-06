@@ -1,3 +1,7 @@
+#post-page {
+	margin: 0 20px;
+}
+
 #post-page .list-group-item {
 	border: none;
 }

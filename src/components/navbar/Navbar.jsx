@@ -14,7 +14,7 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export default function Navbar() {
   const api = useApi();
-  const [user] = useLocalStorage('user', []);
+  const [user, setUser] = useLocalStorage('user', []);
 
   return (
     <ReactNavbar expand="sm" sticky="top">
@@ -40,18 +40,18 @@ export default function Navbar() {
               ""
           }
           {
-            (user.programTitle === "admin" && useLocation().pathname !== '/admin' && useLocation().pathname !== '/about') ?
+            (user && user.programTitle === "admin" && useLocation().pathname !== '/admin' && useLocation().pathname !== '/about') ?
               <div className="navbar-link-group"><Link to="/admin">Admin</Link></div> :
               ""
           }
           <div className="d-flex login-ctl-wrap">
             {
-            useLocation().pathname === '/about' ?
+              (useLocation().pathname === '/about' && !user) ?
               <>
                 <Nav.Link as={Link} to="/register" onClick={() => api.logoutUser()}>Register</Nav.Link>
                 <Nav.Link as={Link} to="/login" onClick={() => api.logoutUser()}>Login</Nav.Link>
               </> :
-              <Nav.Link as={Link} to="/login" onClick={() => api.logoutUser()}>Logout</Nav.Link>
+              <Nav.Link as={Link} to="/login" onClick={() => {setUser(null); api.logoutUser();}}>Logout</Nav.Link>
             }
           </div>
         </div>

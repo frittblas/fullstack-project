@@ -65,7 +65,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-          <Button className="auth-btn" type="submit">Log In</Button>
+          <Button variant="success" className="auth-btn" type="submit">Log In</Button>
           {loginError && (
             <Form.Text className="text-danger">{loginError}</Form.Text>
           )}

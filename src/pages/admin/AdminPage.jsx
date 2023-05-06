@@ -74,7 +74,7 @@ export default function AdminPage() {
       console.error(error.message);
     }
   };
-  
+
   const handleDeleteUsers = async () => {
     console.log("clicked on delete button")
     try {
@@ -95,8 +95,8 @@ export default function AdminPage() {
   const handleStats = () => {
     navigate('/statistics')
   };
- 
-  
+
+
   if (state.adminProgramSelected !== getCurrentProg) {
     resetSearchField();
     setCurrentProg(state.adminProgramSelected);
@@ -105,14 +105,14 @@ export default function AdminPage() {
   }
 
   return (
-    <div>
-      <Form.Group className="d-flex flex-wrap align-items-center justify-content-center" style={{ gap: '40px' }}>
+    <div id="admin-page">
+      <Form.Group className="d-flex flex-wrap align-items-center justify-content-center" style={{ gap: '10px' }}>
         <Button
           variant="danger"
           onClick={() => handleDeleteUsers()}
           type="button"
           className="delete rounded btn-light-green"
-          style={{ width: '120px' }}
+          style={{ width: '100px' }}
           disabled={selectedUsers.length === 0}
         >
           Delete
@@ -120,7 +120,7 @@ export default function AdminPage() {
         <Button
           variant="success"
           onClick={() => setShowModal(true)}
-          style={{ width: '120px' }}
+          style={{ width: '100px' }}
           className="rounded btn-light-green"
         >
           New User
@@ -129,7 +129,7 @@ export default function AdminPage() {
           variant="primary"
           onClick={() => handleStats()}
           type="button"
-          style={{ width: '120px' }}
+          style={{ width: '100px' }}
           className="rounded new-user-btn btn-light-green"
         >
           Stats
@@ -143,11 +143,11 @@ export default function AdminPage() {
         />
         <div className="w-100">
           <div className="input-group input-group-sm">
-            <SearchBar 
+            <SearchBar
               onSearch={(e, val) => setUsersList(filterUsers(val, getMainUserList))}
               onReset={() => setUsersList(getMainUserList)}
               placeholder="first, last, username"
-              style={{ width: '300px' }} 
+              style={{ width: '300px' }}
             />
           </div>
         </div>
@@ -157,7 +157,7 @@ export default function AdminPage() {
           <Spinner animation="border" />
         </div>
       ) : (
-        <Table responsive className="align-middle user-table">
+        <Table responsive className="align-middle user-table" style={{ margin: '0px' }}>
           <tbody>
             {getUsersList && getUsersList.map(u => (
               <UserListItem
@@ -172,18 +172,19 @@ export default function AdminPage() {
       )}
     </div>
   );
-  
-function filterUsers(keyword, userList) {
-  const result = userList.filter(u => {
-    return (
-      u.firstname.toLowerCase().includes(keyword.toLowerCase()) ||
-      u.lastname.toLowerCase().includes(keyword.toLowerCase()) ||
-      u.username.toLowerCase().includes(keyword.toLowerCase())
-    );
-  });
 
-  return result;
+  function filterUsers(keyword, userList) {
+    const result = userList.filter(u => {
+      return (
+        u.firstname.toLowerCase().includes(keyword.toLowerCase()) ||
+        u.lastname.toLowerCase().includes(keyword.toLowerCase()) ||
+        u.username.toLowerCase().includes(keyword.toLowerCase())
+      );
+    });
+
+    return result;
+  }
+  function resetSearchField() {
+    searchBar.value = '';
+  }
 }
-function resetSearchField() {
-  searchBar.value = '';
-}}

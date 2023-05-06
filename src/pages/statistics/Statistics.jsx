@@ -89,7 +89,7 @@ export default function Statistics() {
   };
 
   return (
-    <>
+    <div id="stats-page">
       {isInitLoad ? (
         <div className="spinner-wrap">
           <Spinner animation="border" />
@@ -108,6 +108,6 @@ export default function Statistics() {
           </Tab>
         </Tabs>
       )}
-    </>
+    </div>
   );
 }

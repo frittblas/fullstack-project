@@ -16,7 +16,7 @@ export default function PostForm({onPostPosted}) {
   return (
     <Form id="post-form" method="POST" onSubmit={e => onPostSubmit(e, api, state.programMain)}>
       <Form.Group className="mb-3" controlId="validationPostTitle">
-        <Form.Control onItype="input" placeholder="The Big Title" required />
+        <Form.Control type="input" placeholder="The Big Title" required />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Control as="textarea" placeholder="..." required />

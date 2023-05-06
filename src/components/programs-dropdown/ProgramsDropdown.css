@@ -3,6 +3,16 @@
 	align-items: center;
 }
 
+.programs-select select {
+	width: auto;
+}
+
 .programs-select span {
 	margin-right: 5px;	
 }
+
+/*@media (max-width: 440px) {
+  	.programs-select select {
+		width: 200px;
+	}
+}*/

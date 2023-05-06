@@ -80,7 +80,7 @@ export default function UserListItem({ userData, onSelect }) {
 
       <Modal show={showModal} onHide={() => closeModal()}>
         <Modal.Header closeButton>
-          <Form.Label className="title">Update user</Form.Label>
+          <Modal.Title>Update user</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group controlId="formUserName">
@@ -149,8 +149,8 @@ export default function UserListItem({ userData, onSelect }) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={() => closeModal()}>Cancel</Button>
-          <Button variant="success" onClick={() => handleSaveChanges()} disabled={!formValid}>Save Changes</Button>
+          <Button variant="success" className="rounded new-user-btn btn-light-green" onClick={() => closeModal()}>Cancel</Button>
+          <Button variant="success" className="rounded new-user-btn btn-light-green" onClick={() => handleSaveChanges()} disabled={!formValid}>Save Changes</Button>
         </Modal.Footer>
       </Modal>
     </>

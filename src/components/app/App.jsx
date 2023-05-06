@@ -21,13 +21,14 @@ export default function App() {
     programMain: true
   });
   const location = useLocation();
-  const hideNavbar = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/about';
+  const hideNavbar = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/about';
 
   return (<>
     <main>
       {!hideNavbar && <Navbar />}
       <Container id="content">
         <Routes>
+          <Route path="/" element={<Login />}> </Route>
           <Route path="/users" element={<UsersPage />}> </Route>
           <Route path="/admin" element={<AdminPage />}> </Route>
           <Route path="/posts/:postId" element={<PostsPage />}> </Route>

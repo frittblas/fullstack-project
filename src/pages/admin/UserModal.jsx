@@ -109,10 +109,10 @@ export default function AddUserModal(props) {
           <Form.Group controlId="formBasicRole">
             <Form.Label>Profile Image</Form.Label>
             <Form.Control
-              type="text"
+              type="file"
               placeholder="Enter image URL"
               onChange={(e) =>
-                setFormData({ ...formData, profileImg: e.target.value })
+                setFormData({ ...formData, profileImg: changePicFormat(e.target.value) })
               }
               value={formData.profileImg}
             />
@@ -120,10 +120,10 @@ export default function AddUserModal(props) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setShowModal(false)}>
+        <Button variant="success" className="rounded new-user-btn btn-light-green" onClick={() => setShowModal(false)}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={() => handleAddUser()}>
+        <Button variant="success" className="rounded new-user-btn btn-light-green" onClick={() => handleAddUser()}>
           Create User
         </Button>
       </Modal.Footer>

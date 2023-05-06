@@ -171,7 +171,7 @@ export default function Register() {
               </div>
             )}
           </Form.Group>
-          <Button className="auth-btn" type="submit">Register</Button>
+          <Button variant="success" className="auth-btn" type="submit">Register</Button>
           {registrationError && (
             <Form.Text className="text-danger">{registrationError}</Form.Text>
           )}

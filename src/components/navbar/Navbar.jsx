@@ -48,8 +48,8 @@ export default function Navbar() {
             {
               (useLocation().pathname === '/about' && !user) ?
               <>
-                <Nav.Link as={Link} to="/register" onClick={() => api.logoutUser()}>Register</Nav.Link>
-                <Nav.Link as={Link} to="/login" onClick={() => api.logoutUser()}>Login</Nav.Link>
+                <Nav.Link as={Link} to="/register">Register</Nav.Link>
+                <Nav.Link as={Link} to="/login">Login</Nav.Link>
               </> :
               <Nav.Link as={Link} to="/login" onClick={() => {setUser(null); api.logoutUser();}}>Logout</Nav.Link>
             }

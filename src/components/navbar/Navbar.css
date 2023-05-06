@@ -1,59 +1,59 @@
 nav {
-	background-color: #6dc71d;
-	margin-bottom: 30px;
+  background-color: #6dc71d;
+  margin-bottom: 15px;
 }
 
 nav .form-switch input {
-	border-radius: 8px !important;
+  border-radius: 8px !important;
 }
 
 nav .navbar-link-group {
-	padding: 0 10px 0;
-	border-left: 1px solid white;
+  padding: 0 10px 0;
+  border-left: 1px solid white;
 }
 
 nav .navbar-link-group a {
-	color: white;
-	text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 .navbar-light a.navbar-brand {
-	color: white;
-	margin-right: 3%;
+  color: white;
+  margin-right: 3%;
 }
 
 a.navbar-brand img {
-	border: 4px solid white;
+  border: 4px solid white;
 }
 
 .logout-wrap {
-	margin-left: auto;
-	padding-left: 10px;
+  margin-left: auto;
+  padding-left: 10px;
 }
 
 @media (max-width: 581px) {
-	nav.navbar > .container-fluid {
-		flex-wrap: nowrap;
-	}
+  nav.navbar>.container-fluid {
+    flex-wrap: nowrap;
+  }
 }
 
 @media (max-width: 540px) {
-	.navbar .programs-select {
-		display: block;
-	}
+  .navbar .programs-select {
+    display: block;
+  }
 }
 
 @media (max-width: 350px) {
-	nav.navbar > .container-fluid {
-		flex-direction: column;
-	}
+  nav.navbar>.container-fluid {
+    flex-direction: column;
+  }
 
-	.logout-wrap {
-		margin-left: 0;
-	}
+  .logout-wrap {
+    margin-left: 0;
+  }
 
-	nav .container-fluid > div {
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
+  nav .container-fluid>div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }

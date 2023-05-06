@@ -7,3 +7,7 @@
 	display: flex;
 	justify-content: center;
 }
+
+#stats-page ul.mb-3.nav.nav-tabs li.nav-item button[aria-selected="false"] {
+	color: #6dc71d;
+}

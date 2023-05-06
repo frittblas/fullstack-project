@@ -1,3 +1,8 @@
+#user-list-items-tbl a {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .form-label {
   color: black !important;
   margin-top: 10px;

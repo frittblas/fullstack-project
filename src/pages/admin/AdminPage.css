@@ -1,3 +1,7 @@
+#admin-page {
+	margin: 0 10px;
+}
+
 .table-responsive > table.user-table {
 	margin-top: 20px;
 	border-collapse:separate; 

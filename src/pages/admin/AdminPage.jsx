@@ -105,7 +105,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div>
+    <div id="admin-page">
       <Form.Group className="d-flex flex-wrap align-items-center justify-content-center" style={{ gap: '40px' }}>
         <Button
           variant="danger"

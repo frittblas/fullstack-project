@@ -73,9 +73,9 @@ export default function UserListItem({ userData, onSelect }) {
       <tr>
         <td><Form.Check type="checkbox" onChange={() => onSelect(userData._id)} /></td>
         <td><Image roundedCircle="true" src={`/api/users/${userData._id}/image`} onError={(event) => event.target.src = '../../../noavatar.png'} height="50" width="50" /></td>
-        <td>{`${userData.firstname} ${userData.lastname}`}</td>
+        <td><a onClick={() => handleEditUser(userData)}>{`${userData.firstname} ${userData.lastname}`}</a></td>
         <td>{userData.programTitle}</td>
-        <td><Button className="rounded new-user-btn btn-light-green" variant="success" onClick={() => handleEditUser(userData)}>Edit</Button></td>
+        <td className="new-user-btn-row"><Button className="rounded new-user-btn btn-light-green" variant="success" onClick={() => handleEditUser(userData)}>Edit</Button></td>
       </tr>
 
       <Modal show={showModal} onHide={() => closeModal()}>

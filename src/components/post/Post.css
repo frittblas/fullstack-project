@@ -29,3 +29,24 @@
   font-size: 0.8rem;
   margin-top: 15px;
 }
+
+@media screen and (max-width: 600px) {
+  .post {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-image-container {
+    order: 1;
+    margin-bottom: 10px;
+  }
+
+  .post-details {
+    order: 2;
+    margin-top: 10px;
+  }
+
+  .card-text {
+    margin-top: 10px;
+  }
+}

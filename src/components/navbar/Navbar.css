@@ -31,7 +31,11 @@ a.navbar-brand img {
   border: 4px solid white;
 }
 
-.logout-wrap {
+.login-ctl-wrap a {
+  margin-right: 10px;
+}
+
+.login-ctl-wrap {
   margin-left: auto;
   padding-left: 10px;
 }
@@ -57,7 +61,7 @@ a.navbar-brand img {
     flex-direction: column;
   }
 
-  .logout-wrap {
+  .login-ctl-wrap {
     margin-left: 0;
   }
 

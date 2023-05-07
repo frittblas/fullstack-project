@@ -112,7 +112,7 @@ export default function AdminPage() {
           onClick={() => handleDeleteUsers()}
           type="button"
           className="delete rounded btn-light-green btn-sm"
-          style={{ width: '100px' }}
+          style={{ width: '105px' }}
           disabled={selectedUsers.length === 0}
         >
           Delete
@@ -120,7 +120,7 @@ export default function AdminPage() {
         <Button
           variant="success"
           onClick={() => setShowModal(true)}
-          style={{ width: '100px' }}
+          style={{ width: '105px' }}
           className="rounded btn-light-green btn-sm"
         >
           New User
@@ -129,7 +129,7 @@ export default function AdminPage() {
           variant="primary"
           onClick={() => handleStats()}
           type="button"
-          style={{ width: '100px' }}
+          style={{ width: '105px' }}
           className="rounded new-user-btn btn-light-green  btn-sm"
         >
           Stats

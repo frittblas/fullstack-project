@@ -17,3 +17,11 @@
 .post-full .text-muted {
   font-size: 0.7rem;
 }
+
+.post-full p {
+  white-space: break-spaces;
+}
+
+.list-group>.list-group-item p {
+  white-space: break-spaces;
+}

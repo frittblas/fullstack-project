@@ -11,7 +11,7 @@ export default function SearchBar({ onSearch, onReset, placeholder }) {
         variant="success"
         onClick={(e) => onSearch(e, searchBar.value)}
         size="sm"
-        className= "rounded"
+        className="rounded"
       >
         Search
       </Button>

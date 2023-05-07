@@ -18,7 +18,7 @@ export default function Register() {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [programTitle, setProgramTitle] = useState('');
   const [profileImg, setProfileImg] = useState(null);
-  // const [profileImgPreview, setProfileImgPreview] = useState('');
+  const [profileImgPreview, setProfileImgPreview] = useState('');
   const [programsList, setProgramsList] = useState([]);
   const [showAvatarSelect, setShowAvatarSelect] = useState(false);
   const navigate = useNavigate();
@@ -72,18 +72,6 @@ export default function Register() {
       </option>
     ));
   };
-
-  // const handleFileUpload = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setProfileImg(await APIHelper.toBase64(file));
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       setProfileImgPreview(reader.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
 
   return (
     <Container className="root-container">
@@ -164,7 +152,12 @@ export default function Register() {
               {generateProgramOptions(programsList)}
             </Form.Select>
           </Form.Group>
-          <Form.Group controlId="profilepic">
+          <Form.Group className="profilepic" controlId="profilepic">
+            {profileImgPreview && (
+              <div className="profile-pic-preview">
+                <img src={profileImgPreview} alt="Profile Picture Preview" />
+              </div>
+            )}
             <Button variant="success" className="btn-small" onClick={() => setShowAvatarSelect(true)}>
               Choose Pic
             </Button>
@@ -179,8 +172,18 @@ export default function Register() {
         </Button>
       </Container>
       <AvatarSelector 
-        handleCrop={img => setProfileImg(APIHelper.removePreDataFromBase64(img))}
-        handleClose={() => setShowAvatarSelect(false)}
+        handleCrop={img => {
+          const imgRaw = APIHelper.removePreDataFromBase64(img);
+          setProfileImg(imgRaw);
+          setProfileImgPreview(img);
+        }}
+        handleClose={() => {
+          setShowAvatarSelect(false);
+        }}
+        handleCancel={() => {
+          setProfileImg(null);
+          setProfileImgPreview(null);
+        }}
         showAvatarSelect={showAvatarSelect} />
     </Container>
   );

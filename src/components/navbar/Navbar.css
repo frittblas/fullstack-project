@@ -10,11 +10,16 @@ nav .form-switch input {
 nav .navbar-link-group {
   padding: 0 10px 0;
   border-left: 1px solid white;
+  border-right: 1px solid white;
 }
 
 nav .navbar-link-group a {
   color: white;
   text-decoration: none;
+}
+
+nav .main-menu-wrap {
+  width: 100%;
 }
 
 .navbar-light a.navbar-brand {
@@ -26,7 +31,11 @@ a.navbar-brand img {
   border: 4px solid white;
 }
 
-.logout-wrap {
+.login-ctl-wrap a {
+  margin-right: 10px;
+}
+
+.login-ctl-wrap {
   margin-left: auto;
   padding-left: 10px;
 }
@@ -43,12 +52,16 @@ a.navbar-brand img {
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 420px) {
+  nav .main-menu-wrap {
+    width: auto;
+  }
+
   nav.navbar>.container-fluid {
     flex-direction: column;
   }
 
-  .logout-wrap {
+  .login-ctl-wrap {
     margin-left: 0;
   }
 

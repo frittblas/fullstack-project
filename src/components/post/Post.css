@@ -10,11 +10,11 @@
   color: black;
 }
 
-.post>.card-body>.card-subtitle {
+.post>.card-body>.post-details .card-subtitle {
   font-size: 0.6rem;
 }
 
-.post>.card-body>a>img {
+.post>.card-body>.post-image-container>a>img {
   float: left;
   margin-right: 15px;
   max-height: 130px;
@@ -25,7 +25,7 @@
   margin-right: 10px;
 }
 
-.post>.card-body>.card-text {
+.post>.card-body>.post-details .card-text {
   font-size: 0.8rem;
   margin-top: 15px;
 }
@@ -36,17 +36,15 @@
     flex-direction: column;
   }
 
-  .post-image-container {
+  .post>.card-body>.post-image-container>a>img {
+    float: none;
+    max-height: 500px;
     order: 1;
     margin-bottom: 10px;
   }
 
-  .post-details {
+  .post>.post-details {
     order: 2;
-    margin-top: 10px;
-  }
-
-  .card-text {
     margin-top: 10px;
   }
 }

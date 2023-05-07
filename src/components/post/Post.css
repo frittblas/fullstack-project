@@ -28,6 +28,11 @@
 .post>.card-body>.post-details .card-text {
   font-size: 0.8rem;
   margin-top: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 @media screen and (max-width: 600px) {
@@ -41,6 +46,14 @@
     max-height: 500px;
     order: 1;
     margin-bottom: 10px;
+  }
+
+  .post>.card-body>.post-details .card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
   }
 
   .post>.post-details {

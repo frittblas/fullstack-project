@@ -106,13 +106,13 @@ export default function AdminPage() {
 
   return (
     <div id="admin-page">
-      <Form.Group className="d-flex flex-wrap align-items-center justify-content-center" style={{ gap: '10px' }}>
+      <Form.Group className="d-flex flex-wrap align-items-center justify-content-center" style={{ gap: '12px' }}>
         <Button
           variant="danger"
           onClick={() => handleDeleteUsers()}
           type="button"
           className="delete rounded btn-light-green btn-sm"
-          style={{ width: '100px' }}
+          style={{ width: '110px' }}
           disabled={selectedUsers.length === 0}
         >
           Delete
@@ -120,7 +120,7 @@ export default function AdminPage() {
         <Button
           variant="success"
           onClick={() => setShowModal(true)}
-          style={{ width: '100px' }}
+          style={{ width: '110px' }}
           className="rounded btn-light-green btn-sm"
         >
           New User
@@ -129,7 +129,7 @@ export default function AdminPage() {
           variant="primary"
           onClick={() => handleStats()}
           type="button"
-          style={{ width: '100px' }}
+          style={{ width: '110px' }}
           className="rounded new-user-btn btn-light-green  btn-sm"
         >
           Stats

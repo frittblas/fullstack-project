@@ -6,7 +6,7 @@ async function login(res, username, password) {
 
   console.log("login function called!");
 
-  const user = await users.findOne({ username });
+  const user = await users.findOne({ username: { $regex: new RegExp(username, 'i') } });
   if (!user) {
     return { message: 'Invalid username' };
   }

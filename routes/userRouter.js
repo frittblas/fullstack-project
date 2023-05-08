@@ -60,7 +60,7 @@ router.post('/register', async (req, res) => {
   try {
     const { firstname, lastname, username, email, password, programTitle, profileImg } = req.body;
 
-    const profileImgString = await JSON.stringify(profileImg);
+    // const profileImgString = await JSON.stringify(profileImg);
 
     const user = {
       firstname,
@@ -69,7 +69,8 @@ router.post('/register', async (req, res) => {
       email,
       password,
       programTitle,
-      profileImg: profileImgString,
+      // profileImg: profileImgString,
+      profileImg: profileImg,
     };
 
     const message = await register(res, user);
@@ -84,10 +85,10 @@ router.get('/:id/image', authenticateJWT(allowedPrograms), async (req, res) => {
     const someUser = await user.findById(req.params.id);
     if (!someUser) return res.sendFile('dist/noavatar.png', { root: './' });
 
-    const imageObj = await JSON.parse(someUser.profileImg);
-    const image = Buffer.from(imageObj.contents, 'base64');
+    // const imageObj = await JSON.parse(someUser.profileImg);
+    const image = Buffer.from(someUser.profileImg, 'base64');
 
-    res.set('Content-Type', imageObj.type);
+    res.set('Content-Type', 'image/jpeg');
     res.send(image);
 
   } catch (err) {

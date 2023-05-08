@@ -1,7 +1,11 @@
 .profile-pic-preview img {
-  margin: 10px;
+  margin: 10px 10px 0;
   width: 110px;
   height: 110px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.register-form>.profilepic>button.btn-small {
+  margin-top: 20px;
 }

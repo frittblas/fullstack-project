@@ -3,6 +3,7 @@ import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import APIHelper from '../../utilities/api-helper';
+import AvatarSelector from '../../components/avatar-selector/AvatarSelector';
 import { useApi } from '../../hooks/useApi';
 
 export default function Register() {
@@ -19,6 +20,7 @@ export default function Register() {
   const [profileImg, setProfileImg] = useState(null);
   const [profileImgPreview, setProfileImgPreview] = useState('');
   const [programsList, setProgramsList] = useState([]);
+  const [showAvatarSelect, setShowAvatarSelect] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,18 +71,6 @@ export default function Register() {
         {program.programTitle}
       </option>
     ));
-  };
-
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfileImg(await APIHelper.toBase64(file));
-      const reader = new FileReader();
-      reader.onload = () => {
-        setProfileImgPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   return (
@@ -162,14 +152,15 @@ export default function Register() {
               {generateProgramOptions(programsList)}
             </Form.Select>
           </Form.Group>
-          <Form.Group controlId="profilepic">
-            <Form.Label>Profile picture</Form.Label>
-            <Form.Control type="file" onChange={handleFileUpload} />
+          <Form.Group className="profilepic" controlId="profilepic">
             {profileImgPreview && (
               <div className="profile-pic-preview">
                 <img src={profileImgPreview} alt="Profile Picture Preview" />
               </div>
             )}
+            <Button variant="success" className="btn-small" onClick={() => setShowAvatarSelect(true)}>
+              Choose Pic
+            </Button>
           </Form.Group>
           <Button variant="success" className="auth-btn" type="submit">Register</Button>
           {registrationError && (
@@ -180,6 +171,20 @@ export default function Register() {
           Already have an account? Login here.
         </Button>
       </Container>
+      <AvatarSelector 
+        handleCrop={img => {
+          const imgRaw = APIHelper.removePreDataFromBase64(img);
+          setProfileImg(imgRaw);
+          setProfileImgPreview(img);
+        }}
+        handleClose={() => {
+          setShowAvatarSelect(false);
+        }}
+        handleCancel={() => {
+          setProfileImg(null);
+          setProfileImgPreview(null);
+        }}
+        showAvatarSelect={showAvatarSelect} />
     </Container>
   );
 }

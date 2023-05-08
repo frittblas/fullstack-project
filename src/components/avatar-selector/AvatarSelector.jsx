@@ -17,12 +17,12 @@ export default function AvatarSelector({showAvatarSelect, handleCrop, handleClos
         <Avatar onClose={() => {setSrc(null); handleCancel();}} onCrop={img => handleCrop(img)} width={300} height={300} src={src}/>
       </Modal.Body>
       <Modal.Footer>
-        <Button className="btn-small" onClick={() => handleClose()}>Done</Button>
-        <Button className="btn-small" variant='disabled' 
+      <Button className="rounded new-user-btn btn-light-green" variant='disabled' 
           onClick={() => {handleCancel(); handleClose();}}
         >
           Cancel
         </Button>
+        <Button className="rounded new-user-btn btn-light-green" onClick={() => handleClose()}>Confirm</Button>
       </Modal.Footer>
     </Modal>
   );

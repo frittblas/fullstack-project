@@ -158,8 +158,8 @@ export default function Register() {
                 <img src={profileImgPreview} alt="Profile Picture Preview" />
               </div>
             )}
-            <Button variant="success" className="btn-small" onClick={() => setShowAvatarSelect(true)}>
-              Choose Pic
+            <Button variant="success" className="rounded btn-small" onClick={() => setShowAvatarSelect(true)}>
+              Choose profile pic
             </Button>
           </Form.Group>
           <Button variant="success" className="auth-btn" type="submit">Register</Button>

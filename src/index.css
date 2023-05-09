@@ -29,6 +29,12 @@ button.btn {
   border-radius: 0;
 }
 
+button.btn-secondary {
+  background-color: #93999f;
+  border: none;
+  border-radius: 0;
+}
+
 textarea, input {
   border-radius: 0 !important;
 }

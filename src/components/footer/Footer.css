@@ -1,8 +1,27 @@
 .about-link {
   color: #6dc71d;
 }
-
 .about-link:hover {
-  color: rgb(189, 187, 187) !important;
-  text-decoration: underline;
+    color: rgb(189, 187, 187) !important;
+    text-decoration: underline;
+  }
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  color: #6c757d;
+  font-size: 0.875rem;
+  padding: 1rem;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.footer.hidden {
+  opacity: 0;
 }

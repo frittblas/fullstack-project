@@ -59,14 +59,11 @@ router.post('/register', async (req, res) => {
 
   try {
     const { firstname, lastname, username, email, password, programTitle, profileImg } = req.body;
-
-    const capitalizedFirstname = firstname.charAt(0).toUpperCase() + firstname.slice(1).toLowerCase();
-    const capitalizedLastname = lastname.charAt(0).toUpperCase() + lastname.slice(1).toLowerCase();
     
 
     const user = {
-      firstname: capitalizedFirstname,
-      lastname: capitalizedLastname,
+      firstname,
+      lastname,
       username,
       email,
       password,

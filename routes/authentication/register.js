@@ -107,6 +107,13 @@ async function register(res, user) {
     return { message: validationError };
   }
 
+  //capitalize first and last name
+  const capitalizedFirstname = user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1).toLowerCase();
+  const capitalizedLastname = user.lastname.charAt(0).toUpperCase() + user.lastname.slice(1).toLowerCase();
+  user.firstname = capitalizedFirstname;
+  user.lastname = capitalizedLastname;
+
+
   // encrypt password
   user.password = await encryptPassword(user.password);
 

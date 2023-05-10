@@ -59,8 +59,7 @@ router.post('/register', async (req, res) => {
 
   try {
     const { firstname, lastname, username, email, password, programTitle, profileImg } = req.body;
-
-    // const profileImgString = await JSON.stringify(profileImg);
+    
 
     const user = {
       firstname,
@@ -69,7 +68,6 @@ router.post('/register', async (req, res) => {
       email,
       password,
       programTitle,
-      // profileImg: profileImgString,
       profileImg: profileImg,
     };
 

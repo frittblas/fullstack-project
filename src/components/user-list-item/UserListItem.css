@@ -19,7 +19,7 @@
 }
 
 @media screen and (max-width: 420px) {
-  .new-user-btn-row {
+  .edit-user-btn-row {
     display: none;
   }
 }

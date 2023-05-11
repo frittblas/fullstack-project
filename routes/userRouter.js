@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const message = await login(res, username, password);
+    const message = await login(res, username.toUpperCase(), password);
     res.send(message);
   } catch (err) {
     res.status(500).send(err.message);
@@ -62,9 +62,9 @@ router.post('/register', async (req, res) => {
     
 
     const user = {
-      firstname,
+      firstname: firstname,
       lastname,
-      username,
+      username: username.toUpperCase(),
       email,
       password,
       programTitle,

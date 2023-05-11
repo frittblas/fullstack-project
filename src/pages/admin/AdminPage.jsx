@@ -107,7 +107,7 @@ export default function AdminPage() {
   return (
     <div id="admin-page">
       <Form.Group className="d-flex flex-wrap align-items-center justify-content-center" style={{ gap: '10px' }}>
-        <Button
+      <Button
           variant="danger"
           onClick={() => handleDeleteUsers()}
           type="button"
@@ -117,6 +117,7 @@ export default function AdminPage() {
         >
           Delete
         </Button>
+
         <Button
           variant="success"
           onClick={() => setShowModal(true)}

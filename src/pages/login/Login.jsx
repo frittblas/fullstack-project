@@ -22,14 +22,7 @@ export default function Login() {
 
     setLoginError(response.message);
 
-    if (response.message) {
-      if (response.message.includes('username')) {
-        setUsername('');
-      }
-      if (response.message.includes('password')) {
-        setPassword('');
-      }
-    } else {
+    if (!response.message) {
       navigate('/users');
     }
   };
@@ -67,7 +60,7 @@ export default function Login() {
           </Form.Group>
           <Button variant="success" className="auth-btn" type="submit">Log In</Button>
           {loginError && (
-            <Form.Text className="text-danger">{loginError}</Form.Text>
+            <Form.Text className="text-danger">Invalid username or password</Form.Text>
           )}
         </Form>
         <Button className="link-btn" onClick={handleRegister}>

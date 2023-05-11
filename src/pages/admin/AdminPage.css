@@ -20,6 +20,10 @@
   width: 400px;
 }
 
+.delete[disabled] {
+  background-color: rgb(101, 101, 101);
+}
+
 @media screen and (max-width: 600px) {
   .modal {
     display: flex;

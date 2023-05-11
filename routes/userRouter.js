@@ -62,7 +62,7 @@ router.post('/register', async (req, res) => {
     
 
     const user = {
-      firstname: firstname,
+      firstname,
       lastname,
       username: username.toUpperCase(),
       email,

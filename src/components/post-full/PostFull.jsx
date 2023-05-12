@@ -4,6 +4,8 @@ import Image from 'react-bootstrap/Image';
 import './PostFull.css';
 
 export default function PostFull({ postData }) {
+  const postDate = new Date(postData.date).toDateString();
+
   return (
     <div className="post-full">
       <h3>{postData.title}</h3>
@@ -16,6 +18,7 @@ export default function PostFull({ postData }) {
         </div>
       </div>
       <p>{postData.message}</p>
+      <code>{postDate}</code>
     </div>
   );
 }

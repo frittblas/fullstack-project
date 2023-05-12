@@ -21,6 +21,7 @@ export default function Statistics() {
       const users = await api.getUsersPerProgram();
       const posts = await api.getPostsPerProgram();
       const numberOfPosts = await api.getNumberOfPosts();
+      const numberOfUsers = await api.getNumberOfUsers();
       setUsersPerProgram(users);
       setPostsPerProgram(posts);
       setNumberOfUsers(numberOfUsers);
@@ -101,10 +102,19 @@ export default function Statistics() {
         className="mb-3">
           <Tab eventKey="posts-stts" title="Posts">
             <Bar data={postsData} options={postOptions}/>
-            <div>Total number of posts: {numberOfPosts?.posts || ""}</div>
+              <div>
+                <h4>
+                  Total number of posts: {numberOfPosts?.posts || ""}
+                </h4>
+              </div> 
           </Tab>
-          <Tab eventKey="users-stts" title="Users">
-            <Doughnut data={usersData} />
+            <Tab eventKey="users-stts" title="Users">
+              <Doughnut data={usersData} />
+              <div>
+                <h4>
+                  Total number of Users: {numberOfUsers.users || ""}
+                </h4>
+              </div> 
           </Tab>
         </Tabs>
       )}

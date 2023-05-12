@@ -53,7 +53,7 @@ async function validateUserInput(firstname, lastname, username, email, password,
     return 'Email is in our system';
   }
 
-  const userNameExists = await User.findOne({ username });
+  const userNameExists = await User.findOne({ username: {  $regex: new RegExp('\\b' + username + '\\b', 'i') } });
   if (userNameExists) {
     return 'Username is taken';
   }

@@ -16,10 +16,12 @@ npm run dev
 Started 2023-04-04
 
 
-## Some info:
+# Development env setup (docker):
+$ docker-compose up  - this will start necessary containers
 
-Yada yada.
+P.S. Access to DB should be granted for the IP of machine used for development.
 
 
-
-/Hans
+## Dev env start
+1. $ sudo ./startup.sh  (This will start necessary container and vite)
+2. $ sudo docker exec -it fsf nodemon server.js  (To start backend)

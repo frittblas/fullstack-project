@@ -25,3 +25,7 @@
 .list-group>.list-group-item p {
   white-space: break-spaces;
 }
+
+.post-full code {
+  color: grey;
+}

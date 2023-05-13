@@ -49,12 +49,10 @@ export default function UserListItem({ userData, onSelect }) {
         }
       });
 
-      console.log("changes: " + updatedUser);
       const resp = await api.updateUser(userData.username, updatedUser)
       window.location.reload();
     } else {
       setPasswordMatch(false);
-      console.log("no pw match!")
     }
   };
 
@@ -75,7 +73,7 @@ export default function UserListItem({ userData, onSelect }) {
         <td><Image roundedCircle="true" src={`/api/users/${userData._id}/image`} onError={(event) => event.target.src = '../../../noavatar.png'} height="50" width="50" /></td>
         <td><a onClick={() => handleEditUser(userData)}>{`${userData.firstname} ${userData.lastname}`}</a></td>
         <td>{userData.programTitle}</td>
-        <td className="new-user-btn-row"><Button className="rounded new-user-btn btn-light-green" variant="success" onClick={() => handleEditUser(userData)}>Edit</Button></td>
+        <td className="edit-user-btn-row"><Button className="rounded btn-light-green" variant="success" onClick={() => handleEditUser(userData)}>Edit</Button></td>
       </tr>
 
       <Modal show={showModal} onHide={() => closeModal()}>
@@ -149,8 +147,8 @@ export default function UserListItem({ userData, onSelect }) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" className="rounded new-user-btn btn-light-green" onClick={() => closeModal()}>Cancel</Button>
-          <Button variant="success" className="rounded new-user-btn btn-light-green" onClick={() => handleSaveChanges()} disabled={!formValid}>Save Changes</Button>
+          <Button variant="secondary" className="rounded" onClick={() => closeModal()}>Cancel</Button>
+          <Button variant="success" className="rounded btn-light-green" onClick={() => handleSaveChanges()} disabled={!formValid}>Save Changes</Button>
         </Modal.Footer>
       </Modal>
     </>

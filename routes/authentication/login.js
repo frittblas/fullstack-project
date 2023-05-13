@@ -4,9 +4,7 @@ import { signJWT } from '../authentication/webtoken.js';
 
 async function login(res, username, password) {
 
-  console.log("login function called!");
-
-  const user = await users.findOne({ username: { $regex: new RegExp(username, 'i') } });
+  const user = await users.findOne({ username: {  $regex: new RegExp('\\b' + username + '\\b', 'i') } });
   if (!user) {
     return { message: 'Invalid username' };
   }

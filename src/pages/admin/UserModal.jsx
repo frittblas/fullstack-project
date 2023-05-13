@@ -104,17 +104,17 @@ export default function AddUserModal(props) {
                 </option>
               ))}
             </Form.Control>
-          </Form.Group>   
-                    </Form>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="success" className="rounded new-user-btn btn-light-green" onClick={() => setShowModal(false)}>
-                      Cancel
-                    </Button>
-                    <Button variant="success" className="rounded new-user-btn btn-light-green" onClick={() => handleAddUser()}>
-                      Create User
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-              );
-            }
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" className="rounded" onClick={() => setShowModal(false)}>
+          Cancel
+        </Button>
+        <Button variant="success" className="rounded new-user-btn btn-light-green" onClick={() => handleAddUser()}>
+          Create User
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}

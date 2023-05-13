@@ -1,0 +1,7 @@
+services:
+  frontend:
+    image: lab-node:0.1
+    container_name: fsf
+    volumes:
+      - /home/p33t/Proj/fullstack-project:/home/ubuntu/myapp
+    network_mode: host

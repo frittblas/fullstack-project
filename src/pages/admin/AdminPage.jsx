@@ -76,14 +76,10 @@ export default function AdminPage() {
   };
 
   const handleDeleteUsers = async () => {
-    console.log("clicked on delete button")
     try {
-      console.log("selectedUsers:", selectedUsers);
       const promises = selectedUsers.map((username) => api.deleteUser(username));
-      console.log("promises:", promises);
       await Promise.all(promises);
       const updatedUserList = await api.getUsers();
-      console.log("updatedUserList:", updatedUserList);
       setMainUserList(updatedUserList);
       setUsersList(updatedUserList);
       setSelectedUsers([]);

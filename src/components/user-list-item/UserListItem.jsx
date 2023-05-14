@@ -49,12 +49,10 @@ export default function UserListItem({ userData, onSelect }) {
         }
       });
 
-      console.log("changes: " + updatedUser);
       const resp = await api.updateUser(userData.username, updatedUser)
       window.location.reload();
     } else {
       setPasswordMatch(false);
-      console.log("no pw match!")
     }
   };
 

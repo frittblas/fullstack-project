@@ -21,7 +21,7 @@ async function signJWT(res, user) {
   // create the cookie as access_token
   res.cookie('access_token', token, {
     httpOnly: true,
-    maxAge: 600000 // set cookie to expire in 10 minutes
+    maxAge: 6000000 // set cookie to expire in 100 minutes
   });
 
 

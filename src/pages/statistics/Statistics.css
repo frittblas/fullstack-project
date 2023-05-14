@@ -3,11 +3,21 @@
 }
 
 #uncontrolled-tab-tabpane-users-stts {
-	max-height: 70vh;
-	display: flex;
-	justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-height: 50vh;
 }
+#uncontrolled-tab-tabpane-posts-stts {
+  flex-direction:column;
+  align-items:center;
+  text-align: center;
+}
+
 
 #stats-page ul.mb-3.nav.nav-tabs li.nav-item button[aria-selected="false"] {
 	color: #6dc71d;
 }
+
+

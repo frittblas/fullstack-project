@@ -39,5 +39,3 @@ export default function About() {
     </>
   )
 }
-
-// <Image src="../../../about-pictures/ + {dataItem.image}" />

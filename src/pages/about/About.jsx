@@ -26,7 +26,7 @@ export default function About() {
         {aboutData.map((dataItem) => (
           <Col className="mt-4 m-3" xs={10} sm={8} md={5} lg={3} xl={3} key={dataItem._id}>
             <Card className="h-100">
-              <Image src="../../../user.jpeg" />
+              <Image src={`/about-pictures/${dataItem.image}`} />
               <Card.Header>{dataItem.name}</Card.Header>
               <Card.Body>
                 <Card.Text style={{ fontWeight: 'bold' }}>{dataItem.title}</Card.Text>
@@ -39,3 +39,5 @@ export default function About() {
     </>
   )
 }
+
+// <Image src="../../../about-pictures/ + {dataItem.image}" />

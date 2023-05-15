@@ -16,7 +16,7 @@ async function signJWT(res, user) {
 
 
   let token = await jwt.sign({ user: userForToken }, process.env.JWT_TOKEN);
-  console.log("token: ", token);
+  //console.log("token: ", token);
 
   // create the cookie as access_token
   res.cookie('access_token', token, {
